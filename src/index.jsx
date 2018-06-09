@@ -8,8 +8,6 @@ import 'typeface-roboto';
 import App from './core/App';
 import store from './core/store';
 
-console.log(store.getState());
-
 ReactDOM.render(
   <Provider store={store}>
     <App />
