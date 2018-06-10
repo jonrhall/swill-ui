@@ -3,7 +3,8 @@
   "plugins": [ "react" ],
   "env": { "browser": true },
   "rules": {
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ]
   },
   "extends": [ "airbnb", "plugin:react/recommended" ]
 }
