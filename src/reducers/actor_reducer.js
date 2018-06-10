@@ -6,15 +6,15 @@ const initialActorState = {
 const actorReducer = (state = initialActorState, action) => {
   switch (action.type) {
     case 'GET_ACTORS_PENDING':
-      return Object.assign({}, state, {
+      return {
         loading: true,
         actors: null
-      });
+      };
     case 'GET_ACTORS_FULFILLED':
-      return Object.assign({}, state, {
+      return {
         loading: false,
         actors: action.payload
-      });
+      };
     default:
       return state;
   }

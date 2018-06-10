@@ -7,9 +7,9 @@ export function getActors() {
   };
 }
 
-export function getKettles() {
+export function loadAppConfig() {
   return {
-    type: 'GET_KETTLES',
-    payload: sdk.resources.actors.getActors()
+    type: 'LOAD_APP_CONFIG',
+    payload: sdk.config.getConfig()
   };
 }

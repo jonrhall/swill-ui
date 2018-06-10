@@ -1,18 +1,49 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 import AppView from '../components/AppView';
+import { loadAppConfig } from '../actions';
 
-const App = () => (
-  <React.Fragment>
-    <CssBaseline />
-    <Router>
-      <div>
-        <Route exact path="/" render={() => <Link to="/Actors">Link to Actors</Link>} />
-        <Route path="/Actors" component={AppView} />
-      </div>
-    </Router>
-  </React.Fragment>
-);
+class App extends React.Component {
+  async componentWillMount() {
+    this.props.loadAppConfig();
+  }
 
-export default App;
+  render() {
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        {this.props.appLoading ?
+          <h2>Loading...</h2> :
+          <Router>
+            <div>
+              <Route exact path="/" render={() => <Link to="/Actors">Link to Actors</Link>} />
+              <Route path="/Actors" component={AppView} />
+            </div>
+          </Router>
+        }
+      </React.Fragment>
+    );
+  }
+}
+
+App.propTypes = {
+  appLoading: PropTypes.bool.isRequired,
+  loadAppConfig: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  appLoading: state.appState.loading
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadAppConfig: () => dispatch(loadAppConfig())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
