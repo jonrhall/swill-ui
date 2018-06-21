@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AppView from '../components/AppView';
@@ -18,12 +17,7 @@ class App extends React.Component {
         <CssBaseline />
         {this.props.appLoading ?
           <h2>Loading...</h2> :
-          <Router>
-            <div>
-              <Route exact path="/" render={() => <Link to="/Actors">Link to Actors</Link>} />
-              <Route path="/Actors" component={AppView} />
-            </div>
-          </Router>
+          <AppView />
         }
       </React.Fragment>
     );

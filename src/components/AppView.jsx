@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import ResourceList from './ResourceList';
 import { getActors } from '../actions';
@@ -12,12 +13,22 @@ class AppState extends Component {
 
   render() {
     return (
-      <div>
-        Hello world <br />
-        { this.props.actorsLoading ? 'Actors loading!' : 'Actors not loading.' } <br />
-        { this.props.actors.length ?
-          <ResourceList list={this.props.actors} resource="Actor" /> : 'No actors loaded'}
-      </div>
+      <Router>
+        <div>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div>
+              Hello world <br />
+                { this.props.actorsLoading ? 'Actors loading!' : 'Actors not loading.' } <br />
+                { this.props.actors.length ?
+                  <ResourceList list={this.props.actors} resource="Actor" /> : 'No actors loaded'}
+              </div>
+            )}
+          />
+        </div>
+      </Router>
     );
   }
 }
