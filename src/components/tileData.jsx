@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -11,18 +12,22 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 export const mailFolderListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <LocalDrink />
-      </ListItemIcon>
-      <ListItemText primary="Brewing" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BubblesIcon />
-      </ListItemIcon>
-      <ListItemText primary="Fermentation" />
-    </ListItem>
+    <Link to="/brewing">
+      <ListItem button>
+        <ListItemIcon>
+          <LocalDrink />
+        </ListItemIcon>
+        <ListItemText primary="Brewing" />
+      </ListItem>
+    </Link>
+    <Link to="/fermentation">
+      <ListItem button>
+        <ListItemIcon>
+          <BubblesIcon />
+        </ListItemIcon>
+        <ListItemText primary="Fermentation" />
+      </ListItem>
+    </Link>
   </div>
 );
 

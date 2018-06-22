@@ -58,10 +58,10 @@ const AppBar = props => (
 
 AppBar.propTypes = {
   classes: PropTypes.shape({
-    appBar: PropTypes.object,
-    appBarShift: PropTypes.object,
-    menuButton: PropTypes.object,
-    hide: PropTypes.object
+    appBar: PropTypes.string,
+    appBarShift: PropTypes.string,
+    menuButton: PropTypes.string,
+    hide: PropTypes.string
   }).isRequired,
   expanded: PropTypes.bool.isRequired,
   openDrawer: PropTypes.func.isRequired

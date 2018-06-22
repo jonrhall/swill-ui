@@ -67,9 +67,9 @@ const AppDrawer = props => (
 
 AppDrawer.propTypes = {
   classes: PropTypes.shape({
-    drawerPaper: PropTypes.object,
-    drawerPaperClose: PropTypes.object,
-    toolbar: PropTypes.object
+    drawerPaper: PropTypes.string,
+    drawerPaperClose: PropTypes.string,
+    toolbar: PropTypes.string
   }).isRequired,
   theme: PropTypes.shape({
     direction: PropTypes.string

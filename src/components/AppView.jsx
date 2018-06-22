@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 import AppBar from './AppBar';
 import AppDrawer from './AppDrawer';
 import { openMenu, closeMenu } from '../actions';
+import HomeView from './HomeView';
 
 const styles = theme => ({
   root: {
@@ -33,28 +33,31 @@ const styles = theme => ({
 
 const AppView = props => (
   <Router>
-    <Route
-      exact
-      path="/"
-      render={() => (
-        <div className={props.classes.root}>
-          <AppBar expanded={props.drawerExpanded} openDrawer={props.openDrawer} />
-          <AppDrawer expanded={props.drawerExpanded} closeDrawer={props.closeDrawer} />
-          <main className={props.classes.content}>
-            <div className={props.classes.toolbar} />
-            <Typography noWrap>Welcome to Swill UI!</Typography>
-          </main>
-        </div>
-      )}
-    />
+    <div className={props.classes.root}>
+      <AppBar expanded={props.drawerExpanded} openDrawer={props.openDrawer} />
+      <AppDrawer expanded={props.drawerExpanded} closeDrawer={props.closeDrawer} />
+      <main className={props.classes.content}>
+        <div className={props.classes.toolbar} />
+        <Route
+          exact
+          path="/"
+          render={() => <Redirect to="/brewing" />}
+        />
+        <Route
+          exact
+          path="/brewing"
+          component={HomeView}
+        />
+      </main>
+    </div>
   </Router>
 );
 
 AppView.propTypes = {
   classes: PropTypes.shape({
-    root: PropTypes.object,
-    content: PropTypes.object,
-    toolbar: PropTypes.object
+    root: PropTypes.string,
+    content: PropTypes.string,
+    toolbar: PropTypes.string
   }).isRequired,
   drawerExpanded: PropTypes.bool.isRequired,
   openDrawer: PropTypes.func.isRequired,
