@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import AppView from '../components/AppView';
+import AppView from '../core/AppView';
 import { loadAppConfig } from '../actions';
 
 class App extends React.Component {

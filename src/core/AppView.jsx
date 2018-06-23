@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from './AppBar';
 import AppDrawer from './AppDrawer';
 import { openMenu, closeMenu } from '../actions';
-import HomeView from './HomeView';
+import HomeView from '../components/HomeView';
 
 const styles = theme => ({
   root: {
