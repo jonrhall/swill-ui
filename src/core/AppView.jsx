@@ -8,6 +8,7 @@ import AppBar from './AppBar';
 import AppDrawer from './AppDrawer';
 import { openMenu, closeMenu } from '../actions';
 import HomeView from '../components/HomeView';
+import HardwareView from '../components/HardwareView';
 
 const styles = theme => ({
   root: {
@@ -51,6 +52,11 @@ const AppView = props => (
           exact
           path="/brew"
           component={HomeView}
+        />
+        <Route
+          exact
+          path="/hardware"
+          component={HardwareView}
         />
       </main>
     </div>

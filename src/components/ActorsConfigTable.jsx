@@ -10,16 +10,15 @@ import Paper from '@material-ui/core/Paper';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText
   }
 }))(TableCell);
 
 const styles = theme => ({
   root: {
-    margin: theme.spacing.unit * 3,
-    overflowX: 'auto',
-    width: '70rem'
+    marginBottom: theme.spacing.unit * 3,
+    overflowX: 'auto'
   },
   row: {
     '&:nth-of-type(odd)': {
@@ -31,26 +30,28 @@ const styles = theme => ({
 const ResourceList = (props) => {
   const { classes, list, resource } = props;
   return (
-    <Paper className={classes.root}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <CustomTableCell>{`${resource} ID`}</CustomTableCell>
-            <CustomTableCell>Name</CustomTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {list.map(instance => (
-            <TableRow className={classes.row} key={instance.id}>
-              <TableCell component="th" scope="row">
-                {instance.id}
-              </TableCell>
-              <TableCell>{instance.name}</TableCell>
+    <React.Fragment>
+      <Paper className={classes.root}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <CustomTableCell>{`${resource} ID`}</CustomTableCell>
+              <CustomTableCell>Name</CustomTableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {list.map(instance => (
+              <TableRow className={classes.row} key={instance.id}>
+                <TableCell component="th" scope="row">
+                  {instance.id}
+                </TableCell>
+                <TableCell>{instance.name}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </React.Fragment>
   );
 };
 
