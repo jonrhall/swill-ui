@@ -41,11 +41,11 @@ const AppView = props => (
         <Route
           exact
           path="/"
-          render={() => <Redirect to="/brewing" />}
+          render={() => <Redirect to="/brew" />}
         />
         <Route
           exact
-          path="/brewing"
+          path="/brew"
           component={HomeView}
         />
       </main>
