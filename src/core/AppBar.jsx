@@ -50,7 +50,7 @@ const AppBar = props => (
         <MenuIcon />
       </IconButton>
       <Typography variant="title" color="inherit" noWrap>
-        Swill UI
+        {props.name}
       </Typography>
     </Toolbar>
   </MenuBar>
@@ -64,7 +64,8 @@ AppBar.propTypes = {
     hide: PropTypes.string
   }).isRequired,
   expanded: PropTypes.bool.isRequired,
-  openDrawer: PropTypes.func.isRequired
+  openDrawer: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(AppBar);

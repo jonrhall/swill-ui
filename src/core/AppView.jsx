@@ -34,7 +34,11 @@ const styles = theme => ({
 const AppView = props => (
   <Router>
     <div className={props.classes.root}>
-      <AppBar expanded={props.drawerExpanded} openDrawer={props.openDrawer} />
+      <AppBar
+        expanded={props.drawerExpanded}
+        openDrawer={props.openDrawer}
+        name={props.breweryName}
+      />
       <AppDrawer expanded={props.drawerExpanded} closeDrawer={props.closeDrawer} />
       <main className={props.classes.content}>
         <div className={props.classes.toolbar} />
@@ -61,11 +65,13 @@ AppView.propTypes = {
   }).isRequired,
   drawerExpanded: PropTypes.bool.isRequired,
   openDrawer: PropTypes.func.isRequired,
-  closeDrawer: PropTypes.func.isRequired
+  closeDrawer: PropTypes.func.isRequired,
+  breweryName: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-  drawerExpanded: state.appState.menuOpen
+  drawerExpanded: state.appState.menuOpen,
+  breweryName: state.appState.breweryName
 });
 
 const mapDispatchToProps = dispatch => ({
