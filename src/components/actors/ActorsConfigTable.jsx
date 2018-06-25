@@ -8,10 +8,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import ActorRow from './ActorRow';
+
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
+    fontWeight: 'bold'
   }
 }))(TableCell);
 
@@ -27,35 +30,28 @@ const styles = theme => ({
   }
 });
 
-const ResourceList = (props) => {
-  const { classes, list, resource } = props;
-  return (
-    <React.Fragment>
-      <Paper className={classes.root}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <CustomTableCell>{`${resource} ID`}</CustomTableCell>
-              <CustomTableCell>Name</CustomTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {list.map(instance => (
-              <TableRow className={classes.row} key={instance.id}>
-                <TableCell component="th" scope="row">
-                  {instance.id}
-                </TableCell>
-                <TableCell>{instance.name}</TableCell>
-              </TableRow>
+const ActorsConfigTable = props => (
+  <React.Fragment>
+    <Paper className={props.classes.root}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {['Name', 'On/Off'].map(title => (
+              <CustomTableCell key={title}>{title}</CustomTableCell>
             ))}
-          </TableBody>
-        </Table>
-      </Paper>
-    </React.Fragment>
-  );
-};
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props.list.map(instance => (
+            <ActorRow key={instance.id} actor={instance} />
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
+  </React.Fragment>
+);
 
-ResourceList.propTypes = {
+ActorsConfigTable.propTypes = {
   classes: PropTypes.shape({
     root: PropTypes.string,
     table: PropTypes.string
@@ -63,8 +59,7 @@ ResourceList.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string
-  })).isRequired,
-  resource: PropTypes.string.isRequired
+  })).isRequired
 };
 
-export default withStyles(styles)(ResourceList);
+export default withStyles(styles)(ActorsConfigTable);

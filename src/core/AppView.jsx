@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import AppBar from './AppBar';
 import AppDrawer from './AppDrawer';
-import { openMenu, closeMenu } from '../actions';
+import { connectSdk, openMenu, closeMenu } from '../actions';
 import HomeView from '../components/HomeView';
 import HardwareView from '../components/HardwareView';
 
@@ -80,10 +80,14 @@ const mapStateToProps = state => ({
   breweryName: state.appState.breweryName
 });
 
-const mapDispatchToProps = dispatch => ({
-  openDrawer: () => dispatch(openMenu()),
-  closeDrawer: () => dispatch(closeMenu())
-});
+const mapDispatchToProps = (dispatch) => {
+  connectSdk(dispatch);
+
+  return {
+    openDrawer: () => dispatch(openMenu()),
+    closeDrawer: () => dispatch(closeMenu())
+  };
+};
 
 export default withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,

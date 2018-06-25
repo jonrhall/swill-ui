@@ -7,6 +7,21 @@ export function getActors() {
   };
 }
 
+export async function switchActorOff(actor) {
+  return actor.setState({ state: 0 });
+}
+
+export async function switchActorOn(actor) {
+  return actor.setState({ state: 1 });
+}
+
+export function actorUpdate(actor) {
+  return {
+    type: 'ACTOR_UPDATE',
+    actor
+  };
+}
+
 export function loadAppConfig() {
   return {
     type: 'LOAD_APP_CONFIG',
@@ -24,4 +39,12 @@ export function closeMenu() {
   return {
     type: 'CLOSE_MENU'
   };
+}
+
+export function connectSdk(dispatch) {
+  sdk.resources.actors.onUpdate((event, actor) => {
+    if (event === 'SWITCH_ACTOR') {
+      dispatch(actorUpdate(actor));
+    }
+  });
 }

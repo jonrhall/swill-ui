@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
-import ActorsConfigTable from './ActorsConfigTable';
+import ActorsConfigTable from './actors/ActorsConfigTable';
 import { getActors } from '../actions';
 
 class HardwareView extends React.Component {
@@ -24,7 +24,9 @@ class HardwareView extends React.Component {
   });
 
   async componentWillMount() {
-    this.props.getActors();
+    if (this.props.actorList.length < 1) {
+      this.props.getActors();
+    }
   }
 
   render() {
