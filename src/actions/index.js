@@ -15,6 +15,13 @@ export async function switchActorOn(actor) {
   return actor.setState({ state: 1 });
 }
 
+export function editActorName(actor, name) {
+  return {
+    type: 'EDIT_ACTOR_NAME',
+    payload: actor.setState({ name })
+  };
+}
+
 export function actorUpdate(actor) {
   return {
     type: 'ACTOR_UPDATE',
