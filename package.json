@@ -1,7 +1,7 @@
 {
-  "name": "swill-react-template",
+  "name": "swill-ui",
   "version": "0.1.0",
-  "description": "A ReactJS template to create custom UI components for CraftBeerPi.",
+  "description": "A custom UI for CraftBeerPi.",
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@material-ui/core": "^1.1.0",
     "@material-ui/icons": "^1.1.0",
+    "@material-ui/lab": "^1.0.0-alpha.5",
     "classnames": "^2.2.6",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
@@ -24,7 +25,7 @@
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^5.1.1",
-    "swill-sdk": "^1.0.0",
+    "swill-sdk": "https://github.com/jonrhall/swill-sdk.git#version-1.1",
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {

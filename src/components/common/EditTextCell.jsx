@@ -30,7 +30,7 @@ const styles = theme => ({
   }
 });
 
-class EditText extends React.Component {
+class EditTextCell extends React.Component {
   state = {
     anchorEl: null,
     modalText: this.props.text
@@ -85,9 +85,8 @@ class EditText extends React.Component {
           <div className={this.props.classes.menuContent}>
             <TextField
               id="input-with-icon-grid"
-              label="Edit name"
-              helperText="Enter a name for the actor."
-              margin="dense"
+              label="Edit text"
+              helperText={this.props.label}
               value={modalText}
               onChange={this.handleChange}
             />
@@ -107,9 +106,10 @@ class EditText extends React.Component {
   }
 }
 
-EditText.propTypes = {
+EditTextCell.propTypes = {
   text: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
   classes: PropTypes.shape({
     menuContent: PropTypes.string,
     actionButtons: PropTypes.string,
@@ -118,4 +118,4 @@ EditText.propTypes = {
   }).isRequired
 };
 
-export default withStyles(styles)(EditText);
+export default withStyles(styles)(EditTextCell);

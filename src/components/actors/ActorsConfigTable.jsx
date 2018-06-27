@@ -33,7 +33,7 @@ const ActorsConfigTable = props => (
       <Table>
         <TableHead>
           <TableRow>
-            {['Name', 'On/Off'].map(title => (
+            {['Name', 'On/Off', 'Power'].map(title => (
               <TableCell className={props.classes.head} key={title}>{title}</TableCell>
             ))}
           </TableRow>

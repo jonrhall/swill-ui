@@ -22,6 +22,10 @@ export function editActorName(actor, name) {
   };
 }
 
+export function editActorPower(actor, power) {
+  return sdk.resources.actors.modifyActor({ ...actor, power });
+}
+
 export function actorUpdate(actor) {
   return {
     type: 'ACTOR_UPDATE',

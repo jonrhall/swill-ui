@@ -4,8 +4,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
 
-import { switchActorOff, switchActorOn, editActorName } from '../../actions';
+import {
+  switchActorOff,
+  switchActorOn,
+  editActorName,
+  editActorPower
+} from '../../actions';
 import EditTextCell from '../common/EditTextCell';
+import EditRangeCell from '../common/EditRangeCell';
 import ToggleSwitchCell from '../common/ToggleSwitchCell';
 
 const styles = theme => ({
@@ -25,16 +31,32 @@ class ActorRow extends React.Component {
     }
   }
 
-  editName = (name) => {
-    this.props.editActorName(this.props.actor, name);
-  }
+  editField = func => prop => func(this.props.actor, prop);
 
   render() {
-    const { actor, classes } = this.props;
+    const {
+      actor,
+      classes,
+      editName
+    } = this.props;
     return (
       <TableRow className={classes.row} key={actor.id}>
-        <EditTextCell text={actor.name} onChange={this.editName} />
-        <ToggleSwitchCell checked={actor.state === 1} onChange={this.toggleActor} />
+        <EditTextCell
+          text={actor.name}
+          onChange={this.editField(editName)}
+          label="Enter a name for the actor."
+        />
+        <ToggleSwitchCell
+          checked={actor.state === 1}
+          onChange={this.toggleActor}
+        />
+        <EditRangeCell
+          value={actor.power}
+          onChange={this.editField(editActorPower)}
+          lowRange={0}
+          highRange={100}
+          label="Enter power value for the actor."
+        />
       </TableRow>
     );
   }
@@ -49,13 +71,13 @@ ActorRow.propTypes = {
   classes: PropTypes.shape({
     row: PropTypes.string
   }).isRequired,
-  editActorName: PropTypes.func.isRequired
+  editName: PropTypes.func.isRequired
 };
 
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
-  editActorName: (actor, name) => dispatch(editActorName(actor, name))
+  editName: (actor, name) => dispatch(editActorName(actor, name))
 });
 
 export default connect(
