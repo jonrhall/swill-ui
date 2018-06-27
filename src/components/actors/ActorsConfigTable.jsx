@@ -10,14 +10,6 @@ import Paper from '@material-ui/core/Paper';
 
 import ActorRow from './ActorRow';
 
-const CustomTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    fontWeight: 'bold'
-  }
-}))(TableCell);
-
 const styles = theme => ({
   root: {
     marginBottom: theme.spacing.unit * 3,
@@ -27,6 +19,11 @@ const styles = theme => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default
     }
+  },
+  head: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    fontWeight: 'bold'
   }
 });
 
@@ -37,7 +34,7 @@ const ActorsConfigTable = props => (
         <TableHead>
           <TableRow>
             {['Name', 'On/Off'].map(title => (
-              <CustomTableCell key={title}>{title}</CustomTableCell>
+              <TableCell className={props.classes.head} key={title}>{title}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -54,7 +51,8 @@ const ActorsConfigTable = props => (
 ActorsConfigTable.propTypes = {
   classes: PropTypes.shape({
     root: PropTypes.string,
-    table: PropTypes.string
+    table: PropTypes.string,
+    head: PropTypes.string
   }).isRequired,
   list: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,

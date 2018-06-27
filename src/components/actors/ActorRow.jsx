@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
-import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 import { switchActorOff, switchActorOn, editActorName } from '../../actions';
 import EditTextCell from '../common/EditTextCell';
+import ToggleSwitchCell from '../common/ToggleSwitchCell';
 
 const styles = theme => ({
   row: {
@@ -35,13 +34,7 @@ class ActorRow extends React.Component {
     return (
       <TableRow className={classes.row} key={actor.id}>
         <EditTextCell text={actor.name} onChange={this.editName} />
-        <TableCell>
-          <Switch
-            checked={actor.state === 1}
-            onChange={this.toggleActor}
-            value="checkedA"
-          />
-        </TableCell>
+        <ToggleSwitchCell checked={actor.state === 1} onChange={this.toggleActor} />
       </TableRow>
     );
   }
