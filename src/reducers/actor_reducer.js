@@ -8,8 +8,6 @@ const updateActorList = (newActor, state) =>
     // Update the actor in the actors list
     actors: state.actors.map((actor) => {
       if (newActor.id === actor.id) {
-        // setState is a prototype method on the resource, it won't be returned in an API request.
-        newActor.setState = actor.setState; // eslint-disable-line
         return newActor;
       }
       return actor;

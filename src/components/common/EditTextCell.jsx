@@ -73,7 +73,7 @@ class EditText extends React.Component {
           aria-haspopup="true"
           onClick={this.handleOpen}
         >
-          <Typography className={this.props.classes.textTransform}>{modalText}</Typography>
+          <Typography className={this.props.classes.textTransform}>{this.props.text}</Typography>
         </Button>
         <Menu
           id="simple-menu"

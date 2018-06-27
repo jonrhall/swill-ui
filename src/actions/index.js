@@ -8,17 +8,17 @@ export function getActors() {
 }
 
 export async function switchActorOff(actor) {
-  return actor.setState({ state: 0 });
+  return sdk.resources.actors.modifyActor({ ...actor, state: 0 });
 }
 
 export async function switchActorOn(actor) {
-  return actor.setState({ state: 1 });
+  return sdk.resources.actors.modifyActor({ ...actor, state: 1 });
 }
 
 export function editActorName(actor, name) {
   return {
     type: 'EDIT_ACTOR_NAME',
-    payload: actor.setState({ name })
+    payload: sdk.resources.actors.modifyActor({ ...actor, name })
   };
 }
 
