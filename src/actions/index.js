@@ -7,6 +7,13 @@ export function getActors() {
   };
 }
 
+export function getActorTypes() {
+  return {
+    type: 'GET_ACTOR_TYPES',
+    payload: sdk.resources.actors.getActorTypes()
+  };
+}
+
 export async function switchActorOff(actor) {
   return sdk.resources.actors.modifyActor({ ...actor, state: 0 });
 }
@@ -24,6 +31,13 @@ export function editActorName(actor, name) {
 
 export function editActorPower(actor, power) {
   return sdk.resources.actors.modifyActor({ ...actor, power });
+}
+
+export function editActorType(actor, type) {
+  return {
+    type: 'EDIT_ACTOR_TYPE',
+    payload: sdk.resources.actors.modifyActor({ ...actor, type })
+  };
 }
 
 export function actorUpdate(actor) {

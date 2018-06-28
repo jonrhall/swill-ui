@@ -15,9 +15,12 @@ const styles = theme => ({
     marginRight: theme.spacing.unit * 10,
     marginLeft: theme.spacing.unit * 3,
     outline: 0,
-    width: '300px'
+    width: '280px'
   },
-  sliderInput: { marginTop: '16px' },
+  sliderInput: {
+    position: 'relative',
+    top: '4px'
+  },
   textInput: { width: '80px' },
   description: { marginTop: '10px' },
   actionButtons: {
@@ -113,7 +116,7 @@ class EditRangeCell extends React.Component {
                   step={1}
                   aria-labelledby="range-label"
                   onChange={(e, val) => this.setState({ modalValue: val })}
-                  className={this.props.classes.sliderInput}
+                  style={{ position: 'relative', top: '4px' }}
                 />
               </Grid>
               <Grid item xs={4}>

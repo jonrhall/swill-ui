@@ -33,14 +33,14 @@ const ActorsConfigTable = props => (
       <Table>
         <TableHead>
           <TableRow>
-            {['Name', 'On/Off', 'Power'].map(title => (
+            {['Name', 'On/Off', 'Power %', 'Type'].map(title => (
               <TableCell className={props.classes.head} key={title}>{title}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {props.list.map(instance => (
-            <ActorRow key={instance.id} actor={instance} />
+            <ActorRow key={instance.id} actor={instance} types={props.types} />
           ))}
         </TableBody>
       </Table>
@@ -57,6 +57,16 @@ ActorsConfigTable.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string
+  })).isRequired,
+  types: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    properties: PropTypes.arrayOf(PropTypes.shape({
+      configurable: PropTypes.bool,
+      description: PropTypes.string,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string
+    }))
   })).isRequired
 };
 

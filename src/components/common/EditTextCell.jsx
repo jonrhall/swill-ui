@@ -9,7 +9,7 @@ import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
   menuContent: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 10,
     marginLeft: theme.spacing.unit * 3,
     outline: 0

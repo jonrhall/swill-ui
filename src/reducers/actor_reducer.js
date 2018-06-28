@@ -1,6 +1,7 @@
 const initialActorState = {
   loading: false,
-  actors: []
+  actors: [],
+  types: []
 };
 
 const updateActorList = (newActor, state) =>
@@ -22,11 +23,16 @@ const actorReducer = (state = initialActorState, action) => {
         loading: true
       });
     case 'GET_ACTORS_FULFILLED':
-      return {
+      return Object.assign({}, state, {
         loading: false,
         actors: action.payload
-      };
+      });
+    case 'GET_ACTOR_TYPES_FULFILLED':
+      return Object.assign({}, state, {
+        types: action.payload
+      });
     case 'EDIT_ACTOR_NAME_FULFILLED':
+    case 'EDIT_ACTOR_TYPE_FULFILLED':
       return updateActorList(action.payload, state);
     case 'ACTOR_UPDATE':
       return updateActorList(action.actor, state);

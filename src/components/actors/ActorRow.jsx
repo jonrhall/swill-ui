@@ -8,11 +8,13 @@ import {
   switchActorOff,
   switchActorOn,
   editActorName,
-  editActorPower
+  editActorPower,
+  editActorType
 } from '../../actions';
 import EditTextCell from '../common/EditTextCell';
 import EditRangeCell from '../common/EditRangeCell';
 import ToggleSwitchCell from '../common/ToggleSwitchCell';
+import EditTypeCell from '../common/EditTypeCell';
 
 const styles = theme => ({
   row: {
@@ -36,6 +38,7 @@ class ActorRow extends React.Component {
   render() {
     const {
       actor,
+      types,
       classes,
       editName
     } = this.props;
@@ -57,6 +60,12 @@ class ActorRow extends React.Component {
           highRange={100}
           label="Enter power value for the actor."
         />
+        <EditTypeCell
+          type={actor.type}
+          options={types}
+          onChange={this.editField(editActorType)}
+          label="Choose a type for the actor."
+        />
       </TableRow>
     );
   }
@@ -68,6 +77,8 @@ ActorRow.propTypes = {
     name: PropTypes.string,
     state: PropTypes.number
   }).isRequired,
+  // This is validated in a higher order component
+  types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   classes: PropTypes.shape({
     row: PropTypes.string
   }).isRequired,
