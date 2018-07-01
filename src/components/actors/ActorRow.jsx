@@ -33,14 +33,15 @@ class ActorRow extends React.Component {
     }
   }
 
-  editField = func => prop => func(this.props.actor, prop);
+  editField = func => (...props) => func(this.props.actor, ...props);
 
   render() {
     const {
       actor,
       types,
       classes,
-      editName
+      editName,
+      editType
     } = this.props;
     return (
       <TableRow className={classes.row} key={actor.id}>
@@ -62,8 +63,9 @@ class ActorRow extends React.Component {
         />
         <EditTypeCell
           type={actor.type}
+          config={actor.config}
           options={types}
-          onChange={this.editField(editActorType)}
+          onChange={this.editField(editType)}
           label="Choose a type for the actor."
         />
       </TableRow>
@@ -82,13 +84,15 @@ ActorRow.propTypes = {
   classes: PropTypes.shape({
     row: PropTypes.string
   }).isRequired,
-  editName: PropTypes.func.isRequired
+  editName: PropTypes.func.isRequired,
+  editType: PropTypes.func.isRequired
 };
 
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
-  editName: (actor, name) => dispatch(editActorName(actor, name))
+  editName: (actor, name) => dispatch(editActorName(actor, name)),
+  editType: (actor, type, config) => dispatch(editActorType(actor, type, config))
 });
 
 export default connect(

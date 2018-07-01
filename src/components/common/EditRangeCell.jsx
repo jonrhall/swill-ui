@@ -21,7 +21,10 @@ const styles = theme => ({
     position: 'relative',
     top: '4px'
   },
-  textInput: { width: '80px' },
+  textInput: {
+    width: '80px',
+    textAlign: 'center !important'
+  },
   description: { marginTop: '10px' },
   actionButtons: {
     display: 'flex',
@@ -36,6 +39,9 @@ const styles = theme => ({
   },
   textTransform: {
     textTransform: 'none'
+  },
+  alignCenter: {
+    textAlign: 'center'
   }
 });
 
@@ -127,6 +133,7 @@ class EditRangeCell extends React.Component {
                   value={modalValue}
                   onChange={this.handleChange}
                   className={this.props.classes.textInput}
+                  inputProps={{ className: this.props.classes.alignCenter }}
                 />
               </Grid>
             </Grid>
@@ -165,7 +172,8 @@ EditRangeCell.propTypes = {
     description: PropTypes.string,
     actionButtons: PropTypes.string,
     button: PropTypes.string,
-    textTransform: PropTypes.string
+    textTransform: PropTypes.string,
+    alignCenter: PropTypes.string
   }).isRequired
 };
 

@@ -33,10 +33,10 @@ export function editActorPower(actor, power) {
   return sdk.resources.actors.modifyActor({ ...actor, power });
 }
 
-export function editActorType(actor, type) {
+export function editActorType(actor, type, config) {
   return {
     type: 'EDIT_ACTOR_TYPE',
-    payload: sdk.resources.actors.modifyActor({ ...actor, type })
+    payload: sdk.resources.actors.modifyActor({ ...actor, type, config })
   };
 }
 
