@@ -21,20 +21,6 @@ class HardwareView extends React.Component {
     getActorTypes: () => dispatch(getActorTypes())
   })
 
-  static propTypes = {
-    classes: PropTypes.shape({
-      button: PropTypes.string
-    }).isRequired,
-    loading: PropTypes.bool.isRequired,
-    actorList: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string
-    })).isRequired,
-    actorTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    getActors: PropTypes.func.isRequired,
-    getActorTypes: PropTypes.func.isRequired
-  }
-
   static styles = theme => ({
     button: {
       marginLeft: theme.spacing.unit * 3,
@@ -45,8 +31,27 @@ class HardwareView extends React.Component {
     },
     icon: {
       marginRight: theme.spacing.unit
+    },
+    margin: {
+      margin: theme.spacing.unit * 2
     }
   });
+
+  static propTypes = {
+    classes: PropTypes.shape({
+      button: PropTypes.string,
+      icon: PropTypes.string,
+      margin: PropTypes.string
+    }).isRequired,
+    loading: PropTypes.bool.isRequired,
+    actorList: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    })).isRequired,
+    actorTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    getActors: PropTypes.func.isRequired,
+    getActorTypes: PropTypes.func.isRequired
+  }
 
   async componentWillMount() {
     if (this.props.actorList.length < 1) {
@@ -66,7 +71,10 @@ class HardwareView extends React.Component {
       loading
     } = this.props;
     return (
-      <div>
+      <div className={classes.margin}>
+        <Typography variant="button" gutterBottom style={{ fontWeight: 'bold', marginBottom: 16 }}>
+          Hardware &#x25B8;
+        </Typography>
         <div>
           <Typography variant="display1" gutterBottom style={{ display: 'inline-block' }}>Actors</Typography>
           <Button variant="outlined" size="small" className={classes.button}>
@@ -74,6 +82,21 @@ class HardwareView extends React.Component {
             <Typography variant="button" color="textSecondary">Add</Typography>
           </Button>
         </div>
+        {!loading && actorTypes.length > 0 ?
+          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
+          'Loading...'}
+        {!loading && actorTypes.length > 0 ?
+          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
+          'Loading...'}
+        {!loading && actorTypes.length > 0 ?
+          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
+          'Loading...'}
+        {!loading && actorTypes.length > 0 ?
+          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
+          'Loading...'}
+        {!loading && actorTypes.length > 0 ?
+          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
+          'Loading...'}
         {!loading && actorTypes.length > 0 ?
           <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
           'Loading...'}

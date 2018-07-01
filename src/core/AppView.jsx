@@ -28,8 +28,13 @@ class AppView extends React.Component {
     },
     content: {
       flexGrow: 1,
-      backgroundColor: theme.palette.background.default,
-      padding: theme.spacing.unit * 3
+      backgroundColor: theme.palette.background.default
+    },
+    routes: {
+      position: 'absolute',
+      overflow: 'auto',
+      height: 'calc(100% - 64px)',
+      width: 'calc(100% - 72px)'
     }
   })
 
@@ -51,7 +56,8 @@ class AppView extends React.Component {
     classes: PropTypes.shape({
       root: PropTypes.string,
       content: PropTypes.string,
-      toolbar: PropTypes.string
+      toolbar: PropTypes.string,
+      routes: PropTypes.string
     }).isRequired,
     drawerExpanded: PropTypes.bool.isRequired,
     openDrawer: PropTypes.func.isRequired,
@@ -78,21 +84,23 @@ class AppView extends React.Component {
           <AppDrawer expanded={drawerExpanded} closeDrawer={closeDrawer} />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <Route
-              exact
-              path="/"
-              render={() => <Redirect to="/brew" />}
-            />
-            <Route
-              exact
-              path="/brew"
-              component={HomeView}
-            />
-            <Route
-              exact
-              path="/hardware"
-              component={HardwareView}
-            />
+            <div className={classes.routes}>
+              <Route
+                exact
+                path="/"
+                render={() => <Redirect to="/brew" />}
+              />
+              <Route
+                exact
+                path="/brew"
+                component={HomeView}
+              />
+              <Route
+                exact
+                path="/hardware"
+                component={HardwareView}
+              />
+            </div>
           </main>
         </div>
       </Router>
