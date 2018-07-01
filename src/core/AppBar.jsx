@@ -10,63 +10,73 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    backgroundColor: theme.palette.primary.dark
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36
-  },
-  hide: {
-    display: 'none'
+class AppBar extends React.Component {
+  static styles = theme => ({
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+      }),
+      backgroundColor: theme.palette.primary.dark
+    },
+    appBarShift: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen
+      })
+    },
+    menuButton: {
+      marginLeft: 12,
+      marginRight: 36
+    },
+    hide: {
+      display: 'none'
+    }
+  })
+
+  static propTypes = {
+    classes: PropTypes.shape({
+      appBar: PropTypes.string,
+      appBarShift: PropTypes.string,
+      menuButton: PropTypes.string,
+      hide: PropTypes.string
+    }).isRequired,
+    expanded: PropTypes.bool.isRequired,
+    openDrawer: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired
   }
-});
 
-const AppBar = props => (
-  <MenuBar
-    position="absolute"
-    className={classNames(props.classes.appBar, props.expanded && props.classes.appBarShift)}
-  >
-    <Toolbar disableGutters={!props.expanded}>
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        onClick={props.openDrawer}
-        className={classNames(props.classes.menuButton, props.expanded && props.classes.hide)}
+  render() {
+    const {
+      classes,
+      expanded,
+      name,
+      openDrawer
+    } = this.props;
+    return (
+      <MenuBar
+        position="absolute"
+        className={classNames(classes.appBar, expanded && classes.appBarShift)}
       >
-        <MenuIcon />
-      </IconButton>
-      <Typography variant="title" color="inherit" noWrap>
-        {props.name}
-      </Typography>
-    </Toolbar>
-  </MenuBar>
-);
+        <Toolbar disableGutters={!expanded}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={openDrawer}
+            className={classNames(classes.menuButton, expanded && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="title" color="inherit" noWrap>
+            {name}
+          </Typography>
+        </Toolbar>
+      </MenuBar>
+    );
+  }
+}
 
-AppBar.propTypes = {
-  classes: PropTypes.shape({
-    appBar: PropTypes.string,
-    appBarShift: PropTypes.string,
-    menuButton: PropTypes.string,
-    hide: PropTypes.string
-  }).isRequired,
-  expanded: PropTypes.bool.isRequired,
-  openDrawer: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired
-};
-
-export default withStyles(styles, { withTheme: true })(AppBar);
+export default withStyles(AppBar.styles)(AppBar);

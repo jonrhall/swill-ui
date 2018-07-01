@@ -4,6 +4,7 @@
   "env": { "browser": true },
   "rules": {
     "comma-dangle": ["error", "never"],
+    "react/prefer-stateless-function": [0],
     "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ]
   },
   "extends": [ "airbnb", "plugin:react/recommended" ]

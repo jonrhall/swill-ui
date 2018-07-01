@@ -9,28 +9,41 @@ import deepOrange from '@material-ui/core/colors/deepOrange';
 import AppView from '../core/AppView';
 import { loadAppConfig } from '../actions';
 
-// Theme: https://goo.gl/2FQxdQ
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: lightBlue[800],
-      contrastText: '#fff'
-    },
-    secondary: {
-      main: deepOrange[400],
-      contrastText: '#fff'
-    }
-  }
-});
-
 class App extends React.Component {
+  static mapStateToProps = state => ({
+    appLoading: state.appState.loading
+  })
+
+  static mapDispatchToProps = dispatch => ({
+    loadAppConfig: () => dispatch(loadAppConfig())
+  })
+
+  static propTypes = {
+    appLoading: PropTypes.bool.isRequired,
+    loadAppConfig: PropTypes.func.isRequired
+  }
+
   async componentWillMount() {
     this.props.loadAppConfig();
   }
 
+  // Theme: https://goo.gl/2FQxdQ
+  theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: lightBlue[800],
+        contrastText: '#fff'
+      },
+      secondary: {
+        main: deepOrange[400],
+        contrastText: '#fff'
+      }
+    }
+  })
+
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={this.theme}>
         <React.Fragment>
           <CssBaseline />
           {this.props.appLoading ?
@@ -43,20 +56,7 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
-  appLoading: PropTypes.bool.isRequired,
-  loadAppConfig: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  appLoading: state.appState.loading
-});
-
-const mapDispatchToProps = dispatch => ({
-  loadAppConfig: () => dispatch(loadAppConfig())
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  App.mapStateToProps,
+  App.mapDispatchToProps
 )(App);

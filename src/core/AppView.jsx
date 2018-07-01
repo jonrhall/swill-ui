@@ -10,86 +10,97 @@ import { connectSdk, openMenu, closeMenu } from '../actions';
 import HomeView from '../components/HomeView';
 import HardwareView from '../components/HardwareView';
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'flex'
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3
+class AppView extends React.Component {
+  static styles = theme => ({
+    root: {
+      flexGrow: 1,
+      zIndex: 1,
+      overflow: 'hidden',
+      position: 'relative',
+      display: 'flex'
+    },
+    toolbar: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      padding: '0 8px',
+      ...theme.mixins.toolbar
+    },
+    content: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.default,
+      padding: theme.spacing.unit * 3
+    }
+  })
+
+  static mapStateToProps = state => ({
+    drawerExpanded: state.appState.menuOpen,
+    breweryName: state.appState.breweryName
+  })
+
+  static mapDispatchToProps = (dispatch) => {
+    connectSdk(dispatch);
+
+    return {
+      openDrawer: () => dispatch(openMenu()),
+      closeDrawer: () => dispatch(closeMenu())
+    };
   }
-});
 
-const AppView = props => (
-  <Router>
-    <div className={props.classes.root}>
-      <AppBar
-        expanded={props.drawerExpanded}
-        openDrawer={props.openDrawer}
-        name={props.breweryName}
-      />
-      <AppDrawer expanded={props.drawerExpanded} closeDrawer={props.closeDrawer} />
-      <main className={props.classes.content}>
-        <div className={props.classes.toolbar} />
-        <Route
-          exact
-          path="/"
-          render={() => <Redirect to="/brew" />}
-        />
-        <Route
-          exact
-          path="/brew"
-          component={HomeView}
-        />
-        <Route
-          exact
-          path="/hardware"
-          component={HardwareView}
-        />
-      </main>
-    </div>
-  </Router>
-);
+  static propTypes = {
+    classes: PropTypes.shape({
+      root: PropTypes.string,
+      content: PropTypes.string,
+      toolbar: PropTypes.string
+    }).isRequired,
+    drawerExpanded: PropTypes.bool.isRequired,
+    openDrawer: PropTypes.func.isRequired,
+    closeDrawer: PropTypes.func.isRequired,
+    breweryName: PropTypes.string.isRequired
+  }
 
-AppView.propTypes = {
-  classes: PropTypes.shape({
-    root: PropTypes.string,
-    content: PropTypes.string,
-    toolbar: PropTypes.string
-  }).isRequired,
-  drawerExpanded: PropTypes.bool.isRequired,
-  openDrawer: PropTypes.func.isRequired,
-  closeDrawer: PropTypes.func.isRequired,
-  breweryName: PropTypes.string.isRequired
-};
+  render() {
+    const {
+      breweryName,
+      classes,
+      closeDrawer,
+      drawerExpanded,
+      openDrawer
+    } = this.props;
+    return (
+      <Router>
+        <div className={classes.root}>
+          <AppBar
+            expanded={drawerExpanded}
+            openDrawer={openDrawer}
+            name={breweryName}
+          />
+          <AppDrawer expanded={drawerExpanded} closeDrawer={closeDrawer} />
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Route
+              exact
+              path="/"
+              render={() => <Redirect to="/brew" />}
+            />
+            <Route
+              exact
+              path="/brew"
+              component={HomeView}
+            />
+            <Route
+              exact
+              path="/hardware"
+              component={HardwareView}
+            />
+          </main>
+        </div>
+      </Router>
+    );
+  }
+}
 
-const mapStateToProps = state => ({
-  drawerExpanded: state.appState.menuOpen,
-  breweryName: state.appState.breweryName
-});
-
-const mapDispatchToProps = (dispatch) => {
-  connectSdk(dispatch);
-
-  return {
-    openDrawer: () => dispatch(openMenu()),
-    closeDrawer: () => dispatch(closeMenu())
-  };
-};
-
-export default withStyles(styles, { withTheme: true })(connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default withStyles(AppView.styles, { withTheme: true })(connect(
+  AppView.mapStateToProps,
+  AppView.mapDispatchToProps
 )(AppView));

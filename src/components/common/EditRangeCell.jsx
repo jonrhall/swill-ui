@@ -9,43 +9,61 @@ import { Typography } from '@material-ui/core';
 import Slider from '@material-ui/lab/Slider';
 import Grid from '@material-ui/core/Grid';
 
-const styles = theme => ({
-  menuContent: {
-    margin: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 10,
-    marginLeft: theme.spacing.unit * 3,
-    outline: 0,
-    width: '280px'
-  },
-  sliderInput: {
-    position: 'relative',
-    top: '4px'
-  },
-  textInput: {
-    width: '80px',
-    textAlign: 'center !important'
-  },
-  description: { marginTop: '10px' },
-  actionButtons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    margin: theme.spacing.unit,
-    marginRight: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit * 3,
-    outline: 0
-  },
-  button: {
-    fontWeight: 'bold'
-  },
-  textTransform: {
-    textTransform: 'none'
-  },
-  alignCenter: {
-    textAlign: 'center'
-  }
-});
-
 class EditRangeCell extends React.Component {
+  static styles = theme => ({
+    menuContent: {
+      margin: theme.spacing.unit * 2,
+      marginRight: theme.spacing.unit * 10,
+      marginLeft: theme.spacing.unit * 3,
+      outline: 0,
+      width: '280px'
+    },
+    sliderInput: {
+      position: 'relative',
+      top: '4px'
+    },
+    textInput: {
+      width: '80px',
+      textAlign: 'center !important'
+    },
+    description: { marginTop: theme.spacing.unit },
+    actionButtons: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      margin: theme.spacing.unit,
+      marginRight: theme.spacing.unit * 3,
+      marginLeft: theme.spacing.unit * 3,
+      outline: 0
+    },
+    button: {
+      fontWeight: 'bold'
+    },
+    textTransform: {
+      textTransform: 'none'
+    },
+    alignCenter: {
+      textAlign: 'center'
+    }
+  })
+
+  static propTypes = {
+    value: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
+    highRange: PropTypes.number.isRequired,
+    lowRange: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    classes: PropTypes.shape({
+      menuContent: PropTypes.string,
+      sliderInput: PropTypes.string,
+      textInput: PropTypes.string,
+      description: PropTypes.string,
+      actionButtons: PropTypes.string,
+      button: PropTypes.string,
+      textTransform: PropTypes.string,
+      alignCenter: PropTypes.string
+    }).isRequired
+  }
+
   state = {
     anchorEl: null,
     modalValue: this.props.value
@@ -159,22 +177,4 @@ class EditRangeCell extends React.Component {
   }
 }
 
-EditRangeCell.propTypes = {
-  value: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  highRange: PropTypes.number.isRequired,
-  lowRange: PropTypes.number.isRequired,
-  label: PropTypes.string.isRequired,
-  classes: PropTypes.shape({
-    menuContent: PropTypes.string,
-    sliderInput: PropTypes.string,
-    textInput: PropTypes.string,
-    description: PropTypes.string,
-    actionButtons: PropTypes.string,
-    button: PropTypes.string,
-    textTransform: PropTypes.string,
-    alignCenter: PropTypes.string
-  }).isRequired
-};
-
-export default withStyles(styles)(EditRangeCell);
+export default withStyles(EditRangeCell.styles)(EditRangeCell);

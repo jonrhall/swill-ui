@@ -7,30 +7,42 @@ import Menu from '@material-ui/core/Menu';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 
-const styles = theme => ({
-  menuContent: {
-    margin: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 10,
-    marginLeft: theme.spacing.unit * 3,
-    outline: 0
-  },
-  actionButtons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    margin: theme.spacing.unit,
-    marginRight: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit * 3,
-    outline: 0
-  },
-  button: {
-    fontWeight: 'bold'
-  },
-  textTransform: {
-    textTransform: 'none'
-  }
-});
-
 class EditTextCell extends React.Component {
+  static styles = theme => ({
+    menuContent: {
+      margin: theme.spacing.unit * 2,
+      marginRight: theme.spacing.unit * 10,
+      marginLeft: theme.spacing.unit * 3,
+      outline: 0
+    },
+    actionButtons: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      margin: theme.spacing.unit,
+      marginRight: theme.spacing.unit * 3,
+      marginLeft: theme.spacing.unit * 3,
+      outline: 0
+    },
+    button: {
+      fontWeight: 'bold'
+    },
+    textTransform: {
+      textTransform: 'none'
+    }
+  })
+
+  static propTypes = {
+    text: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+    classes: PropTypes.shape({
+      menuContent: PropTypes.string,
+      actionButtons: PropTypes.string,
+      button: PropTypes.string,
+      textTransform: PropTypes.string
+    }).isRequired
+  }
+
   state = {
     anchorEl: null,
     modalText: this.props.text
@@ -106,16 +118,4 @@ class EditTextCell extends React.Component {
   }
 }
 
-EditTextCell.propTypes = {
-  text: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-  classes: PropTypes.shape({
-    menuContent: PropTypes.string,
-    actionButtons: PropTypes.string,
-    button: PropTypes.string,
-    textTransform: PropTypes.string
-  }).isRequired
-};
-
-export default withStyles(styles)(EditTextCell);
+export default withStyles(EditTextCell.styles)(EditTextCell);

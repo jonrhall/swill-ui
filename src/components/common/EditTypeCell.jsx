@@ -19,7 +19,7 @@ class EditTypeCell extends React.Component {
       marginRight: theme.spacing.unit * 10,
       marginLeft: theme.spacing.unit * 3,
       outline: 0,
-      width: 360
+      width: 280
     },
     actionButtons: {
       display: 'flex',

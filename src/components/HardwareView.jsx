@@ -10,6 +10,31 @@ import ActorsConfigTable from './actors/ActorsConfigTable';
 import { getActors, getActorTypes } from '../actions';
 
 class HardwareView extends React.Component {
+  static mapStateToProps = state => ({
+    actorList: state.actors.actors,
+    actorTypes: state.actors.types,
+    loading: state.actors.loading
+  })
+
+  static mapDispatchToProps = dispatch => ({
+    getActors: () => dispatch(getActors()),
+    getActorTypes: () => dispatch(getActorTypes())
+  })
+
+  static propTypes = {
+    classes: PropTypes.shape({
+      button: PropTypes.string
+    }).isRequired,
+    loading: PropTypes.bool.isRequired,
+    actorList: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    })).isRequired,
+    actorTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    getActors: PropTypes.func.isRequired,
+    getActorTypes: PropTypes.func.isRequired
+  }
+
   static styles = theme => ({
     button: {
       marginLeft: theme.spacing.unit * 3,
@@ -57,32 +82,7 @@ class HardwareView extends React.Component {
   }
 }
 
-HardwareView.propTypes = {
-  classes: PropTypes.shape({
-    button: PropTypes.string
-  }).isRequired,
-  loading: PropTypes.bool.isRequired,
-  actorList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string
-  })).isRequired,
-  actorTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  getActors: PropTypes.func.isRequired,
-  getActorTypes: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  actorList: state.actors.actors,
-  actorTypes: state.actors.types,
-  loading: state.actors.loading
-});
-
-const mapDispatchToProps = dispatch => ({
-  getActors: () => dispatch(getActors()),
-  getActorTypes: () => dispatch(getActorTypes())
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  HardwareView.mapStateToProps,
+  HardwareView.mapDispatchToProps
 )(withStyles(HardwareView.styles)(HardwareView));

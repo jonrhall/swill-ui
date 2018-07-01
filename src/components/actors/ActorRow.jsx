@@ -16,15 +16,37 @@ import EditRangeCell from '../common/EditRangeCell';
 import ToggleSwitchCell from '../common/ToggleSwitchCell';
 import EditTypeCell from '../common/EditTypeCell';
 
-const styles = theme => ({
-  row: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default
-    }
-  }
-});
-
 class ActorRow extends React.Component {
+  static styles = theme => ({
+    row: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.background.default
+      }
+    }
+  })
+
+  static mapStateToProps = () => ({})
+
+  static mapDispatchToProps = dispatch => ({
+    editName: (actor, name) => dispatch(editActorName(actor, name)),
+    editType: (actor, type, config) => dispatch(editActorType(actor, type, config))
+  })
+
+  static propTypes = {
+    actor: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      state: PropTypes.number
+    }).isRequired,
+    // This is validated in a higher order component
+    types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    classes: PropTypes.shape({
+      row: PropTypes.string
+    }).isRequired,
+    editName: PropTypes.func.isRequired,
+    editType: PropTypes.func.isRequired
+  }
+
   toggleActor = () => {
     if (this.props.actor.state === 0) {
       switchActorOn(this.props.actor);
@@ -73,29 +95,7 @@ class ActorRow extends React.Component {
   }
 }
 
-ActorRow.propTypes = {
-  actor: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    state: PropTypes.number
-  }).isRequired,
-  // This is validated in a higher order component
-  types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  classes: PropTypes.shape({
-    row: PropTypes.string
-  }).isRequired,
-  editName: PropTypes.func.isRequired,
-  editType: PropTypes.func.isRequired
-};
-
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = dispatch => ({
-  editName: (actor, name) => dispatch(editActorName(actor, name)),
-  editType: (actor, type, config) => dispatch(editActorType(actor, type, config))
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(ActorRow));
+  ActorRow.mapStateToProps,
+  ActorRow.mapDispatchToProps
+)(withStyles(ActorRow.styles)(ActorRow));
