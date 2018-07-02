@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import ActorsConfigTable from './actors/ActorsConfigTable';
-import { getActors, getActorTypes } from '../actions';
+import { getActors, getActorTypes, createActor } from '../actions';
 import PageHeader from './common/PageHeader';
 
 class HardwareView extends React.Component {
@@ -16,7 +16,8 @@ class HardwareView extends React.Component {
 
   static mapDispatchToProps = dispatch => ({
     getActors: () => dispatch(getActors()),
-    getActorTypes: () => dispatch(getActorTypes())
+    getActorTypes: () => dispatch(getActorTypes()),
+    createActor: () => dispatch(createActor())
   })
 
   static styles = theme => ({
@@ -36,7 +37,8 @@ class HardwareView extends React.Component {
     })).isRequired,
     actorTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     getActors: PropTypes.func.isRequired,
-    getActorTypes: PropTypes.func.isRequired
+    getActorTypes: PropTypes.func.isRequired,
+    createActor: PropTypes.func.isRequired
   }
 
   async componentWillMount() {
@@ -60,7 +62,11 @@ class HardwareView extends React.Component {
       <div className={classes.margin}>
         <PageHeader text="Hardware" />
         {!loading && actorTypes.length > 0 ?
-          <ActorsConfigTable list={actorList} types={actorTypes} /> :
+          <ActorsConfigTable
+            list={actorList}
+            types={actorTypes}
+            addActor={this.props.createActor}
+          /> :
           'Loading...'}
       </div>
     );

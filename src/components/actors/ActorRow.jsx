@@ -9,12 +9,14 @@ import {
   switchActorOn,
   editActorName,
   editActorPower,
-  editActorType
+  editActorType,
+  removeActor
 } from '../../actions';
 import EditTextCell from '../common/EditTextCell';
 import EditRangeCell from '../common/EditRangeCell';
 import ToggleSwitchCell from '../common/ToggleSwitchCell';
 import EditTypeCell from '../common/EditTypeCell';
+import RemoveResourceCell from '../common/RemoveResourceCell';
 
 class ActorRow extends React.Component {
   static styles = theme => ({
@@ -29,7 +31,8 @@ class ActorRow extends React.Component {
 
   static mapDispatchToProps = dispatch => ({
     editName: (actor, name) => dispatch(editActorName(actor, name)),
-    editType: (actor, type, config) => dispatch(editActorType(actor, type, config))
+    editType: (actor, type, config) => dispatch(editActorType(actor, type, config)),
+    removeActor: actor => dispatch(removeActor(actor))
   })
 
   static propTypes = {
@@ -44,7 +47,8 @@ class ActorRow extends React.Component {
       row: PropTypes.string
     }).isRequired,
     editName: PropTypes.func.isRequired,
-    editType: PropTypes.func.isRequired
+    editType: PropTypes.func.isRequired,
+    removeActor: PropTypes.func.isRequired
   }
 
   toggleActor = () => {
@@ -89,6 +93,9 @@ class ActorRow extends React.Component {
           options={types}
           onChange={this.editField(editType)}
           label="Choose a type for the actor."
+        />
+        <RemoveResourceCell
+          onClick={this.editField(this.props.removeActor)}
         />
       </TableRow>
     );

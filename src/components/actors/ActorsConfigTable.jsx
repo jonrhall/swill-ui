@@ -40,17 +40,23 @@ class ActorsConfigTable extends React.Component {
         name: PropTypes.string,
         type: PropTypes.string
       }))
-    })).isRequired
+    })).isRequired,
+    addActor: PropTypes.func.isRequired
   }
 
   render() {
-    const { classes, list, types } = this.props;
+    const {
+      addActor,
+      classes,
+      list,
+      types
+    } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Actors" />
+        <TableTitle text="Actors" addAction={addActor} />
         <Paper className={classes.root}>
           <Table>
-            <TableHeader columns={['Name', 'On/Off', 'Power %', 'Type']} />
+            <TableHeader columns={['Name', 'On/Off', 'Power %', 'Type', 'Remove']} />
             <TableBody>
               {list.map(instance => (
                 <ActorRow key={instance.id} actor={instance} types={types} />

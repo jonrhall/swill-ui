@@ -47,6 +47,21 @@ export function actorUpdate(actor) {
   };
 }
 
+export function createActor() {
+  return {
+    type: 'CREATE_ACTOR',
+    payload: sdk.resources.actors.createActor()
+  };
+}
+
+export function removeActor(actor) {
+  return {
+    type: 'REMOVE_ACTOR',
+    id: actor.id,
+    payload: sdk.resources.actors.deleteActor(actor)
+  };
+}
+
 export function loadAppConfig() {
   return {
     type: 'LOAD_APP_CONFIG',

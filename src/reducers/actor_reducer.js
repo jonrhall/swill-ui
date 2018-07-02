@@ -31,6 +31,14 @@ const actorReducer = (state = initialActorState, action) => {
       return Object.assign({}, state, {
         types: action.payload
       });
+    case 'CREATE_ACTOR_FULFILLED':
+      return Object.assign({}, state, {
+        actors: [...state.actors, action.payload]
+      });
+    case 'REMOVE_ACTOR_FULFILLED':
+      return Object.assign({}, state, {
+        actors: state.actors.filter(actor => actor.id !== action.payload.id)
+      });
     case 'EDIT_ACTOR_NAME_FULFILLED':
     case 'EDIT_ACTOR_TYPE_FULFILLED':
       return updateActorList(action.payload, state);

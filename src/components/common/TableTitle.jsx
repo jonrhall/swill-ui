@@ -24,15 +24,16 @@ class TableTitle extends React.Component {
       button: PropTypes.string,
       icon: PropTypes.string
     }).isRequired,
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
+    addAction: PropTypes.func.isRequired
   }
 
   render() {
-    const { classes, text } = this.props;
+    const { addAction, classes, text } = this.props;
     return (
       <div>
         <Typography variant="display1" gutterBottom style={{ display: 'inline-block' }}>{text}</Typography>
-        <Button variant="outlined" size="small" className={classes.button}>
+        <Button variant="outlined" size="small" className={classes.button} onClick={addAction}>
           <AddIcon className={classes.icon} />
           <Typography variant="button" color="textSecondary">Add</Typography>
         </Button>
