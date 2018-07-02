@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import ActorRow from './ActorRow';
+import TableHeader from '../common/TableHeader';
+import TableTitle from '../common/TableTitle';
 
 class ActorsConfigTable extends React.Component {
   static styles = theme => ({
@@ -20,19 +19,13 @@ class ActorsConfigTable extends React.Component {
       '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.background.default
       }
-    },
-    head: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      fontWeight: 'bold'
     }
   })
 
   static propTypes = {
     classes: PropTypes.shape({
       root: PropTypes.string,
-      table: PropTypes.string,
-      head: PropTypes.string
+      table: PropTypes.string
     }).isRequired,
     list: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
@@ -54,15 +47,10 @@ class ActorsConfigTable extends React.Component {
     const { classes, list, types } = this.props;
     return (
       <React.Fragment>
+        <TableTitle text="Actors" />
         <Paper className={classes.root}>
           <Table>
-            <TableHead>
-              <TableRow>
-                {['Name', 'On/Off', 'Power %', 'Type'].map(title => (
-                  <TableCell className={classes.head} key={title}>{title}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+            <TableHeader columns={['Name', 'On/Off', 'Power %', 'Type']} />
             <TableBody>
               {list.map(instance => (
                 <ActorRow key={instance.id} actor={instance} types={types} />

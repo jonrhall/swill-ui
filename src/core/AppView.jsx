@@ -34,7 +34,10 @@ class AppView extends React.Component {
       position: 'absolute',
       overflow: 'auto',
       height: 'calc(100% - 64px)',
-      width: 'calc(100% - 72px)'
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen
+      })
     }
   })
 
@@ -84,7 +87,7 @@ class AppView extends React.Component {
           <AppDrawer expanded={drawerExpanded} closeDrawer={closeDrawer} />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <div className={classes.routes}>
+            <div className={classes.routes} style={{ width: drawerExpanded ? 'calc(100% - 240px)' : 'calc(100% - 72px)' }}>
               <Route
                 exact
                 path="/"

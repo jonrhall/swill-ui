@@ -2,12 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 
 import ActorsConfigTable from './actors/ActorsConfigTable';
 import { getActors, getActorTypes } from '../actions';
+import PageHeader from './common/PageHeader';
 
 class HardwareView extends React.Component {
   static mapStateToProps = state => ({
@@ -22,16 +20,6 @@ class HardwareView extends React.Component {
   })
 
   static styles = theme => ({
-    button: {
-      marginLeft: theme.spacing.unit * 3,
-      marginBottom: theme.spacing.unit * 2,
-      paddingTop: '2px',
-      paddingBottom: '2px',
-      color: theme.palette.secondary.main
-    },
-    icon: {
-      marginRight: theme.spacing.unit
-    },
     margin: {
       margin: theme.spacing.unit * 2
     }
@@ -39,8 +27,6 @@ class HardwareView extends React.Component {
 
   static propTypes = {
     classes: PropTypes.shape({
-      button: PropTypes.string,
-      icon: PropTypes.string,
       margin: PropTypes.string
     }).isRequired,
     loading: PropTypes.bool.isRequired,
@@ -72,33 +58,9 @@ class HardwareView extends React.Component {
     } = this.props;
     return (
       <div className={classes.margin}>
-        <Typography variant="button" gutterBottom style={{ fontWeight: 'bold', marginBottom: 16 }}>
-          Hardware &#x25B8;
-        </Typography>
-        <div>
-          <Typography variant="display1" gutterBottom style={{ display: 'inline-block' }}>Actors</Typography>
-          <Button variant="outlined" size="small" className={classes.button}>
-            <AddIcon className={classes.icon} />
-            <Typography variant="button" color="textSecondary">Add</Typography>
-          </Button>
-        </div>
+        <PageHeader text="Hardware" />
         {!loading && actorTypes.length > 0 ?
-          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
-          'Loading...'}
-        {!loading && actorTypes.length > 0 ?
-          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
-          'Loading...'}
-        {!loading && actorTypes.length > 0 ?
-          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
-          'Loading...'}
-        {!loading && actorTypes.length > 0 ?
-          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
-          'Loading...'}
-        {!loading && actorTypes.length > 0 ?
-          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
-          'Loading...'}
-        {!loading && actorTypes.length > 0 ?
-          <ActorsConfigTable resource="Actors" list={actorList} types={actorTypes} /> :
+          <ActorsConfigTable list={actorList} types={actorTypes} /> :
           'Loading...'}
       </div>
     );
