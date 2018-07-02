@@ -7,8 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from './AppBar';
 import AppDrawer from './AppDrawer';
 import { connectSdk, openMenu, closeMenu } from '../actions';
-import HomeView from '../components/HomeView';
-import HardwareView from '../components/HardwareView';
+import Views from '../components/views';
 
 class AppView extends React.Component {
   static styles = theme => ({
@@ -68,6 +67,16 @@ class AppView extends React.Component {
     breweryName: PropTypes.string.isRequired
   }
 
+  static routes = [
+    { path: '/addons', component: Views.AddOnsView },
+    { path: '/brew', component: Views.BrewView },
+    { path: '/dashboard', component: Views.DashboardView },
+    { path: '/ferment', component: Views.FermentView },
+    { path: '/hardware', component: Views.HardwareView },
+    { path: '/logs', component: Views.LogsView },
+    { path: '/system', component: Views.SystemView }
+  ]
+
   render() {
     const {
       breweryName,
@@ -93,16 +102,14 @@ class AppView extends React.Component {
                 path="/"
                 render={() => <Redirect to="/brew" />}
               />
-              <Route
-                exact
-                path="/brew"
-                component={HomeView}
-              />
-              <Route
-                exact
-                path="/hardware"
-                component={HardwareView}
-              />
+              {this.constructor.routes.map(({ path, component }) => (
+                <Route
+                  exact
+                  path={path}
+                  component={component}
+                  key={path}
+                />
+              ))}
             </div>
           </main>
         </div>

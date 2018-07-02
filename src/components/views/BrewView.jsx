@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import PageHeader from './common/PageHeader';
+
+import PageHeader from '../common/PageHeader';
 
 class HomeView extends React.Component {
   static styles = theme => ({

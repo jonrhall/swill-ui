@@ -4,9 +4,9 @@ const initialActorState = {
   types: []
 };
 
+// Update an actor in the actors list
 const updateActorList = (newActor, state) =>
   Object.assign({}, state, {
-    // Update the actor in the actors list
     actors: state.actors.map((actor) => {
       if (newActor.id === actor.id) {
         return newActor;
@@ -16,7 +16,6 @@ const updateActorList = (newActor, state) =>
   });
 
 const actorReducer = (state = initialActorState, action) => {
-  // let foo;
   switch (action.type) {
     case 'GET_ACTORS_PENDING':
       return Object.assign({}, state, {

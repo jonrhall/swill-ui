@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import ActorsConfigTable from './actors/ActorsConfigTable';
-import { getActors, getActorTypes, createActor } from '../actions';
-import PageHeader from './common/PageHeader';
+import ActorsConfigTable from '../actors/ActorsConfigTable';
+import { getActors, getActorTypes, createActor } from '../../actions';
+import PageHeader from '../common/PageHeader';
 
 class HardwareView extends React.Component {
   static mapStateToProps = state => ({
