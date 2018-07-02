@@ -13,16 +13,12 @@ class TableTitle extends React.Component {
       paddingTop: '2px',
       paddingBottom: '2px',
       color: theme.palette.secondary.main
-    },
-    icon: {
-      marginRight: theme.spacing.unit
     }
   });
 
   static propTypes = {
     classes: PropTypes.shape({
-      button: PropTypes.string,
-      icon: PropTypes.string
+      button: PropTypes.string
     }).isRequired,
     text: PropTypes.string.isRequired,
     addAction: PropTypes.func.isRequired
@@ -34,8 +30,7 @@ class TableTitle extends React.Component {
       <div>
         <Typography variant="display1" gutterBottom style={{ display: 'inline-block' }}>{text}</Typography>
         <Button variant="outlined" size="small" className={classes.button} onClick={addAction}>
-          <AddIcon className={classes.icon} />
-          <Typography variant="button" color="textSecondary">Add</Typography>
+          <AddIcon />
         </Button>
       </div>
     );

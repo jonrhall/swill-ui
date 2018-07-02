@@ -62,6 +62,49 @@ export function removeActor(actor) {
   };
 }
 
+export function getKettles() {
+  return {
+    type: 'GET_KETTLES',
+    payload: sdk.resources.kettles.getKettles()
+  };
+}
+
+export function getKettleTypes() {
+  return {
+    type: 'GET_KETTLE_TYPES',
+    payload: sdk.resources.kettles.getKettleTypes()
+  };
+}
+
+export function editKettleName(kettle, name) {
+  return {
+    type: 'EDIT_KETTLE_NAME',
+    payload: sdk.resources.kettles.modifyKettle({ ...kettle, name })
+  };
+}
+
+export function kettleUpdate(kettle) {
+  return {
+    type: 'KETTLE_UPDATE',
+    kettle
+  };
+}
+
+export function createKettle() {
+  return {
+    type: 'CREATE_KETTLE',
+    payload: sdk.resources.kettles.createKettle()
+  };
+}
+
+export function removeKettle(kettle) {
+  return {
+    type: 'REMOVE_KETTLE',
+    id: kettle.id,
+    payload: sdk.resources.kettles.deleteKettle(kettle)
+  };
+}
+
 export function loadAppConfig() {
   return {
     type: 'LOAD_APP_CONFIG',
