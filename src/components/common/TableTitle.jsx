@@ -9,10 +9,7 @@ class TableTitle extends React.Component {
   static styles = theme => ({
     button: {
       marginLeft: theme.spacing.unit * 3,
-      marginBottom: theme.spacing.unit * 2,
-      paddingTop: '2px',
-      paddingBottom: '2px',
-      color: theme.palette.secondary.main
+      marginBottom: theme.spacing.unit * 2
     }
   });
 
@@ -29,7 +26,7 @@ class TableTitle extends React.Component {
     return (
       <div>
         <Typography variant="display1" gutterBottom style={{ display: 'inline-block' }}>{text}</Typography>
-        <Button variant="outlined" size="small" className={classes.button} onClick={addAction}>
+        <Button variant="fab" mini color="secondary" className={classes.button} onClick={addAction}>
           <AddIcon />
         </Button>
       </div>

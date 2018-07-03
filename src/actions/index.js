@@ -76,6 +76,14 @@ export function getKettleTypes() {
   };
 }
 
+export async function switchKettleOff(kettle) {
+  return sdk.resources.kettles.modifyKettle({ ...kettle, state: false });
+}
+
+export async function switchKettleOn(kettle) {
+  return sdk.resources.kettles.modifyKettle({ ...kettle, state: true });
+}
+
 export function editKettleName(kettle, name) {
   return {
     type: 'EDIT_KETTLE_NAME',
@@ -128,6 +136,12 @@ export function connectSdk(dispatch) {
   sdk.resources.actors.onUpdate((event, actor) => {
     if (event === 'SWITCH_ACTOR') {
       dispatch(actorUpdate(actor));
+    }
+  });
+
+  sdk.resources.kettles.onUpdate((event, kettle) => {
+    if (event === 'UPDATE_KETTLE') {
+      dispatch(kettleUpdate(kettle));
     }
   });
 }

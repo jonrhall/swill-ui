@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
 
-import { editKettleName } from '../../actions';
+import { switchKettleOn, switchKettleOff, editKettleName, removeKettle } from '../../actions';
 import EditTextCell from '../common/EditTextCell';
+import RemoveResourceCell from '../common/RemoveResourceCell';
+import ToggleSwitchCell from '../common/ToggleSwitchCell';
 
 class KettleRow extends React.Component {
   static styles = theme => ({
@@ -19,18 +21,29 @@ class KettleRow extends React.Component {
   static mapStateToProps = () => ({})
 
   static mapDispatchToProps = dispatch => ({
-    editName: (kettle, name) => dispatch(editKettleName(kettle, name))
+    editName: (kettle, name) => dispatch(editKettleName(kettle, name)),
+    removeKettle: kettle => dispatch(removeKettle(kettle))
   })
 
   static propTypes = {
     kettle: PropTypes.shape({
       id: PropTypes.number,
-      name: PropTypes.string
+      name: PropTypes.string,
+      state: PropTypes.bool
     }).isRequired,
     classes: PropTypes.shape({
       row: PropTypes.string
     }).isRequired,
-    editName: PropTypes.func.isRequired
+    editName: PropTypes.func.isRequired,
+    removeKettle: PropTypes.func.isRequired
+  }
+
+  toggleKettle = () => {
+    if (this.props.kettle.state === false) {
+      switchKettleOn(this.props.kettle);
+    } else {
+      switchKettleOff(this.props.kettle);
+    }
   }
 
   editField = func => (...props) => func(this.props.kettle, ...props);
@@ -47,6 +60,13 @@ class KettleRow extends React.Component {
           text={kettle.name}
           onChange={this.editField(editName)}
           label="Enter a name for the kettle."
+        />
+        <ToggleSwitchCell
+          checked={kettle.state}
+          onChange={this.toggleKettle}
+        />
+        <RemoveResourceCell
+          onClick={this.editField(this.props.removeKettle)}
         />
       </TableRow>
     );
