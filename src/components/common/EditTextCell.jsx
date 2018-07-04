@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import TextField from '@material-ui/core/TextField';
-import { Typography } from '@material-ui/core';
+
+import MenuActionButtons from './MenuActionButtons';
+import TableCellButton from './TableCellButton';
 
 class EditTextCell extends React.Component {
   static styles = theme => ({
@@ -14,20 +15,6 @@ class EditTextCell extends React.Component {
       marginRight: theme.spacing.unit * 10,
       marginLeft: theme.spacing.unit * 3,
       outline: 0
-    },
-    actionButtons: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      margin: theme.spacing.unit,
-      marginRight: theme.spacing.unit * 3,
-      marginLeft: theme.spacing.unit * 3,
-      outline: 0
-    },
-    button: {
-      fontWeight: 'bold'
-    },
-    textTransform: {
-      textTransform: 'none'
     }
   })
 
@@ -36,10 +23,7 @@ class EditTextCell extends React.Component {
     onChange: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
     classes: PropTypes.shape({
-      menuContent: PropTypes.string,
-      actionButtons: PropTypes.string,
-      button: PropTypes.string,
-      textTransform: PropTypes.string
+      menuContent: PropTypes.string
     }).isRequired
   }
 
@@ -81,15 +65,14 @@ class EditTextCell extends React.Component {
 
     return (
       <TableCell>
-        <Button
-          aria-owns={anchorEl ? 'simple-menu' : null}
-          aria-haspopup="true"
+        <TableCellButton
+          anchor={!!anchorEl}
+          buttonText={this.props.text}
           onClick={this.handleOpen}
-        >
-          <Typography className={this.props.classes.textTransform}>{this.props.text}</Typography>
-        </Button>
+          menuName="edit-text-menu"
+        />
         <Menu
-          id="simple-menu"
+          id="edit-text-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
@@ -103,15 +86,7 @@ class EditTextCell extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className={this.props.classes.actionButtons}>
-            <Button
-              color="secondary"
-              className={this.props.classes.button}
-              onClick={this.saveChange}
-            >
-              Save
-            </Button>
-          </div>
+          <MenuActionButtons onSave={this.saveChange} />
         </Menu>
       </TableCell>
     );

@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Typography } from '@material-ui/core';
+
+import MenuActionButtons from './MenuActionButtons';
+import TableCellButton from './TableCellButton';
 
 class SelectResourceCell extends React.Component {
   static style = theme => ({
@@ -30,9 +31,6 @@ class SelectResourceCell extends React.Component {
     },
     button: {
       fontWeight: 'bold'
-    },
-    textTransform: {
-      textTransform: 'none'
     }
   })
 
@@ -40,8 +38,7 @@ class SelectResourceCell extends React.Component {
     classes: PropTypes.shape({
       menuContent: PropTypes.string,
       actionButtons: PropTypes.string,
-      button: PropTypes.string,
-      textTransform: PropTypes.string
+      button: PropTypes.string
     }).isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
@@ -107,15 +104,14 @@ class SelectResourceCell extends React.Component {
     } = this.state;
     return (
       <TableCell>
-        <Button
-          aria-owns={anchorEl ? 'simple-menu' : null}
-          aria-haspopup="true"
+        <TableCellButton
+          anchor={!!anchorEl}
+          buttonText={buttonText}
           onClick={this.handleOpen}
-        >
-          <Typography className={classes.textTransform}>{buttonText}</Typography>
-        </Button>
+          menuName="select-resource-menu"
+        />
         <Menu
-          id="simple-menu"
+          id="select-resource-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
@@ -139,15 +135,7 @@ class SelectResourceCell extends React.Component {
             </Select>
             <FormHelperText>{label}</FormHelperText>
           </FormControl>
-          <div className={classes.actionButtons}>
-            <Button
-              color="secondary"
-              className={classes.button}
-              onClick={this.saveChange}
-            >
-              Save
-            </Button>
-          </div>
+          <MenuActionButtons onSave={this.saveChange} />
         </Menu>
       </TableCell>
     );

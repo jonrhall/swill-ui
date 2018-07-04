@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import Slider from '@material-ui/lab/Slider';
 import Grid from '@material-ui/core/Grid';
+
+import MenuActionButtons from './MenuActionButtons';
+import TableCellButton from './TableCellButton';
 
 class EditRangeCell extends React.Component {
   static styles = theme => ({
@@ -27,20 +29,6 @@ class EditRangeCell extends React.Component {
       textAlign: 'center !important'
     },
     description: { marginTop: theme.spacing.unit },
-    actionButtons: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      margin: theme.spacing.unit,
-      marginRight: theme.spacing.unit * 3,
-      marginLeft: theme.spacing.unit * 3,
-      outline: 0
-    },
-    button: {
-      fontWeight: 'bold'
-    },
-    textTransform: {
-      textTransform: 'none'
-    },
     alignCenter: {
       textAlign: 'center'
     }
@@ -57,9 +45,6 @@ class EditRangeCell extends React.Component {
       sliderInput: PropTypes.string,
       textInput: PropTypes.string,
       description: PropTypes.string,
-      actionButtons: PropTypes.string,
-      button: PropTypes.string,
-      textTransform: PropTypes.string,
       alignCenter: PropTypes.string
     }).isRequired
   }
@@ -110,36 +95,42 @@ class EditRangeCell extends React.Component {
   };
 
   render() {
-    const { anchorEl, modalValue } = this.state;
-
+    const {
+      anchorEl,
+      modalValue
+    } = this.state;
+    const {
+      classes,
+      lowRange,
+      highRange,
+      value,
+      label
+    } = this.props;
     return (
       <TableCell>
-        <Button
-          aria-owns={anchorEl ? 'simple-menu' : null}
-          aria-haspopup="true"
+        <TableCellButton
+          anchor={!!anchorEl}
+          buttonText={value.toString()}
           onClick={this.handleOpen}
-        >
-          <Typography className={this.props.classes.textTransform}>
-            {this.props.value}
-          </Typography>
-        </Button>
+          menuName="edit-range-cell"
+        />
         <Menu
-          id="simple-menu"
+          id="edit-range-cell"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <div className={this.props.classes.menuContent}>
+          <div className={classes.menuContent}>
             <Typography id="range-label" variant="caption">Edit range</Typography>
             <Grid container spacing={24}>
               <Grid item xs={8}>
                 <Slider
                   value={modalValue}
-                  min={this.props.lowRange}
-                  max={this.props.highRange}
+                  min={lowRange}
+                  max={highRange}
                   step={1}
                   aria-labelledby="range-label"
-                  onChange={(e, val) => this.setState({ modalValue: val })}
+                  onChange={this.handleSliderChange}
                   style={{ position: 'relative', top: '4px' }}
                 />
               </Grid>
@@ -150,27 +141,19 @@ class EditRangeCell extends React.Component {
                   margin="dense"
                   value={modalValue}
                   onChange={this.handleChange}
-                  className={this.props.classes.textInput}
-                  inputProps={{ className: this.props.classes.alignCenter }}
+                  className={classes.textInput}
+                  inputProps={{ className: classes.alignCenter }}
                 />
               </Grid>
             </Grid>
             <Typography
               variant="caption"
-              className={this.props.classes.description}
+              className={classes.description}
             >
-              {this.props.label}
+              {label}
             </Typography>
           </div>
-          <div className={this.props.classes.actionButtons}>
-            <Button
-              color="secondary"
-              className={this.props.classes.button}
-              onClick={this.saveChange}
-            >
-              Save
-            </Button>
-          </div>
+          <MenuActionButtons onSave={this.saveChange} />
         </Menu>
       </TableCell>
     );
