@@ -39,6 +39,8 @@ const kettleReducer = (state = initialKettleState, action) => {
         kettles: state.kettles.filter(kettle => kettle.id !== action.payload.id)
       });
     case 'EDIT_KETTLE_NAME_FULFILLED':
+    case 'EDIT_KETTLE_AGITATOR_FULFILLED':
+    case 'EDIT_KETTLE_HEATER_FULFILLED':
     case 'EDIT_KETTLE_TYPE_FULFILLED':
       return updateKettleList(action.payload, state);
     case 'KETTLE_UPDATE':

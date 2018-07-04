@@ -29,6 +29,20 @@ export function editKettleName(kettle, name) {
   };
 }
 
+export function editKettleAgitator(kettle, agitator) {
+  return {
+    type: 'EDIT_KETTLE_AGITATOR',
+    payload: sdk.resources.kettles.modifyKettle({ ...kettle, agitator })
+  };
+}
+
+export function editKettleHeater(kettle, heater) {
+  return {
+    type: 'EDIT_KETTLE_HEATER',
+    payload: sdk.resources.kettles.modifyKettle({ ...kettle, heater })
+  };
+}
+
 export function kettleUpdate(kettle) {
   return {
     type: 'KETTLE_UPDATE',
