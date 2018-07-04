@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import Paper from '@material-ui/core/Paper';
 
+import { getActors, getActorTypes, createActor } from '../../actions/actors';
 import ActorRow from './ActorRow';
 import TableHeader from '../common/TableHeader';
 import TableTitle from '../common/TableTitle';
@@ -22,16 +24,27 @@ class ActorsConfigTable extends React.Component {
     }
   })
 
+  static mapStateToProps = state => ({
+    actorList: state.actors.actors,
+    actorTypes: state.actors.types
+  })
+
+  static mapDispatchToProps = dispatch => ({
+    getActors: () => dispatch(getActors()),
+    getActorTypes: () => dispatch(getActorTypes()),
+    addActor: () => dispatch(createActor())
+  })
+
   static propTypes = {
     classes: PropTypes.shape({
       root: PropTypes.string,
       table: PropTypes.string
     }).isRequired,
-    list: PropTypes.arrayOf(PropTypes.shape({
+    actorList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     })).isRequired,
-    types: PropTypes.arrayOf(PropTypes.shape({
+    actorTypes: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       properties: PropTypes.arrayOf(PropTypes.shape({
         configurable: PropTypes.bool,
@@ -41,15 +54,27 @@ class ActorsConfigTable extends React.Component {
         type: PropTypes.string
       }))
     })).isRequired,
+    getActors: PropTypes.func.isRequired,
+    getActorTypes: PropTypes.func.isRequired,
     addActor: PropTypes.func.isRequired
+  }
+
+  componentWillMount() {
+    if (this.props.actorList.length < 1) {
+      this.props.getActors();
+    }
+
+    if (this.props.actorTypes.length < 1) {
+      this.props.getActorTypes();
+    }
   }
 
   render() {
     const {
       addActor,
       classes,
-      list,
-      types
+      actorList,
+      actorTypes
     } = this.props;
     return (
       <React.Fragment>
@@ -58,8 +83,8 @@ class ActorsConfigTable extends React.Component {
           <Table>
             <TableHeader columns={['Name', 'On/Off', 'Power %', 'Type', 'Remove']} />
             <TableBody>
-              {list.map(instance => (
-                <ActorRow key={instance.id} actor={instance} types={types} />
+              {actorList.map(actor => (
+                <ActorRow key={actor.id} actor={actor} types={actorTypes} />
               ))}
             </TableBody>
           </Table>
@@ -69,4 +94,7 @@ class ActorsConfigTable extends React.Component {
   }
 }
 
-export default withStyles(ActorsConfigTable.styles)(ActorsConfigTable);
+export default connect(
+  ActorsConfigTable.mapStateToProps,
+  ActorsConfigTable.mapDispatchToProps
+)(withStyles(ActorsConfigTable.styles)(ActorsConfigTable));

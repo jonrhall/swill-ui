@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import Paper from '@material-ui/core/Paper';
 
+import { getKettles, getKettleTypes, createKettle } from '../../actions/kettles';
 import KettleRow from './KettleRow';
 import TableHeader from '../common/TableHeader';
 import TableTitle from '../common/TableTitle';
@@ -22,16 +24,27 @@ class KettlesConfigTable extends React.Component {
     }
   })
 
+  static mapStateToProps = state => ({
+    kettleList: state.kettles.kettles,
+    kettleTypes: state.kettles.types
+  })
+
+  static mapDispatchToProps = dispatch => ({
+    getKettles: () => dispatch(getKettles()),
+    getKettleTypes: () => dispatch(getKettleTypes()),
+    addKettle: () => dispatch(createKettle())
+  })
+
   static propTypes = {
     classes: PropTypes.shape({
       root: PropTypes.string,
       table: PropTypes.string
     }).isRequired,
-    list: PropTypes.arrayOf(PropTypes.shape({
+    kettleList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     })).isRequired,
-    types: PropTypes.arrayOf(PropTypes.shape({
+    kettleTypes: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       properties: PropTypes.arrayOf(PropTypes.shape({
         configurable: PropTypes.bool,
@@ -41,15 +54,27 @@ class KettlesConfigTable extends React.Component {
         type: PropTypes.string
       }))
     })).isRequired,
+    getKettles: PropTypes.func.isRequired,
+    getKettleTypes: PropTypes.func.isRequired,
     addKettle: PropTypes.func.isRequired
+  }
+
+  componentWillMount() {
+    if (this.props.kettleList.length < 1) {
+      this.props.getKettles();
+    }
+
+    if (this.props.kettleTypes.length < 1) {
+      this.props.getKettleTypes();
+    }
   }
 
   render() {
     const {
       addKettle,
       classes,
-      list,
-      types
+      kettleList,
+      kettleTypes
     } = this.props;
     return (
       <React.Fragment>
@@ -58,8 +83,8 @@ class KettlesConfigTable extends React.Component {
           <Table>
             <TableHeader columns={['Name', 'Auto', 'Remove']} />
             <TableBody>
-              {list.map(kettle => (
-                <KettleRow key={kettle.id} kettle={kettle} types={types} />
+              {kettleList.map(kettle => (
+                <KettleRow key={kettle.id} kettle={kettle} types={kettleTypes} />
               ))}
             </TableBody>
           </Table>
@@ -69,4 +94,7 @@ class KettlesConfigTable extends React.Component {
   }
 }
 
-export default withStyles(KettlesConfigTable.styles)(KettlesConfigTable);
+export default connect(
+  KettlesConfigTable.mapStateToProps,
+  KettlesConfigTable.mapDispatchToProps
+)(withStyles(KettlesConfigTable.styles)(KettlesConfigTable));
