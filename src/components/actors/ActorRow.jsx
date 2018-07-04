@@ -11,7 +11,7 @@ import {
   editActorPower,
   editActorType,
   removeActor
-} from '../../actions';
+} from '../../actions/actors';
 import EditTextCell from '../common/EditTextCell';
 import EditRangeCell from '../common/EditRangeCell';
 import ToggleSwitchCell from '../common/ToggleSwitchCell';

@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
 
-import { switchKettleOn, switchKettleOff, editKettleName, removeKettle } from '../../actions';
+import {
+  switchKettleOn,
+  switchKettleOff,
+  editKettleName,
+  removeKettle
+} from '../../actions/kettles';
 import EditTextCell from '../common/EditTextCell';
 import RemoveResourceCell from '../common/RemoveResourceCell';
 import ToggleSwitchCell from '../common/ToggleSwitchCell';

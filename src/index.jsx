@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import 'typeface-roboto';
+
 import App from './core/App';
 import store from './core/store';
 

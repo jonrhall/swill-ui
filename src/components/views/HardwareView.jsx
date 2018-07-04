@@ -3,14 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import {
-  getActors,
-  getActorTypes,
-  createActor,
-  getKettles,
-  getKettleTypes,
-  createKettle
-} from '../../actions';
+import actions from '../../actions';
 import PageHeader from '../common/PageHeader';
 import ActorsConfigTable from '../actors/ActorsConfigTable';
 import KettlesConfigTable from '../kettles/KettlesConfigTable';
@@ -25,12 +18,12 @@ class HardwareView extends React.Component {
   })
 
   static mapDispatchToProps = dispatch => ({
-    getActors: () => dispatch(getActors()),
-    getActorTypes: () => dispatch(getActorTypes()),
-    createActor: () => dispatch(createActor()),
-    getKettles: () => dispatch(getKettles()),
-    getKettleTypes: () => dispatch(getKettleTypes()),
-    createKettle: () => dispatch(createKettle())
+    getActors: () => dispatch(actions.actors.getActors()),
+    getActorTypes: () => dispatch(actions.actors.getActorTypes()),
+    createActor: () => dispatch(actions.actors.createActor()),
+    getKettles: () => dispatch(actions.kettles.getKettles()),
+    getKettleTypes: () => dispatch(actions.kettles.getKettleTypes()),
+    createKettle: () => dispatch(actions.kettles.createKettle())
   })
 
   static styles = theme => ({
