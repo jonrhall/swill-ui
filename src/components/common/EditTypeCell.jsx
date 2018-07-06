@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import GenerateTypeInputs from './GenerateTypeInputs';
 import MenuActionButtons from './MenuActionButtons';
 import TableCellButton from './TableCellButton';
+import TypeDescription from './TypeDescription';
 
 class EditTypeCell extends React.Component {
   static styles = theme => ({
@@ -134,6 +135,7 @@ class EditTypeCell extends React.Component {
     } = this.state;
     const {
       classes,
+      config,
       type,
       label,
       options
@@ -146,6 +148,7 @@ class EditTypeCell extends React.Component {
           onClick={this.handleOpen}
           menuName="edit-type-menu"
         />
+        <TypeDescription values={config} emptyText="No associated config." />
         <Menu
           id="edit-type-menu"
           anchorEl={anchorEl}

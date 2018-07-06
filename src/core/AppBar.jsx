@@ -18,7 +18,8 @@ class AppBar extends React.Component {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       }),
-      backgroundColor: theme.palette.primary.dark
+      backgroundColor: theme.palette.primary.dark,
+      borderBottom: `2px solid ${theme.palette.secondary.main}`
     },
     appBarShift: {
       marginLeft: drawerWidth,

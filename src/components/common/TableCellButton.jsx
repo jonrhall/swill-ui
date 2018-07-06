@@ -5,15 +5,20 @@ import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 
 class TableCellButton extends React.Component {
-  static style = () => ({
+  static style = theme => ({
     textTransform: {
       textTransform: 'none'
+    },
+    button: {
+      float: 'left',
+      marginRight: theme.spacing.unit
     }
   })
 
   static propTypes = {
     classes: PropTypes.shape({
-      textTransform: PropTypes.string
+      textTransform: PropTypes.string,
+      button: PropTypes.string
     }).isRequired,
     anchor: PropTypes.bool.isRequired,
     menuName: PropTypes.string.isRequired,
@@ -37,6 +42,7 @@ class TableCellButton extends React.Component {
         aria-owns={anchor ? menuName : null}
         aria-haspopup="true"
         onClick={onClick}
+        className={classes.button}
       >
         <Typography className={classes.textTransform}>{buttonText}</Typography>
       </Button>

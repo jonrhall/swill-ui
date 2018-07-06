@@ -39,7 +39,8 @@ class ActorRow extends React.Component {
     actor: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
-      state: PropTypes.number
+      state: PropTypes.number,
+      config: PropTypes.shape({})
     }).isRequired,
     // This is validated in a higher order component
     types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
