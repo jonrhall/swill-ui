@@ -193,7 +193,7 @@ class EditTypeCell extends React.Component {
               onChange={this.handleModalPropChange}
             />
           </div>
-          <MenuActionButtons onSave={this.saveChange} />
+          <MenuActionButtons onSave={this.saveChange} onCancel={this.handleClose} />
         </Menu>
       </TableCell>
     );

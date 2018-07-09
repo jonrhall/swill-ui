@@ -153,7 +153,7 @@ class EditRangeCell extends React.Component {
               {label}
             </Typography>
           </div>
-          <MenuActionButtons onSave={this.saveChange} />
+          <MenuActionButtons onSave={this.saveChange} onCancel={this.handleClose} />
         </Menu>
       </TableCell>
     );

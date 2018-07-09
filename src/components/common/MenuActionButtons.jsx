@@ -13,7 +13,11 @@ class MenuActionButtons extends Component {
       marginLeft: theme.spacing.unit * 3,
       outline: 0
     },
-    button: {
+    acceptButton: {
+      fontWeight: 'bold'
+    },
+    cancelButton: {
+      color: theme.palette.grey[500],
       fontWeight: 'bold'
     }
   })
@@ -21,18 +25,26 @@ class MenuActionButtons extends Component {
   static propTypes = {
     classes: PropTypes.shape({
       actionButtons: PropTypes.string,
-      button: PropTypes.string
+      acceptButton: PropTypes.string,
+      cancelButton: PropTypes.string
     }).isRequired,
+    onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired
   }
 
   render() {
-    const { classes, onSave } = this.props;
+    const { classes, onSave, onCancel } = this.props;
     return (
       <div className={classes.actionButtons}>
         <Button
+          className={classes.cancelButton}
+          onClick={onCancel}
+        >
+          Cancel
+        </Button>
+        <Button
           color="secondary"
-          className={classes.button}
+          className={classes.acceptButton}
           onClick={onSave}
         >
           Save

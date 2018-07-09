@@ -86,7 +86,7 @@ class EditTextCell extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-          <MenuActionButtons onSave={this.saveChange} />
+          <MenuActionButtons onSave={this.saveChange} onCancel={this.handleClose} />
         </Menu>
       </TableCell>
     );

@@ -135,7 +135,7 @@ class SelectResourceCell extends React.Component {
             </Select>
             <FormHelperText>{label}</FormHelperText>
           </FormControl>
-          <MenuActionButtons onSave={this.saveChange} />
+          <MenuActionButtons onSave={this.saveChange} onCancel={this.handleClose} />
         </Menu>
       </TableCell>
     );
