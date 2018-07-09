@@ -5,10 +5,18 @@ import { withStyles } from '@material-ui/core/styles';
 import PageHeader from '../common/PageHeader';
 import ActorsConfigTable from '../actors/ActorsConfigTable';
 import KettlesConfigTable from '../kettles/KettlesConfigTable';
+import SensorsConfigTable from '../sensors/SensorsConfigTable';
 
 class HardwareView extends React.Component {
   static mapStateToProps = state => ({
-    loading: state.actors.loading || state.kettles.loading
+    // Wait for all the resources to load
+    loading:
+      state.actors.loadingList ||
+      state.actors.loadingTypes ||
+      state.kettles.loadingList ||
+      state.kettles.loadingTypes ||
+      state.sensors.loadingList ||
+      state.sensors.loadingTypes
   })
 
   static mapDispatchToProps = () => ({})
@@ -17,7 +25,7 @@ class HardwareView extends React.Component {
     margin: {
       margin: theme.spacing.unit * 2
     }
-  });
+  })
 
   static propTypes = {
     classes: PropTypes.shape({
@@ -38,6 +46,7 @@ class HardwareView extends React.Component {
           <React.Fragment>
             <ActorsConfigTable />
             <KettlesConfigTable />
+            <SensorsConfigTable />
           </React.Fragment> :
           'Loading...'}
       </div>

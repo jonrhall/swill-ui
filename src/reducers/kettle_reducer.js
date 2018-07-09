@@ -1,5 +1,6 @@
 const initialKettleState = {
-  loading: false,
+  loadingList: false,
+  loadingTypes: false,
   kettles: [],
   types: []
 };
@@ -19,15 +20,20 @@ const kettleReducer = (state = initialKettleState, action) => {
   switch (action.type) {
     case 'GET_KETTLES_PENDING':
       return Object.assign({}, state, {
-        loading: true
+        loadingList: true
       });
     case 'GET_KETTLES_FULFILLED':
       return Object.assign({}, state, {
-        loading: false,
+        loadingList: false,
         kettles: action.payload
+      });
+    case 'GET_KETTLE_TYPES_PENDING':
+      return Object.assign({}, state, {
+        loadingTypes: true
       });
     case 'GET_KETTLE_TYPES_FULFILLED':
       return Object.assign({}, state, {
+        loadingTypes: false,
         types: action.payload
       });
     case 'CREATE_KETTLE_FULFILLED':

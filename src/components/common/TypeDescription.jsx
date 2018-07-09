@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
-const capitalize = str => str.replace(/^\w/, c => c.toUpperCase());
+const format = (str) => {
+  if (str === 'sensor_name') {
+    return 'Sensor';
+  }
+
+  // Capitalize the string
+  return str.replace(/^\w/, c => c.toUpperCase());
+};
 
 class TypeDescription extends Component {
   static styles = theme => ({
@@ -15,6 +22,10 @@ class TypeDescription extends Component {
       paddingTop: theme.spacing.unit * 0.25,
       marginLeft: theme.spacing.unit * 0.5
     },
+    containerPlusSpacing: {
+      paddingTop: theme.spacing.unit * 1.25,
+      marginLeft: theme.spacing.unit * 0.5
+    },
     param: {
       whiteSpace: 'nowrap'
     }
@@ -24,6 +35,7 @@ class TypeDescription extends Component {
     classes: PropTypes.shape({
       empty: PropTypes.string,
       container: PropTypes.string,
+      containerPlusSpacing: PropTypes.string,
       param: PropTypes.string
     }).isRequired,
     values: PropTypes.shape({}).isRequired,
@@ -33,16 +45,22 @@ class TypeDescription extends Component {
   render() {
     const { classes, values, emptyText } = this.props;
     const config = Object.keys(values);
+    let containerClass = classes.container;
 
     if (config.length < 1) {
       return <Typography variant="caption" className={classes.empty}>{emptyText}</Typography>;
     }
 
+    // Add more spacing to type descriptions with only one param
+    if (config.length === 1) {
+      containerClass = classes.containerPlusSpacing;
+    }
+
     return (
-      <Typography variant="caption" className={classes.container}>
+      <Typography variant="caption" className={containerClass}>
         {config.map(param => (
           <div key={param} className={classes.param}>
-            {`${capitalize(param)}: ${values[param]}`}
+            {`${format(param)}: ${values[param] || 'None'}`}
           </div>
         ))}
       </Typography>

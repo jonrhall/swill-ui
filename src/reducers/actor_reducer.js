@@ -1,5 +1,5 @@
 const initialActorState = {
-  loading: false,
+  loadingList: false,
   actors: [],
   types: []
 };
@@ -19,15 +19,20 @@ const actorReducer = (state = initialActorState, action) => {
   switch (action.type) {
     case 'GET_ACTORS_PENDING':
       return Object.assign({}, state, {
-        loading: true
+        loadingList: true
       });
     case 'GET_ACTORS_FULFILLED':
       return Object.assign({}, state, {
-        loading: false,
+        loadingList: false,
         actors: action.payload
+      });
+    case 'GET_ACTOR_TYPES_PENDING':
+      return Object.assign({}, state, {
+        loadingTypes: true
       });
     case 'GET_ACTOR_TYPES_FULFILLED':
       return Object.assign({}, state, {
+        loadingTypes: false,
         types: action.payload
       });
     case 'CREATE_ACTOR_FULFILLED':

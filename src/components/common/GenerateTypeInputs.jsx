@@ -78,6 +78,7 @@ class GenerateTypeInputs extends React.Component {
                       onChange={this.handleChange(prop.name)}
                       inputProps={{ name: prop.name, id: 'type-input-select' }}
                     >
+                      <MenuItem value=""><em>None</em></MenuItem>
                       {prop.options.map(option => (
                         <MenuItem value={`${option}`} key={option}>{`${option}`}</MenuItem>
                       ))}
