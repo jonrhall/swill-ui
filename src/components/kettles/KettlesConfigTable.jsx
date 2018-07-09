@@ -81,7 +81,7 @@ class KettlesConfigTable extends React.Component {
         <TableTitle text="Kettles" addAction={addKettle} />
         <Paper className={classes.root}>
           <Table>
-            <TableHeader columns={['Name', 'Heater', 'Agitator', 'Auto', 'Remove']} />
+            <TableHeader columns={['Name', 'Heater', 'Agitator', 'Logic', 'Auto', 'Remove']} />
             <TableBody>
               {kettleList.map(kettle => (
                 <KettleRow key={kettle.id} kettle={kettle} types={kettleTypes} />

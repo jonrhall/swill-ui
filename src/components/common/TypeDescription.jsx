@@ -60,7 +60,7 @@ class TypeDescription extends Component {
       <Typography variant="caption" className={containerClass}>
         {config.map(param => (
           <div key={param} className={classes.param}>
-            {`${format(param)}: ${values[param] || 'None'}`}
+            {`${format(param)}: ${values[param].toString() || 'None'}`}
           </div>
         ))}
       </Typography>

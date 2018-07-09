@@ -8,6 +8,7 @@ import {
   switchKettleOn,
   switchKettleOff,
   editKettleName,
+  editKettleLogic,
   editKettleAgitator,
   editKettleHeater,
   removeKettle
@@ -16,6 +17,7 @@ import EditTextCell from '../common/EditTextCell';
 import RemoveResourceCell from '../common/RemoveResourceCell';
 import ToggleSwitchCell from '../common/ToggleSwitchCell';
 import SelectResourceCell from '../common/SelectResourceCell';
+import EditTypeCell from '../common/EditTypeCell';
 
 class KettleRow extends React.Component {
   static styles = theme => ({
@@ -32,6 +34,7 @@ class KettleRow extends React.Component {
 
   static mapDispatchToProps = dispatch => ({
     editName: (kettle, name) => dispatch(editKettleName(kettle, name)),
+    editLogic: (kettle, logic, config) => dispatch(editKettleLogic(kettle, logic, config)),
     editAgitator: (kettle, agitator) => dispatch(editKettleAgitator(kettle, agitator)),
     editHeater: (kettle, heater) => dispatch(editKettleHeater(kettle, heater)),
     removeKettle: kettle => dispatch(removeKettle(kettle))
@@ -42,7 +45,10 @@ class KettleRow extends React.Component {
       id: PropTypes.number,
       name: PropTypes.string,
       state: PropTypes.bool,
-      agitator: PropTypes.string
+      agitator: PropTypes.string,
+      heater: PropTypes.string,
+      config: PropTypes.shape({}),
+      logic: PropTypes.string
     }).isRequired,
     actorList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
@@ -51,7 +57,9 @@ class KettleRow extends React.Component {
     classes: PropTypes.shape({
       row: PropTypes.string
     }).isRequired,
+    types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     editName: PropTypes.func.isRequired,
+    editLogic: PropTypes.func.isRequired,
     editAgitator: PropTypes.func.isRequired,
     editHeater: PropTypes.func.isRequired,
     removeKettle: PropTypes.func.isRequired
@@ -82,7 +90,9 @@ class KettleRow extends React.Component {
       kettle,
       actorList,
       classes,
+      types,
       editName,
+      editLogic,
       editAgitator,
       editHeater
     } = this.props;
@@ -106,6 +116,13 @@ class KettleRow extends React.Component {
           label="Choose an actor for the agitator."
           resourceList={actorList}
           onChange={this.editField(editAgitator)}
+        />
+        <EditTypeCell
+          type={kettle.logic}
+          config={kettle.config || {}}
+          options={types}
+          onChange={this.editField(editLogic)}
+          label="Choose a type for the kettle."
         />
         <ToggleSwitchCell
           checked={kettle.state}

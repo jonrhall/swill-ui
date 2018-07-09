@@ -31,7 +31,7 @@ class EditTypeCell extends React.Component {
 
   static propTypes = {
     type: PropTypes.string.isRequired,
-    config: PropTypes.shape({}).isRequired,
+    config: PropTypes.shape({}),
     onChange: PropTypes.func.isRequired,
     // This is validated in a higher order component
     options: PropTypes.arrayOf(PropTypes.shape({
@@ -43,9 +43,13 @@ class EditTypeCell extends React.Component {
     }).isRequired
   }
 
+  static defaultProps = {
+    config: {}
+  }
+
   constructor(props) {
     super(props);
-    const resourceType = props.options.find(option => option.name === this.props.type);
+    const resourceType = this.findResourceType();
 
     this.state = {
       resourceType,
@@ -53,6 +57,16 @@ class EditTypeCell extends React.Component {
       anchorEl: null,
       modalType: props.type
     };
+  }
+
+  findResourceType = (comparator = option => option.name === this.props.type) => {
+    let resourceType = this.props.options.find(comparator);
+
+    if (!resourceType) {
+      resourceType = { properties: [] };
+    }
+
+    return resourceType;
   }
 
   // Function for generating a type's property values
@@ -84,7 +98,7 @@ class EditTypeCell extends React.Component {
   };
 
   handleOpen = (event) => {
-    const resourceType = this.props.options.find(option => option.name === this.props.type);
+    const resourceType = this.findResourceType();
 
     this.setState({
       anchorEl: event.currentTarget,
@@ -99,7 +113,7 @@ class EditTypeCell extends React.Component {
   };
 
   handleTypeChange = (event) => {
-    const resourceType = this.props.options.find(option => option.name === event.target.value);
+    const resourceType = this.findResourceType(option => option.name === event.target.value);
 
     this.setState({
       resourceType,
@@ -144,11 +158,11 @@ class EditTypeCell extends React.Component {
       <TableCell>
         <TableCellButton
           anchor={!!anchorEl}
-          buttonText={type}
+          buttonText={type || <em>None</em>}
           onClick={this.handleOpen}
           menuName="edit-type-menu"
         />
-        <TypeDescription values={config} emptyText="No associated config." />
+        {type ? <TypeDescription values={config} emptyText="No associated config." /> : null}
         <Menu
           id="edit-type-menu"
           anchorEl={anchorEl}
@@ -166,6 +180,7 @@ class EditTypeCell extends React.Component {
                   id: 'type-input'
                 }}
               >
+                <MenuItem value=""><em>None</em></MenuItem>
                 {options.map(({ name }) => (
                   <MenuItem value={name} key={name}>{name}</MenuItem>
                 ))}
