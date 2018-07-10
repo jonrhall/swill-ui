@@ -14,7 +14,7 @@ import TableTitle from '../common/TableTitle';
 class KettlesConfigTable extends React.Component {
   static styles = theme => ({
     root: {
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing.unit * 5,
       overflowX: 'auto'
     },
     row: {
@@ -59,6 +59,10 @@ class KettlesConfigTable extends React.Component {
     addKettle: PropTypes.func.isRequired
   }
 
+  state = {
+    deleteMode: false
+  }
+
   componentWillMount() {
     if (this.props.kettleList.length < 1) {
       this.props.getKettles();
@@ -67,6 +71,10 @@ class KettlesConfigTable extends React.Component {
     if (this.props.kettleTypes.length < 1) {
       this.props.getKettleTypes();
     }
+  }
+
+  toggleDelete = () => {
+    this.setState({ deleteMode: !this.state.deleteMode });
   }
 
   render() {
@@ -78,13 +86,21 @@ class KettlesConfigTable extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Kettles" addAction={addKettle} />
+        <TableTitle text="Kettles" addAction={addKettle} deleteAction={this.toggleDelete} />
         <Paper className={classes.root}>
           <Table>
-            <TableHeader columns={['Name', 'Heater', 'Agitator', 'Logic', 'Auto', 'Remove']} />
+            <TableHeader columns={this.state.deleteMode ?
+              ['Delete?', 'Name', 'Heater', 'Agitator', 'Logic', 'Auto'] :
+              ['Name', 'Heater', 'Agitator', 'Logic', 'Auto']}
+            />
             <TableBody>
               {kettleList.map(kettle => (
-                <KettleRow key={kettle.id} kettle={kettle} types={kettleTypes} />
+                <KettleRow
+                  key={kettle.id}
+                  kettle={kettle}
+                  types={kettleTypes}
+                  deleteMode={this.state.deleteMode}
+                />
               ))}
             </TableBody>
           </Table>

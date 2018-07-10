@@ -14,7 +14,7 @@ import TableTitle from '../common/TableTitle';
 class SensorsConfigTable extends React.Component {
   static styles = theme => ({
     root: {
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing.unit * 5,
       overflowX: 'auto'
     },
     row: {
@@ -59,6 +59,10 @@ class SensorsConfigTable extends React.Component {
     addSensor: PropTypes.func.isRequired
   }
 
+  state = {
+    deleteMode: false
+  }
+
   componentWillMount() {
     if (this.props.sensorList.length < 1) {
       this.props.getSensors();
@@ -67,6 +71,10 @@ class SensorsConfigTable extends React.Component {
     if (this.props.sensorTypes.length < 1) {
       this.props.getSensorTypes();
     }
+  }
+
+  toggleDelete = () => {
+    this.setState({ deleteMode: !this.state.deleteMode });
   }
 
   render() {
@@ -78,13 +86,21 @@ class SensorsConfigTable extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Sensors" addAction={addSensor} />
+        <TableTitle text="Sensors" addAction={addSensor} deleteAction={this.toggleDelete} />
         <Paper className={classes.root}>
           <Table>
-            <TableHeader columns={['Name', 'Type', 'Remove']} />
+            <TableHeader columns={this.state.deleteMode ?
+              ['Delete?', 'Name', 'Type'] :
+              ['Name', 'Type']}
+            />
             <TableBody>
               {sensorList.map(sensor => (
-                <SensorRow key={sensor.id} sensor={sensor} types={sensorTypes} />
+                <SensorRow
+                  key={sensor.id}
+                  sensor={sensor}
+                  types={sensorTypes}
+                  deleteMode={this.state.deleteMode}
+                />
               ))}
             </TableBody>
           </Table>

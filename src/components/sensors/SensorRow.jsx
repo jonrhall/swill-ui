@@ -38,6 +38,7 @@ class SensorRow extends React.Component {
       agitator: PropTypes.string
     }).isRequired,
     types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    deleteMode: PropTypes.bool.isRequired,
     classes: PropTypes.shape({
       row: PropTypes.string
     }).isRequired,
@@ -53,11 +54,16 @@ class SensorRow extends React.Component {
       sensor,
       classes,
       types,
+      deleteMode,
       editName,
       editType
     } = this.props;
     return (
       <TableRow className={classes.row} key={sensor.id}>
+        {deleteMode ?
+          <RemoveResourceCell
+            onClick={this.editField(this.props.removeSensor)}
+          /> : null}
         <EditTextCell
           text={sensor.name}
           onChange={this.editField(editName)}
@@ -69,9 +75,6 @@ class SensorRow extends React.Component {
           options={types}
           onChange={this.editField(editType)}
           label="Choose a type for the sensor."
-        />
-        <RemoveResourceCell
-          onClick={this.editField(this.props.removeSensor)}
         />
       </TableRow>
     );

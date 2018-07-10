@@ -58,6 +58,7 @@ class KettleRow extends React.Component {
       row: PropTypes.string
     }).isRequired,
     types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    deleteMode: PropTypes.bool.isRequired,
     editName: PropTypes.func.isRequired,
     editLogic: PropTypes.func.isRequired,
     editAgitator: PropTypes.func.isRequired,
@@ -91,6 +92,7 @@ class KettleRow extends React.Component {
       actorList,
       classes,
       types,
+      deleteMode,
       editName,
       editLogic,
       editAgitator,
@@ -98,6 +100,10 @@ class KettleRow extends React.Component {
     } = this.props;
     return (
       <TableRow className={classes.row} key={kettle.id}>
+        {deleteMode ?
+          <RemoveResourceCell
+            onClick={this.editField(this.props.removeKettle)}
+          /> : null}
         <EditTextCell
           text={kettle.name}
           onChange={this.editField(editName)}
@@ -127,9 +133,6 @@ class KettleRow extends React.Component {
         <ToggleSwitchCell
           checked={kettle.state}
           onChange={this.toggleKettle}
-        />
-        <RemoveResourceCell
-          onClick={this.editField(this.props.removeKettle)}
         />
       </TableRow>
     );

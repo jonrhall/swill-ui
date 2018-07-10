@@ -44,6 +44,7 @@ class ActorRow extends React.Component {
     }).isRequired,
     // This is validated in a higher order component
     types: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    deleteMode: PropTypes.bool.isRequired,
     classes: PropTypes.shape({
       row: PropTypes.string
     }).isRequired,
@@ -66,20 +67,21 @@ class ActorRow extends React.Component {
     const {
       actor,
       types,
+      deleteMode,
       classes,
       editName,
       editType
     } = this.props;
     return (
       <TableRow className={classes.row} key={actor.id}>
+        {deleteMode ?
+          <RemoveResourceCell
+            onClick={this.editField(this.props.removeActor)}
+          /> : null}
         <EditTextCell
           text={actor.name}
           onChange={this.editField(editName)}
           label="Enter a name for the actor."
-        />
-        <ToggleSwitchCell
-          checked={actor.state === 1}
-          onChange={this.toggleActor}
         />
         <EditRangeCell
           value={actor.power}
@@ -95,8 +97,9 @@ class ActorRow extends React.Component {
           onChange={this.editField(editType)}
           label="Choose a type for the actor."
         />
-        <RemoveResourceCell
-          onClick={this.editField(this.props.removeActor)}
+        <ToggleSwitchCell
+          checked={actor.state === 1}
+          onChange={this.toggleActor}
         />
       </TableRow>
     );

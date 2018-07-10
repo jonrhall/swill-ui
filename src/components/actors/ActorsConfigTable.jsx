@@ -14,7 +14,7 @@ import TableTitle from '../common/TableTitle';
 class ActorsConfigTable extends React.Component {
   static styles = theme => ({
     root: {
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing.unit * 5,
       overflowX: 'auto'
     },
     row: {
@@ -59,6 +59,10 @@ class ActorsConfigTable extends React.Component {
     addActor: PropTypes.func.isRequired
   }
 
+  state = {
+    deleteMode: false
+  }
+
   componentWillMount() {
     if (this.props.actorList.length < 1) {
       this.props.getActors();
@@ -67,6 +71,10 @@ class ActorsConfigTable extends React.Component {
     if (this.props.actorTypes.length < 1) {
       this.props.getActorTypes();
     }
+  }
+
+  toggleDelete = () => {
+    this.setState({ deleteMode: !this.state.deleteMode });
   }
 
   render() {
@@ -78,13 +86,21 @@ class ActorsConfigTable extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Actors" addAction={addActor} />
+        <TableTitle text="Actors" addAction={addActor} deleteAction={this.toggleDelete} />
         <Paper className={classes.root}>
           <Table>
-            <TableHeader columns={['Name', 'On/Off', 'Power %', 'Type', 'Remove']} />
+            <TableHeader columns={this.state.deleteMode ?
+              ['Delete?', 'Name', 'Power %', 'Type', 'On/Off'] :
+              ['Name', 'Power %', 'Type', 'On/Off']}
+            />
             <TableBody>
               {actorList.map(actor => (
-                <ActorRow key={actor.id} actor={actor} types={actorTypes} />
+                <ActorRow
+                  key={actor.id}
+                  actor={actor}
+                  types={actorTypes}
+                  deleteMode={this.state.deleteMode}
+                />
               ))}
             </TableBody>
           </Table>

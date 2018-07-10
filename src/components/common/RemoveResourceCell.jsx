@@ -13,7 +13,7 @@ class RemoveResourceCell extends React.Component {
     const { onClick } = this.props;
     return (
       <TableCell>
-        <IconButton onClick={onClick}>
+        <IconButton color="secondary" onClick={onClick}>
           <DeleteIcon />
         </IconButton>
       </TableCell>
