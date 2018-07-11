@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -24,6 +25,9 @@ class TableTitle extends React.Component {
       fontWeight: 'bold',
       color: theme.palette.grey[700]
     },
+    deleteButtonActive: {
+      color: 'white'
+    },
     buttons: {
       position: 'absolute',
       right: `-${theme.spacing.unit * 2}px`,
@@ -38,6 +42,8 @@ class TableTitle extends React.Component {
     classes: PropTypes.shape({
       button: PropTypes.string,
       buttons: PropTypes.string,
+      deleteButton: PropTypes.string,
+      deleteButtonActive: PropTypes.string,
       relativePosition: PropTypes.string,
       leftIcon: PropTypes.string
     }).isRequired,
@@ -46,9 +52,17 @@ class TableTitle extends React.Component {
     addAction: PropTypes.func.isRequired
   }
 
+  state = {
+    deleteToggle: false
+  }
+
+  toggleDelete = () => {
+    this.setState({ deleteToggle: !this.state.deleteToggle });
+    this.props.deleteAction();
+  }
+
   render() {
     const {
-      deleteAction,
       addAction,
       classes,
       text
@@ -64,11 +78,14 @@ class TableTitle extends React.Component {
         </Typography>
         <div className={classes.buttons}>
           <Button
-            variant="outlined"
-            color="default"
+            variant={this.state.deleteToggle ? 'raised' : 'outlined'}
+            color={this.state.deleteToggle ? 'secondary' : 'default'}
             size="medium"
-            className={classes.deleteButton}
-            onClick={deleteAction}
+            className={classNames(
+              classes.deleteButton,
+              (this.state.deleteToggle ? classes.deleteButtonActive : null)
+            )}
+            onClick={this.toggleDelete}
           >
             <DeleteIcon className={classes.leftIcon} />
             Delete

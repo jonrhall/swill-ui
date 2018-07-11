@@ -90,8 +90,8 @@ class KettlesConfigTable extends React.Component {
         <Paper className={classes.root}>
           <Table>
             <TableHeader columns={this.state.deleteMode ?
-              ['Delete?', 'Name', 'Heater', 'Agitator', 'Logic', 'Auto'] :
-              ['Name', 'Heater', 'Agitator', 'Logic', 'Auto']}
+              ['Delete?', 'Name', 'Logic', 'Heater', 'Agitator', 'Sensor'] :
+              ['Name', 'Logic', 'Heater', 'Agitator', 'Sensor']}
             />
             <TableBody>
               {kettleList.map(kettle => (

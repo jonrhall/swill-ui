@@ -47,6 +47,7 @@ const kettleReducer = (state = initialKettleState, action) => {
     case 'EDIT_KETTLE_NAME_FULFILLED':
     case 'EDIT_KETTLE_AGITATOR_FULFILLED':
     case 'EDIT_KETTLE_HEATER_FULFILLED':
+    case 'EDIT_KETTLE_SENSOR_FULFILLED':
     case 'EDIT_KETTLE_LOGIC_FULFILLED':
       return updateKettleList(action.payload, state);
     case 'KETTLE_UPDATE':

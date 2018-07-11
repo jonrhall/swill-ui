@@ -90,8 +90,8 @@ class ActorsConfigTable extends React.Component {
         <Paper className={classes.root}>
           <Table>
             <TableHeader columns={this.state.deleteMode ?
-              ['Delete?', 'Name', 'Power %', 'Type', 'On/Off'] :
-              ['Name', 'Power %', 'Type', 'On/Off']}
+              ['Delete?', 'Name', 'Type', 'Power %'] :
+              ['Name', 'Type', 'Power %']}
             />
             <TableBody>
               {actorList.map(actor => (

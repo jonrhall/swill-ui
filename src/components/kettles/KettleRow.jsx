@@ -5,17 +5,15 @@ import { withStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
 
 import {
-  switchKettleOn,
-  switchKettleOff,
   editKettleName,
   editKettleLogic,
   editKettleAgitator,
   editKettleHeater,
+  editKettleSensor,
   removeKettle
 } from '../../actions/kettles';
 import EditTextCell from '../common/EditTextCell';
 import RemoveResourceCell from '../common/RemoveResourceCell';
-import ToggleSwitchCell from '../common/ToggleSwitchCell';
 import SelectResourceCell from '../common/SelectResourceCell';
 import EditTypeCell from '../common/EditTypeCell';
 
@@ -29,7 +27,8 @@ class KettleRow extends React.Component {
   })
 
   static mapStateToProps = state => ({
-    actorList: state.actors.actors
+    actorList: state.actors.actors,
+    sensorList: state.sensors.sensors
   })
 
   static mapDispatchToProps = dispatch => ({
@@ -37,6 +36,7 @@ class KettleRow extends React.Component {
     editLogic: (kettle, logic, config) => dispatch(editKettleLogic(kettle, logic, config)),
     editAgitator: (kettle, agitator) => dispatch(editKettleAgitator(kettle, agitator)),
     editHeater: (kettle, heater) => dispatch(editKettleHeater(kettle, heater)),
+    editSensor: (kettle, sensor) => dispatch(editKettleSensor(kettle, sensor)),
     removeKettle: kettle => dispatch(removeKettle(kettle))
   })
 
@@ -44,13 +44,17 @@ class KettleRow extends React.Component {
     kettle: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
-      state: PropTypes.bool,
       agitator: PropTypes.string,
       heater: PropTypes.string,
+      sensor: PropTypes.string,
       config: PropTypes.shape({}),
       logic: PropTypes.string
     }).isRequired,
     actorList: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    })),
+    sensorList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string
     })),
@@ -63,25 +67,20 @@ class KettleRow extends React.Component {
     editLogic: PropTypes.func.isRequired,
     editAgitator: PropTypes.func.isRequired,
     editHeater: PropTypes.func.isRequired,
+    editSensor: PropTypes.func.isRequired,
     removeKettle: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    actorList: []
-  }
-
-  toggleKettle = () => {
-    if (this.props.kettle.state === false) {
-      switchKettleOn(this.props.kettle);
-    } else {
-      switchKettleOff(this.props.kettle);
-    }
+    actorList: [],
+    sensorList: []
   }
 
   editField = func => (...props) => func(this.props.kettle, ...props);
 
-  buttonText = (prop) => {
-    const resource = this.props.actorList.find(({ id }) =>
+  // Generates display text for the cell given a list and a prop to use as the id
+  buttonText = (list, prop) => {
+    const resource = list.find(({ id }) =>
       id.toString() === this.props.kettle[prop]) || {};
     return resource.name || (<em>{`No ${prop}`}</em>);
   }
@@ -90,13 +89,15 @@ class KettleRow extends React.Component {
     const {
       kettle,
       actorList,
+      sensorList,
       classes,
       types,
       deleteMode,
       editName,
       editLogic,
       editAgitator,
-      editHeater
+      editHeater,
+      editSensor
     } = this.props;
     return (
       <TableRow className={classes.row} key={kettle.id}>
@@ -109,20 +110,6 @@ class KettleRow extends React.Component {
           onChange={this.editField(editName)}
           label="Enter a name for the kettle."
         />
-        <SelectResourceCell
-          value={kettle.heater}
-          buttonText={this.buttonText('heater')}
-          label="Choose an actor for the heating element."
-          resourceList={actorList}
-          onChange={this.editField(editHeater)}
-        />
-        <SelectResourceCell
-          value={kettle.agitator}
-          buttonText={this.buttonText('agitator')}
-          label="Choose an actor for the agitator."
-          resourceList={actorList}
-          onChange={this.editField(editAgitator)}
-        />
         <EditTypeCell
           type={kettle.logic}
           config={kettle.config || {}}
@@ -130,9 +117,26 @@ class KettleRow extends React.Component {
           onChange={this.editField(editLogic)}
           label="Choose a type for the kettle."
         />
-        <ToggleSwitchCell
-          checked={kettle.state}
-          onChange={this.toggleKettle}
+        <SelectResourceCell
+          value={kettle.heater}
+          buttonText={this.buttonText(actorList, 'heater')}
+          label="Choose an actor for the heating element."
+          resourceList={actorList}
+          onChange={this.editField(editHeater)}
+        />
+        <SelectResourceCell
+          value={kettle.agitator}
+          buttonText={this.buttonText(actorList, 'agitator')}
+          label="Choose an actor for the agitator."
+          resourceList={actorList}
+          onChange={this.editField(editAgitator)}
+        />
+        <SelectResourceCell
+          value={kettle.sensor}
+          buttonText={this.buttonText(sensorList, 'sensor')}
+          label="Choose a sensor for the kettle."
+          resourceList={sensorList}
+          onChange={this.editField(editSensor)}
         />
       </TableRow>
     );

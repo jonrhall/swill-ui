@@ -50,6 +50,13 @@ export function editKettleHeater(kettle, heater) {
   };
 }
 
+export function editKettleSensor(kettle, sensor) {
+  return {
+    type: 'EDIT_KETTLE_SENSOR',
+    payload: sdk.resources.kettles.modifyKettle({ ...kettle, sensor })
+  };
+}
+
 export function kettleUpdate(kettle) {
   return {
     type: 'KETTLE_UPDATE',

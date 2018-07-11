@@ -5,8 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
 
 import {
-  switchActorOff,
-  switchActorOn,
   editActorName,
   editActorPower,
   editActorType,
@@ -14,7 +12,6 @@ import {
 } from '../../actions/actors';
 import EditTextCell from '../common/EditTextCell';
 import EditRangeCell from '../common/EditRangeCell';
-import ToggleSwitchCell from '../common/ToggleSwitchCell';
 import EditTypeCell from '../common/EditTypeCell';
 import RemoveResourceCell from '../common/RemoveResourceCell';
 
@@ -39,7 +36,6 @@ class ActorRow extends React.Component {
     actor: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
-      state: PropTypes.number,
       config: PropTypes.shape({})
     }).isRequired,
     // This is validated in a higher order component
@@ -51,14 +47,6 @@ class ActorRow extends React.Component {
     editName: PropTypes.func.isRequired,
     editType: PropTypes.func.isRequired,
     removeActor: PropTypes.func.isRequired
-  }
-
-  toggleActor = () => {
-    if (this.props.actor.state === 0) {
-      switchActorOn(this.props.actor);
-    } else {
-      switchActorOff(this.props.actor);
-    }
   }
 
   editField = func => (...props) => func(this.props.actor, ...props);
@@ -83,13 +71,6 @@ class ActorRow extends React.Component {
           onChange={this.editField(editName)}
           label="Enter a name for the actor."
         />
-        <EditRangeCell
-          value={actor.power}
-          onChange={this.editField(editActorPower)}
-          lowRange={0}
-          highRange={100}
-          label="Enter power value for the actor."
-        />
         <EditTypeCell
           type={actor.type}
           config={actor.config}
@@ -97,9 +78,12 @@ class ActorRow extends React.Component {
           onChange={this.editField(editType)}
           label="Choose a type for the actor."
         />
-        <ToggleSwitchCell
-          checked={actor.state === 1}
-          onChange={this.toggleActor}
+        <EditRangeCell
+          value={actor.power}
+          onChange={this.editField(editActorPower)}
+          lowRange={0}
+          highRange={100}
+          label="Enter power value for the actor."
         />
       </TableRow>
     );

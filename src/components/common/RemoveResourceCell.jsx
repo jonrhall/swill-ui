@@ -1,19 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TableCell from '@material-ui/core/TableCell';
 
 class RemoveResourceCell extends React.Component {
+  static styles = theme => ({
+    iconButton: {
+      height: theme.spacing.unit * 3
+    }
+  })
   static propTypes = {
+    classes: PropTypes.shape({ iconButton: PropTypes.string }).isRequired,
     onClick: PropTypes.func.isRequired
   }
 
   render() {
-    const { onClick } = this.props;
+    const { classes, onClick } = this.props;
     return (
       <TableCell>
-        <IconButton color="secondary" onClick={onClick}>
+        <IconButton color="secondary" onClick={onClick} className={classes.iconButton}>
           <DeleteIcon />
         </IconButton>
       </TableCell>
@@ -21,4 +28,4 @@ class RemoveResourceCell extends React.Component {
   }
 }
 
-export default RemoveResourceCell;
+export default withStyles(RemoveResourceCell.styles)(RemoveResourceCell);
