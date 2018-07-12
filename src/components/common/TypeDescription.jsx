@@ -3,9 +3,30 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
+// Customize some, but not all, type names
 const format = (str) => {
   if (str === 'sensor_name') {
     return 'Sensor';
+  }
+
+  if (str === 'gpio') {
+    return 'GPIO';
+  }
+
+  if (str === 'cooler_offset_min') {
+    return 'Cooler min offset';
+  }
+
+  if (str === 'cooler_offset_max') {
+    return 'Cooler max offset';
+  }
+
+  if (str === 'heater_offset_min') {
+    return 'Heater min offset';
+  }
+
+  if (str === 'heater_offset_max') {
+    return 'Heater max offset';
   }
 
   // Capitalize the string

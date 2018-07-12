@@ -7,19 +7,25 @@ import TableCell from '@material-ui/core/TableCell';
 
 class RemoveResourceCell extends React.Component {
   static styles = theme => ({
+    tableCell: {
+      paddingRight: 0
+    },
     iconButton: {
       height: theme.spacing.unit * 3
     }
   })
   static propTypes = {
-    classes: PropTypes.shape({ iconButton: PropTypes.string }).isRequired,
+    classes: PropTypes.shape({
+      tableCell: PropTypes.string,
+      iconButton: PropTypes.string
+    }).isRequired,
     onClick: PropTypes.func.isRequired
   }
 
   render() {
     const { classes, onClick } = this.props;
     return (
-      <TableCell>
+      <TableCell className={classes.tableCell}>
         <IconButton color="secondary" onClick={onClick} className={classes.iconButton}>
           <DeleteIcon />
         </IconButton>

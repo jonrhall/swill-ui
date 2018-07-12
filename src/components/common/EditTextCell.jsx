@@ -10,6 +10,10 @@ import TableCellButton from './TableCellButton';
 
 class EditTextCell extends React.Component {
   static styles = theme => ({
+    tableCell: {
+      paddingLeft: theme.spacing.unit,
+      paddingRight: theme.spacing.unit
+    },
     menuContent: {
       margin: theme.spacing.unit * 2,
       marginRight: theme.spacing.unit * 10,
@@ -23,6 +27,7 @@ class EditTextCell extends React.Component {
     onChange: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
     classes: PropTypes.shape({
+      tableCell: PropTypes.string,
       menuContent: PropTypes.string
     }).isRequired
   }
@@ -41,8 +46,7 @@ class EditTextCell extends React.Component {
 
   handleClose = () => {
     this.setState({
-      anchorEl: null,
-      modalText: this.props.text
+      anchorEl: null
     });
   };
 
@@ -62,12 +66,13 @@ class EditTextCell extends React.Component {
 
   render() {
     const { anchorEl, modalText } = this.state;
+    const { classes, label, text } = this.props;
 
     return (
-      <TableCell>
+      <TableCell className={classes.tableCell}>
         <TableCellButton
           anchor={!!anchorEl}
-          buttonText={this.props.text}
+          buttonText={text}
           onClick={this.handleOpen}
           menuName="edit-text-menu"
         />
@@ -77,11 +82,11 @@ class EditTextCell extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <div className={this.props.classes.menuContent}>
+          <div className={classes.menuContent}>
             <TextField
               id="input-with-icon-grid"
               label="Edit text"
-              helperText={this.props.label}
+              helperText={label}
               value={modalText}
               onChange={this.handleChange}
             />

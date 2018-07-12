@@ -13,6 +13,10 @@ import TableCellButton from './TableCellButton';
 
 class EditRangeCell extends React.Component {
   static styles = theme => ({
+    tableCell: {
+      paddingLeft: theme.spacing.unit,
+      paddingRight: theme.spacing.unit
+    },
     menuContent: {
       margin: theme.spacing.unit * 2,
       marginRight: theme.spacing.unit * 10,
@@ -41,6 +45,7 @@ class EditRangeCell extends React.Component {
     lowRange: PropTypes.number.isRequired,
     label: PropTypes.string.isRequired,
     classes: PropTypes.shape({
+      tableCell: PropTypes.string,
       menuContent: PropTypes.string,
       sliderInput: PropTypes.string,
       textInput: PropTypes.string,
@@ -107,7 +112,7 @@ class EditRangeCell extends React.Component {
       label
     } = this.props;
     return (
-      <TableCell>
+      <TableCell className={classes.tableCell}>
         <TableCellButton
           anchor={!!anchorEl}
           buttonText={value.toString()}

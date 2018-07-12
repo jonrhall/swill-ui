@@ -99,6 +99,13 @@ class KettleRow extends React.Component {
       editHeater,
       editSensor
     } = this.props;
+
+    if (types.length > 0) {
+      // The 'Hysteresis' logic type has very long descriptions that need to be shortened.
+      types[0].properties[0].description = 'Offset below target temp when the heater is switched off. Should be less than "Offset ON".';
+      types[0].properties[1].description = 'Offset below target temp when the heater is switched on. Should be greater than "Offset OFF".';
+    }
+
     return (
       <TableRow className={classes.row} key={kettle.id}>
         {deleteMode ?

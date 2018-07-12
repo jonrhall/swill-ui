@@ -14,6 +14,9 @@ import TableCellButton from './TableCellButton';
 
 class SelectResourceCell extends React.Component {
   static style = theme => ({
+    tableCell: {
+      padding: theme.spacing.unit
+    },
     menuContent: {
       margin: theme.spacing.unit * 2,
       marginRight: theme.spacing.unit * 10,
@@ -36,6 +39,7 @@ class SelectResourceCell extends React.Component {
 
   static propTypes = {
     classes: PropTypes.shape({
+      tableCell: PropTypes.string,
       menuContent: PropTypes.string,
       actionButtons: PropTypes.string,
       button: PropTypes.string
@@ -103,7 +107,7 @@ class SelectResourceCell extends React.Component {
       modalValue
     } = this.state;
     return (
-      <TableCell>
+      <TableCell className={classes.tableCell}>
         <TableCellButton
           anchor={!!anchorEl}
           buttonText={buttonText}

@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import PageHeader from '../common/PageHeader';
 import ActorsConfigTable from '../actors/ActorsConfigTable';
-import KettlesConfigTable from '../kettles/KettlesConfigTable';
 import SensorsConfigTable from '../sensors/SensorsConfigTable';
+import KettlesConfigTable from '../kettles/KettlesConfigTable';
+import FermentersConfigTable from '../fermenters/FermentersConfigTable';
 
 class HardwareView extends React.Component {
   static mapStateToProps = state => ({
@@ -45,8 +46,9 @@ class HardwareView extends React.Component {
         {!loading ?
           <React.Fragment>
             <ActorsConfigTable />
-            <KettlesConfigTable />
             <SensorsConfigTable />
+            <KettlesConfigTable />
+            <FermentersConfigTable />
           </React.Fragment> :
           'Loading...'}
       </div>

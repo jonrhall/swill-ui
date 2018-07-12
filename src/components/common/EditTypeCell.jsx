@@ -16,12 +16,20 @@ import TypeDescription from './TypeDescription';
 
 class EditTypeCell extends React.Component {
   static styles = theme => ({
+    tableCell: {
+      paddingLeft: theme.spacing.unit,
+      paddingRight: theme.spacing.unit * 2
+    },
     menuContent: {
       margin: theme.spacing.unit * 2,
       marginRight: theme.spacing.unit * 10,
       marginLeft: theme.spacing.unit * 3,
       outline: 0,
-      width: 280
+      width: 320
+    },
+    flexDiv: {
+      display: 'flex',
+      direction: 'row'
     }
   })
 
@@ -39,7 +47,9 @@ class EditTypeCell extends React.Component {
     })).isRequired,
     label: PropTypes.string.isRequired,
     classes: PropTypes.shape({
-      menuContent: PropTypes.string
+      tableCell: PropTypes.string,
+      menuContent: PropTypes.string,
+      flexDiv: PropTypes.string
     }).isRequired
   }
 
@@ -55,7 +65,10 @@ class EditTypeCell extends React.Component {
       resourceType,
       modalProperties: this.generateConfig(resourceType),
       anchorEl: null,
-      modalType: props.type
+      modalType: props.type,
+      menuActions: {
+        updatePosition: () => {}
+      }
     };
   }
 
@@ -97,6 +110,12 @@ class EditTypeCell extends React.Component {
     return config;
   };
 
+  bindReposition = (actions) => {
+    this.setState({
+      menuActions: actions
+    });
+  }
+
   handleOpen = (event) => {
     const resourceType = this.findResourceType();
 
@@ -120,6 +139,8 @@ class EditTypeCell extends React.Component {
       modalProperties: this.generateConfig(resourceType),
       modalType: event.target.value
     });
+
+    this.state.menuActions.updatePosition();
   };
 
   handleModalPropChange = (value) => {
@@ -155,19 +176,24 @@ class EditTypeCell extends React.Component {
       options
     } = this.props;
     return (
-      <TableCell>
-        <TableCellButton
-          anchor={!!anchorEl}
-          buttonText={type || <em>None</em>}
-          onClick={this.handleOpen}
-          menuName="edit-type-menu"
-        />
-        {type ? <TypeDescription values={config} emptyText="No associated config." /> : null}
+      <TableCell className={classes.tableCell}>
+        <div className={classes.flexDiv}>
+          <div>
+            <TableCellButton
+              anchor={!!anchorEl}
+              buttonText={type || <em>None</em>}
+              onClick={this.handleOpen}
+              menuName="edit-type-menu"
+            />
+          </div>
+          {type ? <TypeDescription values={config} emptyText="No associated config." /> : null}
+        </div>
         <Menu
           id="edit-type-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
+          action={this.bindReposition}
         >
           <div className={classes.menuContent}>
             <FormControl>
