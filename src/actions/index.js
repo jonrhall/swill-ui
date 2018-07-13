@@ -1,6 +1,9 @@
 import sdk from '../core/sdk';
 import * as actors from './actors';
+import * as fermenters from './fermenters';
 import * as kettles from './kettles';
+import * as logs from './logs';
+import * as sensors from './sensors';
 
 export function loadAppConfig() {
   return {
@@ -37,5 +40,8 @@ export function connectSdk(dispatch) {
 
 export default {
   actors,
-  kettles
+  fermenters,
+  kettles,
+  logs,
+  sensors
 };

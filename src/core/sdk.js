@@ -1,4 +1,4 @@
-import SwillSDK from 'swill-sdk';
+import SwillSDK from '../../../swill-sdk';
 import config from '../../config.json';
 
 export default SwillSDK({
