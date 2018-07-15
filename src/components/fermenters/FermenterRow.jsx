@@ -159,14 +159,14 @@ class FermenterRow extends React.Component {
         />
         <SelectResourceCell
           value={fermenter.sensor2}
-          buttonText={this.buttonText(sensorList, 'sensor')}
+          buttonText={this.buttonText(sensorList, 'sensor2')}
           label="Choose a second sensor for the fermenter."
           resourceList={sensorList}
           onChange={this.editField(editSensor2)}
         />
         <SelectResourceCell
           value={fermenter.sensor3}
-          buttonText={this.buttonText(sensorList, 'sensor')}
+          buttonText={this.buttonText(sensorList, 'sensor3')}
           label="Choose a third sensor for the fermenter."
           resourceList={sensorList}
           onChange={this.editField(editSensor3)}

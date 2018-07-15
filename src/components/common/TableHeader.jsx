@@ -11,22 +11,27 @@ class TableHeader extends React.Component {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
       fontWeight: 'bold'
+    },
+    tableRow: {
+      height: theme.spacing.unit * 4.5
     }
   });
 
   static propTypes = {
     classes: PropTypes.shape({
-      header: PropTypes.string
+      header: PropTypes.string,
+      tableRow: PropTypes.string
     }).isRequired,
     columns: PropTypes.arrayOf(PropTypes.string).isRequired
   }
 
   render() {
+    const { classes, columns } = this.props;
     return (
       <TableHead>
-        <TableRow>
-          {this.props.columns.map(title => (
-            <TableCell className={this.props.classes.header} key={title}>{title}</TableCell>
+        <TableRow className={classes.tableRow}>
+          {columns.map(title => (
+            <TableCell className={classes.header} key={title}>{title}</TableCell>
           ))}
         </TableRow>
       </TableHead>
