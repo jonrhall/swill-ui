@@ -14,7 +14,7 @@ class LogsView extends React.Component {
       const [dateStr] = /^\d+-\d+-\d+\s\d+:\d+:\d+/.exec(log['last-modified']);
       return {
         name: log.name,
-        size: `${Math.ceil(log['content-length'] / 100000)}mb`,
+        size: `${Math.ceil(log['content-length'] / 100000)} MB`,
         dateModified: new Date(dateStr)
       };
     })
@@ -52,7 +52,8 @@ class LogsView extends React.Component {
     const sensorLogs = [];
     const appLogs = [];
 
-    this.props.logList.forEach((log) => {
+    this.props.logList.sort((a, b) => a.name < b.name).forEach((log) => {
+      console.log(log.name); // eslint-disable-line
       if (/^kettle/.test(log.name)) {
         kettleLogs.push(log);
       } else if (/^fermenter/.test(log.name)) {

@@ -52,6 +52,9 @@ class AppDrawer extends React.Component {
     },
     selectedButton: {
       color: theme.palette.secondary.main
+    },
+    selectedText: {
+      color: theme.palette.primary.main
     }
   })
 
@@ -60,6 +63,7 @@ class AppDrawer extends React.Component {
       drawerPaper: PropTypes.string,
       drawerPaperClose: PropTypes.string,
       selectedButton: PropTypes.string,
+      selectedText: PropTypes.string,
       toolbar: PropTypes.string
     }).isRequired,
     theme: PropTypes.shape({
@@ -77,10 +81,10 @@ class AppDrawer extends React.Component {
       {buttons.map(button => (
         <Link to={button.route} key={button.text} style={{ textDecoration: 'none' }}>
           <ListItem button>
-            <ListItemIcon {...{ className: button.selected }}>
+            <ListItemIcon className={button.selected}>
               <button.icon />
             </ListItemIcon>
-            <ListItemText primary={button.text} />
+            <ListItemText classes={{ primary: button.selectedText }} primary={button.text} />
           </ListItem>
         </Link>
       ))}
@@ -92,7 +96,9 @@ class AppDrawer extends React.Component {
     text,
     route,
     selected: this.props.location.pathname === route ?
-      this.props.classes.selectedButton : null
+      this.props.classes.selectedButton : null,
+    selectedText: this.props.location.pathname === route ?
+      this.props.classes.selectedText : null
   })
 
   render() {
