@@ -120,7 +120,7 @@ class AppDrawer extends React.Component {
     const secondaryButtons = [
       this.DrawerButton(HardwareIcon, 'Hardware', '/hardware'),
       this.DrawerButton(LogIcon, 'Logs', '/logs'),
-      this.DrawerButton(AddOnsIcon, 'Add-ons', '/addons'),
+      this.DrawerButton(AddOnsIcon, 'Plugins', '/plugins'),
       this.DrawerButton(SettingsIcon, 'System', '/system')
     ];
 

@@ -9,7 +9,7 @@ import AppDrawer from './AppDrawer';
 import { connectSdk, openMenu, closeMenu } from '../actions';
 import Views from '../components/views';
 
-class AppView extends React.Component {
+class AppViews extends React.Component {
   static styles = theme => ({
     root: {
       flexGrow: 1,
@@ -68,12 +68,12 @@ class AppView extends React.Component {
   }
 
   static routes = [
-    { path: '/addons', component: Views.AddOnsView },
     { path: '/brew', component: Views.BrewView },
     { path: '/dashboard', component: Views.DashboardView },
     { path: '/ferment', component: Views.FermentView },
     { path: '/hardware', component: Views.HardwareView },
     { path: '/logs', component: Views.LogsView },
+    { path: '/plugins', component: Views.PluginsView },
     { path: '/system', component: Views.SystemView }
   ]
 
@@ -118,7 +118,7 @@ class AppView extends React.Component {
   }
 }
 
-export default withStyles(AppView.styles, { withTheme: true })(connect(
-  AppView.mapStateToProps,
-  AppView.mapDispatchToProps
-)(AppView));
+export default withStyles(AppViews.styles, { withTheme: true })(connect(
+  AppViews.mapStateToProps,
+  AppViews.mapDispatchToProps
+)(AppViews));

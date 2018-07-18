@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import lightBlue from '@material-ui/core/colors/lightBlue';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 
-import AppView from '../core/AppView';
+import AppViews from '../core/AppViews';
 import { loadAppConfig } from '../actions';
 
 class App extends React.Component {
@@ -48,7 +48,7 @@ class App extends React.Component {
           <CssBaseline />
           {this.props.appLoading ?
             <h2>Loading...</h2> :
-            <AppView />
+            <AppViews />
           }
         </React.Fragment>
       </MuiThemeProvider>

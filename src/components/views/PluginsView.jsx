@@ -20,7 +20,7 @@ class AddOnsView extends React.Component {
   render() {
     return (
       <div className={this.props.classes.margin}>
-        <PageHeader text="Add-ons" />
+        <PageHeader text="Plugins" />
       </div>
     );
   }
