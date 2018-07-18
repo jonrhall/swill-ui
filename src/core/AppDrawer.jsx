@@ -26,7 +26,7 @@ class AppDrawer extends React.Component {
     drawerPaper: {
       position: 'relative',
       whiteSpace: 'nowrap',
-      width: 240,
+      width: 220,
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen
@@ -118,10 +118,10 @@ class AppDrawer extends React.Component {
 
     // Order matters!
     const secondaryButtons = [
-      this.DrawerButton(HardwareIcon, 'Hardware Settings', '/hardware'),
+      this.DrawerButton(HardwareIcon, 'Hardware', '/hardware'),
       this.DrawerButton(LogIcon, 'Logs', '/logs'),
       this.DrawerButton(AddOnsIcon, 'Add-ons', '/addons'),
-      this.DrawerButton(SettingsIcon, 'System Settings', '/system')
+      this.DrawerButton(SettingsIcon, 'System', '/system')
     ];
 
     return (

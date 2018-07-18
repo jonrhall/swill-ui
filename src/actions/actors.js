@@ -57,7 +57,6 @@ export function createActor() {
 export function removeActor(actor) {
   return {
     type: 'REMOVE_ACTOR',
-    id: actor.id,
     payload: sdk.resources.actors.deleteActor(actor)
   };
 }

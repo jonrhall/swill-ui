@@ -88,7 +88,6 @@ export function createFermenter() {
 export function removeFermenter(fermenter) {
   return {
     type: 'REMOVE_FERMENTER',
-    id: fermenter.id,
     payload: sdk.resources.fermenters.deleteFermenter(fermenter)
   };
 }

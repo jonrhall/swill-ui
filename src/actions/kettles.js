@@ -74,7 +74,6 @@ export function createKettle() {
 export function removeKettle(kettle) {
   return {
     type: 'REMOVE_KETTLE',
-    id: kettle.id,
     payload: sdk.resources.kettles.deleteKettle(kettle)
   };
 }

@@ -3,13 +3,13 @@ import sdk from '../core/sdk';
 export function getLogs() {
   return {
     type: 'GET_LOGS',
-    payload: sdk.logs.getLogs()
+    payload: sdk.resources.logs.getLogs()
   };
 }
 
 export function deleteLog(logName) {
   return {
     type: 'DELETE_LOG',
-    payload: sdk.logs.deleteLog(logName)
+    payload: sdk.resources.logs.deleteLog(logName)
   };
 }

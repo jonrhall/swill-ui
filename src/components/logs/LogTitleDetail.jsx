@@ -6,9 +6,10 @@ import Typography from '@material-ui/core/Typography';
 class LogTitleDetail extends React.Component {
   static styles = theme => ({
     heading: {
-      fontSize: theme.typography.pxToRem(15),
+      fontSize: theme.typography.pxToRem(12),
       color: theme.palette.text.disabled,
-      marginRight: theme.spacing.unit * 12
+      marginRight: theme.spacing.unit * 12,
+      marginTop: theme.spacing.unit * 0.2
     },
     text: {
       marginLeft: theme.spacing.unit,

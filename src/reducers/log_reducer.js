@@ -14,6 +14,10 @@ const logReducer = (state = initialLogState, action) => {
         loadingList: false,
         logs: action.payload
       });
+    case 'DELETE_LOG_FULFILLED':
+      return Object.assign({}, state, {
+        logs: state.logs.filter(log => log.name !== action.payload.name)
+      });
     default:
       return state;
   }

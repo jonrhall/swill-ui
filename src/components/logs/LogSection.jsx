@@ -74,16 +74,16 @@ class LogSection extends React.Component {
           if (a.name < b.name) return -1;
           if (a.name > b.name) return 1;
           return 0;
-        }).map((log, index) => (
+        }).map(log => (
           <ExpansionPanel
-            expanded={expanded === `panel-${index}`}
-            onChange={this.handleChange(`panel-${index}`)}
+            expanded={expanded === `panel-${log.name}`}
+            onChange={this.handleChange(`panel-${log.name}`)}
             key={log.name}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classNames(
                 classes.heading,
-                (expanded === `panel-${index}` ? classes.activeColor : null)
+                (expanded === `panel-${log.name}` ? classes.activeColor : null)
               )}
               >
                 {this.convertName(log.name)}

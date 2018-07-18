@@ -45,7 +45,6 @@ export function createSensor() {
 export function removeSensor(sensor) {
   return {
     type: 'REMOVE_SENSOR',
-    id: sensor.id,
     payload: sdk.resources.sensors.deleteSensor(sensor)
   };
 }
