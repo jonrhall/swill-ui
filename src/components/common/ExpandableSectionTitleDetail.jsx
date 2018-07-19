@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-class LogTitleDetail extends React.Component {
+class ExpandableSectionTitleDetail extends React.Component {
   static styles = theme => ({
     heading: {
       fontSize: theme.typography.pxToRem(12),
@@ -37,4 +37,4 @@ class LogTitleDetail extends React.Component {
 }
 
 
-export default withStyles(LogTitleDetail.styles)(LogTitleDetail);
+export default withStyles(ExpandableSectionTitleDetail.styles)(ExpandableSectionTitleDetail);

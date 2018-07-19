@@ -1,29 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import LogTitleDetail from './LogTitleDetail';
-import LogExpansionPanel from './LogExpansionPanel';
+
+import LogExpandedSection from './LogExpandedSection';
+import ExpandableSection from '../common/ExpandableSection';
 
 class LogSection extends React.Component {
   static styles = theme => ({
     root: {
       width: '100%',
       marginBottom: theme.spacing.unit * 5
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      flexBasis: '33.33%',
-      flexShrink: 0,
-      fontWeight: 'bold',
-      color: theme.palette.grey[700]
-    },
-    activeColor: {
-      color: theme.palette.primary.main
     }
   })
 
@@ -35,12 +22,6 @@ class LogSection extends React.Component {
 
   state = {
     expanded: null
-  };
-
-  handleChange = panel => (event, expanded) => {
-    this.setState({
-      expanded: expanded ? panel : false
-    });
   };
 
   convertName = (name) => {
@@ -58,10 +39,15 @@ class LogSection extends React.Component {
     return name;
   }
 
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false
+    });
+  };
+
   render() {
     const { classes, header, logList } = this.props;
     const { expanded } = this.state;
-
     return (
       <div className={classes.root}>
         <Typography
@@ -75,24 +61,18 @@ class LogSection extends React.Component {
           if (a.name > b.name) return 1;
           return 0;
         }).map(log => (
-          <ExpansionPanel
+          <ExpandableSection
+            name={this.convertName(log.name)}
+            titleDetails={[
+              { label: 'Size', text: log.size },
+              { label: 'Name', text: log.name }
+            ]}
             expanded={expanded === `panel-${log.name}`}
-            onChange={this.handleChange(`panel-${log.name}`)}
+            onClick={this.handleChange(`panel-${log.name}`)}
             key={log.name}
           >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classNames(
-                classes.heading,
-                (expanded === `panel-${log.name}` ? classes.activeColor : null)
-              )}
-              >
-                {this.convertName(log.name)}
-              </Typography>
-              <LogTitleDetail label="Size" text={log.size} />
-              <LogTitleDetail label="Name" text={log.name} />
-            </ExpansionPanelSummary>
-            <LogExpansionPanel log={log} />
-          </ExpansionPanel>
+            <LogExpandedSection log={log} />
+          </ExpandableSection>
         )) : (
           <Typography gutterBottom variant="caption">{`No ${header} logs`}</Typography>
         )}
