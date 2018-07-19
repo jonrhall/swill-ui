@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import { deleteLog } from '../../actions/logs';
 import ExpandedSection from '../common/ExpandedSection';
+import ExpandableSectionDetail from '../common/ExpandableSectionDetail';
+import OutlinedButton from '../common/OutlinedButton';
 
-class LogExpansionPanel extends React.Component {
+class LogExpandedPanel extends React.Component {
   static mapStateToProps = () => ({})
 
   static mapDispatchToProps = dispatch => ({
@@ -22,25 +22,10 @@ class LogExpansionPanel extends React.Component {
       fontWeight: 'bold',
       color: theme.palette.text.secondary,
       marginBottom: theme.spacing.unit
-    },
-    button: {
-      paddingTop: 0,
-      paddingBottom: 0,
-      marginLeft: theme.spacing.unit * 2,
-      fontWeight: 'bold',
-      color: theme.palette.grey[700]
-    },
-    leftIcon: {
-      marginRight: theme.spacing.unit
     }
   })
 
   static propTypes = {
-    classes: PropTypes.shape({
-      bold: PropTypes.string,
-      button: PropTypes.string,
-      leftIcon: PropTypes.string
-    }).isRequired,
     log: PropTypes.shape({
       name: PropTypes.string,
       dateModified: PropTypes.shape({}),
@@ -52,38 +37,23 @@ class LogExpansionPanel extends React.Component {
   delete = () => this.props.deleteLog(this.props.log.name)
 
   render() {
-    const { classes, log } = this.props;
+    const { log } = this.props;
     return (
       <ExpandedSection>
         <React.Fragment>
-          <Typography className={classes.bold}>
-            Date Modified
-          </Typography>
-          <Typography>
-            {log.dateModified.toString()}
-          </Typography>
+          <ExpandableSectionDetail label="Date Modified" text={log.dateModified.toString()} />
         </React.Fragment>
         <React.Fragment>
-          <Button
-            variant="outlined"
-            color="default"
-            size="medium"
-            className={classes.button}
+          <OutlinedButton
+            text="Delete"
+            icon={<DeleteIcon />}
             onClick={this.delete}
-          >
-            <DeleteIcon className={classes.leftIcon} />
-            Delete
-          </Button>
-          <Button
-            variant="outlined"
-            color="default"
-            size="medium"
-            className={classes.button}
+          />
+          <OutlinedButton
+            text="Download"
+            icon={<CloudDownloadIcon />}
             href={log.href}
-          >
-            <CloudDownloadIcon className={classes.leftIcon} />
-            Download
-          </Button>
+          />
         </React.Fragment>
       </ExpandedSection>
     );
@@ -91,6 +61,6 @@ class LogExpansionPanel extends React.Component {
 }
 
 export default connect(
-  LogExpansionPanel.mapStateToProps,
-  LogExpansionPanel.mapDispatchToProps
-)(withStyles(LogExpansionPanel.styles)(LogExpansionPanel));
+  LogExpandedPanel.mapStateToProps,
+  LogExpandedPanel.mapDispatchToProps
+)(withStyles(LogExpandedPanel.styles)(LogExpandedPanel));

@@ -3,6 +3,7 @@ import * as actors from './actors';
 import * as fermenters from './fermenters';
 import * as kettles from './kettles';
 import * as logs from './logs';
+import * as plugins from './plugins';
 import * as sensors from './sensors';
 
 export function loadAppConfig() {
@@ -43,5 +44,6 @@ export default {
   fermenters,
   kettles,
   logs,
+  plugins,
   sensors
 };

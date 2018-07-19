@@ -19,7 +19,7 @@ import BubblesIcon from '@material-ui/icons/BubbleChart';
 import HardwareIcon from '@material-ui/icons/Storage';
 import LogIcon from '@material-ui/icons/Archive';
 import AddOnsIcon from '@material-ui/icons/AddToPhotos';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from '@material-ui/icons/DeviceHub';
 
 class AppDrawer extends React.Component {
   static styles = theme => ({
