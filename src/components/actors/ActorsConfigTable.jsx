@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { getActors, getActorTypes, createActor } from '../../actions/actors';
 import ActorRow from './ActorRow';
 import TableHeader from '../common/TableHeader';
-import TableTitle from '../common/TableTitle';
+import HardwareTableTitle from '../common/HardwareTableTitle';
 
 class ActorsConfigTable extends React.Component {
   static styles = theme => ({
@@ -86,7 +86,7 @@ class ActorsConfigTable extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Actors" addAction={addActor} deleteAction={this.toggleDelete} />
+        <HardwareTableTitle text="Actors" addAction={addActor} deleteAction={this.toggleDelete} />
         <Paper className={classes.root}>
           <Table>
             <TableHeader columns={this.state.deleteMode ?

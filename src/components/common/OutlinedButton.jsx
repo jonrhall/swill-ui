@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -9,7 +10,9 @@ class OutlinedButton extends React.Component {
       paddingTop: 0,
       paddingBottom: 0,
       marginLeft: theme.spacing.unit * 2,
-      fontWeight: 'bold',
+      fontWeight: 'bold'
+    },
+    greyButton: {
       color: theme.palette.grey[700]
     },
     marginLeft: {
@@ -20,6 +23,7 @@ class OutlinedButton extends React.Component {
   static propTypes = {
     classes: PropTypes.shape({
       button: PropTypes.string,
+      greyButton: PropTypes.string,
       marginLeft: PropTypes.string
     }).isRequired,
     text: PropTypes.string.isRequired,
@@ -50,7 +54,7 @@ class OutlinedButton extends React.Component {
         variant="outlined"
         color={color}
         size="medium"
-        className={classes.button}
+        className={classNames(classes.button, color === 'default' ? classes.greyButton : null)}
         onClick={onClick}
         href={href}
       >

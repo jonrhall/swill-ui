@@ -53,6 +53,7 @@ class LogExpandedPanel extends React.Component {
             text="Download"
             icon={<CloudDownloadIcon />}
             href={log.href}
+            color="secondary"
           />
         </React.Fragment>
       </ExpandedSection>

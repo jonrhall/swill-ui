@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { getFermenters, getFermenterTypes, createFermenter } from '../../actions/fermenters';
 import FermenterRow from './FermenterRow';
 import TableHeader from '../common/TableHeader';
-import TableTitle from '../common/TableTitle';
+import HardwareTableTitle from '../common/HardwareTableTitle';
 
 class FermentersConfigTable extends React.Component {
   static styles = theme => ({
@@ -86,7 +86,7 @@ class FermentersConfigTable extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Fermenters" addAction={addFermenter} deleteAction={this.toggleDelete} />
+        <HardwareTableTitle text="Fermenters" addAction={addFermenter} deleteAction={this.toggleDelete} />
         <Paper className={classes.root}>
           <Table>
             <TableHeader columns={this.state.deleteMode ?

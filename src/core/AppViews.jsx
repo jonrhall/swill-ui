@@ -96,7 +96,7 @@ class AppViews extends React.Component {
           <AppDrawer expanded={drawerExpanded} closeDrawer={closeDrawer} />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <div className={classes.routes} style={{ width: drawerExpanded ? 'calc(100% - 240px)' : 'calc(100% - 72px)' }}>
+            <div className={classes.routes} style={{ width: drawerExpanded ? 'calc(100% - 220px)' : 'calc(100% - 72px)' }}>
               <Route
                 exact
                 path="/"

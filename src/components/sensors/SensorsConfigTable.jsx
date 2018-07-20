@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { getSensors, getSensorTypes, createSensor } from '../../actions/sensors';
 import SensorRow from './SensorRow';
 import TableHeader from '../common/TableHeader';
-import TableTitle from '../common/TableTitle';
+import HardwareTableTitle from '../common/HardwareTableTitle';
 
 class SensorsConfigTable extends React.Component {
   static styles = theme => ({
@@ -86,7 +86,7 @@ class SensorsConfigTable extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Sensors" addAction={addSensor} deleteAction={this.toggleDelete} />
+        <HardwareTableTitle text="Sensors" addAction={addSensor} deleteAction={this.toggleDelete} />
         <Paper className={classes.root}>
           <Table>
             <TableHeader columns={this.state.deleteMode ?

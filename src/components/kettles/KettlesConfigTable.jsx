@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { getKettles, getKettleTypes, createKettle } from '../../actions/kettles';
 import KettleRow from './KettleRow';
 import TableHeader from '../common/TableHeader';
-import TableTitle from '../common/TableTitle';
+import HardwareTableTitle from '../common/HardwareTableTitle';
 
 class KettlesConfigTable extends React.Component {
   static styles = theme => ({
@@ -86,7 +86,7 @@ class KettlesConfigTable extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <TableTitle text="Kettles" addAction={addKettle} deleteAction={this.toggleDelete} />
+        <HardwareTableTitle text="Kettles" addAction={addKettle} deleteAction={this.toggleDelete} />
         <Paper className={classes.root}>
           <Table>
             <TableHeader columns={this.state.deleteMode ?

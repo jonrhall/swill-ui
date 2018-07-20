@@ -7,7 +7,9 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
-class TableTitle extends React.Component {
+import OutlinedButton from './OutlinedButton';
+
+class HardwareTableTitle extends React.Component {
   static styles = theme => ({
     relativePosition: {
       position: 'relative'
@@ -21,7 +23,6 @@ class TableTitle extends React.Component {
     deleteButton: {
       paddingTop: 0,
       paddingBottom: 0,
-      marginRight: theme.spacing.unit * 2,
       fontWeight: 'bold',
       color: theme.palette.grey[700]
     },
@@ -30,7 +31,7 @@ class TableTitle extends React.Component {
     },
     buttons: {
       position: 'absolute',
-      right: `-${theme.spacing.unit * 2}px`,
+      right: 0,
       bottom: theme.spacing.unit * 1.5
     },
     leftIcon: {
@@ -90,20 +91,16 @@ class TableTitle extends React.Component {
             <DeleteIcon className={classes.leftIcon} />
             Delete
           </Button>
-          <Button
-            variant="outlined"
+          <OutlinedButton
             color="secondary"
-            size="medium"
-            className={classes.button}
             onClick={addAction}
-          >
-            <AddIcon className={classes.leftIcon} />
-            Add
-          </Button>
+            text="Add"
+            icon={<AddIcon />}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default withStyles(TableTitle.styles)(TableTitle);
+export default withStyles(HardwareTableTitle.styles)(HardwareTableTitle);

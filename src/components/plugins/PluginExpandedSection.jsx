@@ -64,6 +64,7 @@ class PluginExpandedSection extends React.Component {
                 onClick={this.pluginAction('updatePlugin')}
                 text="Update"
                 icon={<SyncIcon />}
+                color="secondary"
               />
             </React.Fragment>
           ) : (
@@ -71,6 +72,7 @@ class PluginExpandedSection extends React.Component {
               onClick={this.pluginAction('installPlugin')}
               text="Install"
               icon={<SaveAltIcon />}
+              color="secondary"
             />
           )}
         </React.Fragment>
