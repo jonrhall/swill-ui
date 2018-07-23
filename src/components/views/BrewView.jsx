@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 import PageHeader from '../common/PageHeader';
+import StepList from '../steps/StepList';
 
 class HomeView extends React.Component {
   static styles = theme => ({
@@ -16,9 +16,6 @@ class HomeView extends React.Component {
   static propTypes = {
     classes: PropTypes.shape({
       margin: PropTypes.string
-    }).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string
     }).isRequired
   }
 
@@ -26,9 +23,14 @@ class HomeView extends React.Component {
     return (
       <div className={this.props.classes.margin}>
         <PageHeader text="Brew" />
-        <Typography variant="headline" gutterBottom>{this.props.location.pathname}</Typography>
-        <div><Typography variant="body1" gutterBottom>Welcome to Swill UI!</Typography></div>
-        <Link to="/ferment"><Typography variant="button" gutterBottom>Ferment</Typography></Link>
+        <Grid container spacing={24}>
+          <Grid item xs={9}>
+            Some content
+          </Grid>
+          <Grid item xs={3}>
+            <StepList />
+          </Grid>
+        </Grid>
       </div>
     );
   }

@@ -46,7 +46,9 @@ class PluginsView extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getPlugins();
+    if (this.props.pluginList.length < 1) {
+      this.props.getPlugins();
+    }
   }
 
   setSearchText = (event) => {
