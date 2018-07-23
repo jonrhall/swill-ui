@@ -10,7 +10,7 @@ class LogSection extends React.Component {
   static styles = theme => ({
     root: {
       width: '100%',
-      marginBottom: theme.spacing.unit * 5
+      marginBottom: theme.spacing.unit * 3
     }
   })
 

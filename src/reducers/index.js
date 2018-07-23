@@ -6,6 +6,7 @@ import fermenters from './fermenter_reducer';
 import logs from './log_reducer';
 import plugins from './plugin_reducer';
 import sensors from './sensor_reducer';
+import steps from './step_reducer';
 
 export default combineReducers({
   actors,
@@ -14,5 +15,6 @@ export default combineReducers({
   fermenters,
   logs,
   plugins,
-  sensors
+  sensors,
+  steps
 });

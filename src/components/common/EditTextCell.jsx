@@ -19,17 +19,25 @@ class EditTextCell extends React.Component {
       marginRight: theme.spacing.unit * 10,
       marginLeft: theme.spacing.unit * 3,
       outline: 0
+    },
+    disabled: {
+      color: theme.palette.text.secondary
     }
   })
 
   static propTypes = {
     text: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     classes: PropTypes.shape({
       tableCell: PropTypes.string,
-      menuContent: PropTypes.string
+      menuContent: PropTypes.string,
+      disabled: PropTypes.string
     }).isRequired
+  }
+
+  static defaultProps = {
+    label: null
   }
 
   state = {
@@ -72,7 +80,7 @@ class EditTextCell extends React.Component {
       <TableCell className={classes.tableCell}>
         <TableCellButton
           anchor={!!anchorEl}
-          buttonText={text}
+          buttonText={text || <em className={classes.disabled}>No value</em>}
           onClick={this.handleOpen}
           menuName="edit-text-menu"
         />

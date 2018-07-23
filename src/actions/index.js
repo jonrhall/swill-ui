@@ -5,13 +5,7 @@ import * as kettles from './kettles';
 import * as logs from './logs';
 import * as plugins from './plugins';
 import * as sensors from './sensors';
-
-export function loadAppConfig() {
-  return {
-    type: 'LOAD_APP_CONFIG',
-    payload: sdk.config.getConfig()
-  };
-}
+import * as steps from './steps';
 
 export function openMenu() {
   return {
@@ -45,5 +39,6 @@ export default {
   kettles,
   logs,
   plugins,
-  sensors
+  sensors,
+  steps
 };

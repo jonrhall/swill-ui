@@ -50,7 +50,7 @@ class SelectResourceCell extends React.Component {
       PropTypes.string,
       PropTypes.shape({})
     ]).isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     emptyLabel: PropTypes.string,
     resourceList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
@@ -59,7 +59,8 @@ class SelectResourceCell extends React.Component {
   }
 
   static defaultProps = {
-    emptyLabel: 'None'
+    emptyLabel: 'None',
+    label: null
   }
 
   state = {
@@ -121,7 +122,7 @@ class SelectResourceCell extends React.Component {
           onClose={this.handleClose}
         >
           <FormControl className={classes.menuContent}>
-            <InputLabel htmlFor="resource-choice">Select a resource</InputLabel>
+            <InputLabel htmlFor="resource-choice">Choose an option</InputLabel>
             <Select
               value={modalValue}
               onChange={this.handleChange}
@@ -134,10 +135,10 @@ class SelectResourceCell extends React.Component {
                 <em>{emptyLabel}</em>
               </MenuItem>
               {resourceList.map(({ id, name }) => (
-                <MenuItem value={id.toString()} key={id}>{name}</MenuItem>
+                <MenuItem value={(id || name).toString()} key={(id || name)}>{name}</MenuItem>
               ))}
             </Select>
-            <FormHelperText>{label}</FormHelperText>
+            {label ? <FormHelperText>{label}</FormHelperText> : null}
           </FormControl>
           <MenuActionButtons onSave={this.saveChange} onCancel={this.handleClose} />
         </Menu>

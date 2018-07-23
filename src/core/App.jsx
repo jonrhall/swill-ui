@@ -7,7 +7,7 @@ import lightBlue from '@material-ui/core/colors/lightBlue';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 
 import AppViews from '../core/AppViews';
-import { loadAppConfig } from '../actions';
+import { loadAppConfig } from '../actions/config';
 
 class App extends React.Component {
   static mapStateToProps = state => ({

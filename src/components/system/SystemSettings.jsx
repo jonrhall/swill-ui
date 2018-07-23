@@ -7,7 +7,7 @@ import SystemSettingsList from './SystemSettingsList';
 
 class SystemSettings extends React.Component {
   static mapStateToProps = state => ({
-    settings: Object.values(state.appState.config)
+    settings: state.appState.config
   })
 
   static mapDispatchToProps = () => ({})
@@ -19,20 +19,20 @@ class SystemSettings extends React.Component {
       buzzer: null,
       donation_notification: null,
       port: 'Server Port',
-      unit: null
+      unit: 'Unit of Temperature'
     },
     other: {
       actor_cols: 'Actor Columns',
-      buzzer_beep_level: null,
+      buzzer_beep_level: 'Buzzer Noise Level',
       kettle_cols: 'Kettle Columns',
       sensor_cols: 'Sensor Columns',
-      setup: null,
+      setup: 'Setup Dialog',
       step_boil: 'Default Boil Step',
-      step_boil_kettle: null,
-      step_chil: null,
-      step_mash: null,
-      step_mash_kettle: null,
-      step_mashin: null
+      step_boil_kettle: 'Default Boil Kettle',
+      step_chil: 'Default Chill Step',
+      step_mash: 'Default Mash Step',
+      step_mash_kettle: 'Default Mash Tun',
+      step_mashin: 'Default Mash In Step'
     }
   }
 

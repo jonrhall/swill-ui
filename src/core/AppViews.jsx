@@ -42,7 +42,7 @@ class AppViews extends React.Component {
 
   static mapStateToProps = state => ({
     drawerExpanded: state.appState.menuOpen,
-    breweryName: state.appState.breweryName
+    breweryName: state.appState.config.find(prop => prop.name === 'brewery_name').value || ''
   })
 
   static mapDispatchToProps = (dispatch) => {

@@ -14,7 +14,6 @@ class ExpandableSection extends React.Component {
       fontSize: theme.typography.pxToRem(15),
       flexBasis: '33.33%',
       flexShrink: 0,
-      fontWeight: 'bold',
       color: theme.palette.grey[700]
     },
     activeColor: {
