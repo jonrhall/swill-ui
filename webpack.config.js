@@ -27,12 +27,15 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff|woff2)$/,
-        use: ['file-loader']
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.css$/,
-        use: ['css-loader']
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'file-loader',
+        options: {
+          limit: 10000
+        }
       }
     ]
   },

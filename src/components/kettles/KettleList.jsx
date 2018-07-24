@@ -10,19 +10,27 @@ import GamesIcon from '@material-ui/icons/Games';
 class KettleList extends React.Component {
   static styles = theme => ({
     kettleTitle: {
-      marginTop: theme.spacing.unit * 8
+      marginTop: theme.spacing.unit * 8,
+      marginBottom: theme.spacing.unit * 2
+    },
+    actualTemp: {
+      fontSize: '3.6rem',
+      fontFamily: 'Share',
+      lineHeight: '2.6rem'
     },
     targetTemp: {
       marginBottom: theme.spacing.unit * 8,
       display: 'flex',
       fontSize: '1.6rem',
-      justifyContent: 'center'
+      fontFamily: 'Share',
+      justifyContent: 'center',
+      position: 'relative',
+      right: '0.4rem'
     },
     targetTempText: {
       position: 'relative',
       bottom: '0.4rem',
-      paddingLeft: theme.spacing.unit,
-      fontFamily: '"Audiowide", serif'
+      paddingLeft: theme.spacing.unit
     }
   })
 
@@ -44,7 +52,7 @@ class KettleList extends React.Component {
               <Typography className={classes.kettleTitle} color="textSecondary" align="center">
                 KettleName
               </Typography>
-              <Typography variant="title" gutterBottom align="center">
+              <Typography className={classes.actualTemp} variant="title" gutterBottom align="center">
                 157&#176;F
               </Typography>
               <Typography className={classes.targetTemp} color="textSecondary" align="center">
