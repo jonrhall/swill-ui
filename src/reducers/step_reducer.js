@@ -1,6 +1,8 @@
 const initialStepState = {
   loadingTypes: false,
-  stepTypes: []
+  stepTypes: [],
+  loadingList: false,
+  steps: []
 };
 
 const stepReducer = (state = initialStepState, action) => {
@@ -13,6 +15,15 @@ const stepReducer = (state = initialStepState, action) => {
       return Object.assign({}, state, {
         loadingTypes: false,
         stepTypes: action.payload
+      });
+    case 'GET_STEPS_PENDING':
+      return Object.assign({}, state, {
+        loadingList: true
+      });
+    case 'GET_STEPS_FULFILLED':
+      return Object.assign({}, state, {
+        loadingList: false,
+        steps: action.payload
       });
     default:
       return state;

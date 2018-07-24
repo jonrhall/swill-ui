@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -8,9 +9,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad', 'foo'];
-}
+import { getSteps } from '../../actions/steps';
 
 function getStepContent(step) {
   switch (step) {
@@ -26,6 +25,25 @@ function getStepContent(step) {
 }
 
 class StepList extends React.Component {
+  static stepTypes = {
+    BoilStep: 'Boil Step',
+    ChilStep: 'Chill Step',
+    MashInStep: 'Mash-in Step',
+    MashStep: 'Mash Step',
+    PumpStep: 'Pump Step'
+  }
+
+  static translateStepType = type => StepList.stepTypes[type] || type
+
+  static mapStateToProps = state => ({
+    loading: state.steps.loadingList,
+    stepList: state.steps.steps
+  })
+
+  static mapDispatchToProps = dispatch => ({
+    getSteps: () => dispatch(getSteps())
+  })
+
   static styles = theme => ({
     button: {
       marginRight: theme.spacing.unit
@@ -53,68 +71,42 @@ class StepList extends React.Component {
       next: PropTypes.string,
       secondary: PropTypes.string,
       stepper: PropTypes.string
-    }).isRequired
+    }).isRequired,
+    stepList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    getSteps: PropTypes.func.isRequired
   }
 
   state = {
-    activeStep: 0,
-    skipped: new Set()
+    activeStep: 0
   };
 
-  isStepOptional = step => step === 1
+  componentWillMount() {
+    if (this.props.stepList.length < 1) {
+      this.props.getSteps();
+    }
+  }
 
   handleNext = () => {
     const { activeStep } = this.state;
-    let { skipped } = this.state;
-    if (this.isStepSkipped(activeStep)) {
-      skipped = new Set(skipped.values());
-      skipped.delete(activeStep);
-    }
     this.setState({
-      activeStep: activeStep + 1,
-      skipped
+      activeStep: activeStep + 1
     });
-  };
-
-  handleBack = () => {
-    const { activeStep } = this.state;
-    this.setState({
-      activeStep: activeStep - 1
-    });
-  };
-
-  handleSkip = () => {
-    const { activeStep } = this.state;
-    if (!this.isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    this.setState((state) => {
-      const skipped = new Set(state.skipped.values());
-      skipped.add(activeStep);
-      return {
-        activeStep: state.activeStep + 1,
-        skipped
-      };
-    });
-  };
+  }
 
   handleReset = () => {
     this.setState({
       activeStep: 0
     });
-  };
-
-  isStepSkipped(step) {
-    return this.state.skipped.has(step);
   }
 
   render() {
-    const { classes } = this.props;
-    const steps = getSteps();
-    const { activeStep } = this.state;
+    const { classes, stepList } = this.props;
+    const currentStep = stepList.find(step => step.state === 'A');
+    let activeStep = 99;
+
+    if (currentStep) {
+      activeStep = currentStep.order - 1;
+    }
 
     return (
       <div className={classes.root}>
@@ -123,24 +115,18 @@ class StepList extends React.Component {
           className={classes.stepper}
           orientation="vertical"
         >
-          {steps.map((label, index) => {
-            const props = {};
+          {stepList.map((label) => {
             const labelProps = {
               StepIconProps: {
                 classes: {
                   active: classes.secondary
                 }
-              }
+              },
+              optional: <Typography variant="caption">{StepList.translateStepType(label.type)}</Typography>
             };
-            if (this.isStepOptional(index)) {
-              labelProps.optional = <Typography variant="caption">Optional</Typography>;
-            }
-            if (this.isStepSkipped(index)) {
-              props.completed = false;
-            }
             return (
-              <Step key={label} {...props}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
+              <Step key={label.name} completed={label.state === 'D'} active={label.state === 'A'}>
+                <StepLabel {...labelProps}>{label.name}</StepLabel>
                 <StepContent>
                   <Typography>Timer: 00:00:00</Typography>
                 </StepContent>
@@ -149,7 +135,7 @@ class StepList extends React.Component {
           })}
         </Stepper>
         <div>
-          {activeStep === steps.length ? (
+          {activeStep === stepList.length ? (
             <div>
               <Typography className={classes.instructions}>
                 All steps completed - you&quot;re finished
@@ -163,29 +149,12 @@ class StepList extends React.Component {
               <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
               <div>
                 <Button
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.button}
-                >
-                  Back
-                </Button>
-                {this.isStepOptional(activeStep) && (
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={this.handleSkip}
-                    className={classes.button}
-                  >
-                    Skip
-                  </Button>
-                )}
-                <Button
                   variant="outlined"
                   color="primary"
                   onClick={this.handleNext}
                   className={classes.button}
                 >
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  {activeStep === stepList.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
             </div>
@@ -196,4 +165,7 @@ class StepList extends React.Component {
   }
 }
 
-export default withStyles(StepList.styles)(StepList);
+export default connect(
+  StepList.mapStateToProps,
+  StepList.mapDispatchToProps
+)(withStyles(StepList.styles)(StepList));

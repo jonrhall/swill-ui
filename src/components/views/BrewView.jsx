@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import PageHeader from '../common/PageHeader';
+import KettleList from '../kettles/KettleList';
 import StepList from '../steps/StepList';
 
 class HomeView extends React.Component {
@@ -25,7 +26,7 @@ class HomeView extends React.Component {
         <PageHeader text="Brew" />
         <Grid container spacing={24}>
           <Grid item xs={9}>
-            Some content
+            <KettleList />
           </Grid>
           <Grid item xs={3}>
             <StepList />
