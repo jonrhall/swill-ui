@@ -22,11 +22,11 @@ class SystemSettings extends React.Component {
       unit: 'Unit of Temperature'
     },
     other: {
-      actor_cols: 'Actor Columns',
+      actor_cols: 'Actor Columns (CBPi-only)',
       buzzer_beep_level: 'Buzzer Noise Level',
-      kettle_cols: 'Kettle Columns',
-      sensor_cols: 'Sensor Columns',
-      setup: 'Setup Dialog',
+      kettle_cols: 'Kettle Columns (CBPi-only)',
+      sensor_cols: 'Sensor Columns (CBPi-only)',
+      setup: 'Setup Dialog (CBPi-only)',
       step_boil: 'Default Boil Step',
       step_boil_kettle: 'Default Boil Kettle',
       step_chil: 'Default Chill Step',
