@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -11,6 +12,7 @@ import AssessmentIcon from '@material-ui/icons/AssessmentOutlined';
 import Button from '@material-ui/core/Button';
 
 import ActionToggle from '../common/ActionToggle';
+import CountdownTimer from '../common/CountdownTimer';
 import { getActors } from '../../actions/actors';
 import { getKettles } from '../../actions/kettles';
 import { getSensors } from '../../actions/sensors';
@@ -19,6 +21,9 @@ class KettleList extends React.Component {
   static styles = theme => ({
     card: {
       position: 'relative'
+    },
+    cardHighlight: {
+      background: theme.palette.primary.light
     },
     buttonWrapper: {
       paddingLeft: 0,
@@ -30,6 +35,16 @@ class KettleList extends React.Component {
     chartIcon: {
       fontSize: 36,
       color: theme.palette.text.secondary
+    },
+    countdown: {
+      position: 'absolute',
+      top: theme.spacing.unit * 3,
+      left: 'calc(50% - 2.6rem)',
+      color: theme.palette.secondary.main,
+      fontWeight: 'bold',
+      fontSize: '1.6rem',
+      textShadow: '0 0 1px black',
+      fontFamily: 'Share'
     },
     topLeft: {
       position: 'absolute',
@@ -62,12 +77,21 @@ class KettleList extends React.Component {
     }
   })
 
-  static mapStateToProps = state => ({
-    actors: state.actors.actors,
-    kettles: state.kettles.kettles,
-    sensors: state.sensors.sensors,
-    tempUnit: state.appState.config.find(prop => prop.name === 'unit').value
-  })
+  static mapStateToProps = (state) => {
+    const activeStep = state.steps.steps.find(step => step.state === 'A');
+    const activeKettle = activeStep ? activeStep.config.kettle : null;
+    const activeTimer = (activeStep && activeStep.stepstate && activeStep.stepstate.timer_end) ?
+      new Date(1000 * activeStep.stepstate.timer_end) : null;
+
+    return {
+      actors: state.actors.actors,
+      kettles: state.kettles.kettles,
+      sensors: state.sensors.sensors,
+      tempUnit: state.appState.config.find(prop => prop.name === 'unit').value,
+      activeKettle,
+      activeTimer
+    };
+  }
 
   static mapDispatchToProps = dispatch => ({
     getActors: () => dispatch(getActors()),
@@ -76,9 +100,13 @@ class KettleList extends React.Component {
   })
 
   static propTypes = {
+    activeKettle: PropTypes.string,
+    activeTimer: PropTypes.shape({}),
     classes: PropTypes.shape({
       card: PropTypes.string,
+      cardHighlight: PropTypes.string,
       chartIcon: PropTypes.string,
+      countdown: PropTypes.string,
       kettleTitle: PropTypes.string,
       actualTemp: PropTypes.string,
       targetTemp: PropTypes.string,
@@ -103,6 +131,11 @@ class KettleList extends React.Component {
     })).isRequired,
     getSensors: PropTypes.func.isRequired,
     tempUnit: PropTypes.string.isRequired
+  }
+
+  static defaultProps = {
+    activeKettle: null,
+    activeTimer: null
   }
 
   componentWillMount() {
@@ -143,12 +176,21 @@ class KettleList extends React.Component {
   }
 
   render() {
-    const { classes, kettles } = this.props;
+    const {
+      activeKettle,
+      activeTimer,
+      classes,
+      kettles
+    } = this.props;
     return (
       <Grid container spacing={24}>
         {kettles.map(kettle => (
           <Grid item zeroMinWidth xs={12} md={6} lg={4} key={kettle.id}>
-            <Card className={classes.card}>
+            <Card className={classNames(
+              classes.card,
+              activeKettle === kettle.id.toString() ? classes.cardHighlight : null
+            )}
+            >
               <div className={classes.topLeft}>
                 <Button className={classes.buttonWrapper}>
                   <AssessmentIcon className={classes.chartIcon} />
@@ -170,6 +212,8 @@ class KettleList extends React.Component {
                 alignment="bottomRight"
               />
               <CardContent>
+                {activeKettle === kettle.id.toString() && activeTimer ?
+                  <CountdownTimer fromDate={activeTimer} className={classes.countdown} /> : null}
                 <Typography className={classes.kettleTitle} color="textSecondary" align="center">
                   {kettle.name}
                 </Typography>

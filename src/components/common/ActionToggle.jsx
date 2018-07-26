@@ -54,13 +54,14 @@ class ActionToggle extends React.Component {
       bottomLabel: PropTypes.string
     }).isRequired,
     checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     text: PropTypes.string.isRequired,
     alignment: PropTypes.string
   }
 
   static defaultProps = {
-    alignment: 'topRight'
+    alignment: 'topRight',
+    onChange: null
   }
 
   render() {

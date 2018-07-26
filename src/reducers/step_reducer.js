@@ -20,6 +20,7 @@ const stepReducer = (state = initialStepState, action) => {
       return Object.assign({}, state, {
         loadingList: true
       });
+    case 'UPDATE_ALL_STEPS':
     case 'GET_STEPS_FULFILLED':
       return Object.assign({}, state, {
         loadingList: false,

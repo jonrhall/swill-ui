@@ -64,6 +64,13 @@ export function kettleUpdate(kettle) {
   };
 }
 
+export function updateKettleTemp(kettle) { // eslint-disable-line camelcase
+  return {
+    type: 'UPDATE_KETTLE_TARGET_TEMP',
+    kettle
+  };
+}
+
 export function createKettle() {
   return {
     type: 'CREATE_KETTLE',

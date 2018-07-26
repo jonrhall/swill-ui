@@ -30,6 +30,16 @@ export function connectSdk(dispatch) {
     if (event === 'UPDATE_KETTLE') {
       dispatch(kettles.kettleUpdate(kettle));
     }
+
+    if (event === 'UPDATE_KETTLE_TARGET_TEMP') {
+      dispatch(kettles.updateKettleTemp(kettle));
+    }
+  });
+
+  sdk.resources.steps.onUpdate((event, data) => {
+    if (event === 'UPDATE_ALL_STEPS') {
+      dispatch(steps.updateAllSteps(data));
+    }
   });
 }
 

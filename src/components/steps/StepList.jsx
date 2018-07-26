@@ -6,23 +6,9 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import { getSteps } from '../../actions/steps';
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Select campaign settings...';
-    case 1:
-      return 'What is an ad group anyways?';
-    case 2:
-      return 'This is the bit I really care about!';
-    default:
-      return 'Unknown step';
-  }
-}
 
 class StepList extends React.Component {
   static stepTypes = {
@@ -37,7 +23,12 @@ class StepList extends React.Component {
 
   static mapStateToProps = state => ({
     loading: state.steps.loadingList,
-    stepList: state.steps.steps
+    stepList: state.steps.steps,
+    tempUnit: (
+      <React.Fragment>
+        &#176;{state.appState.config.find(prop => prop.name === 'unit').value}
+      </React.Fragment>
+    )
   })
 
   static mapDispatchToProps = dispatch => ({
@@ -72,8 +63,18 @@ class StepList extends React.Component {
       secondary: PropTypes.string,
       stepper: PropTypes.string
     }).isRequired,
-    stepList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    getSteps: PropTypes.func.isRequired
+    stepList: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      state: PropTypes.string,
+      start: PropTypes.number,
+      stepstate: PropTypes.shape({
+        timer_end: PropTypes.number,
+        temp: PropTypes.string
+      })
+    })).isRequired,
+    getSteps: PropTypes.func.isRequired,
+    tempUnit: PropTypes.node.isRequired
   }
 
   state = {
@@ -84,6 +85,28 @@ class StepList extends React.Component {
     if (this.props.stepList.length < 1) {
       this.props.getSteps();
     }
+  }
+
+  getStepTemp = (step) => {
+    if (step.stepstate) {
+      return step.stepstate.temp;
+    }
+
+    return step.config.temp;
+  }
+
+  parseTimer = () => {
+    let timer = null;
+    this.props.stepList.some((step) => {
+      if (step.stepstate && step.stepstate.timer_end) {
+        timer = new Date(1000 * step.stepstate.timer_end);
+        return true;
+      }
+
+      return false;
+    });
+
+    return timer;
   }
 
   handleNext = () => {
@@ -100,8 +123,9 @@ class StepList extends React.Component {
   }
 
   render() {
-    const { classes, stepList } = this.props;
+    const { classes, stepList, tempUnit } = this.props;
     const currentStep = stepList.find(step => step.state === 'A');
+    const timer = this.parseTimer();
     let activeStep = 99;
 
     if (currentStep) {
@@ -115,51 +139,27 @@ class StepList extends React.Component {
           className={classes.stepper}
           orientation="vertical"
         >
-          {stepList.map((label) => {
+          {stepList.map((step) => {
             const labelProps = {
               StepIconProps: {
                 classes: {
                   active: classes.secondary
                 }
               },
-              optional: <Typography variant="caption">{StepList.translateStepType(label.type)}</Typography>
+              optional: <Typography variant="caption">{StepList.translateStepType(step.type)}</Typography>
             };
             return (
-              <Step key={label.name} completed={label.state === 'D'} active={label.state === 'A'}>
-                <StepLabel {...labelProps}>{label.name}</StepLabel>
+              <Step key={step.name} completed={step.state === 'D'} active={step.state === 'A'}>
+                <StepLabel {...labelProps}>{step.name}</StepLabel>
                 <StepContent>
-                  <Typography>Timer: 00:00:00</Typography>
+                  <Typography variant="caption">Start: {new Date(1000 * step.start).toLocaleTimeString()}</Typography>
+                  {timer ? <Typography variant="caption">Approx. End: {timer.toLocaleTimeString()}</Typography> : null}
+                  <Typography variant="caption">Set Temp: {this.getStepTemp(step)}{tempUnit}</Typography>
                 </StepContent>
               </Step>
             );
           })}
         </Stepper>
-        <div>
-          {activeStep === stepList.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&quot;re finished
-              </Typography>
-              <Button onClick={this.handleReset} className={classes.button}>
-                Reset
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.handleNext}
-                  className={classes.button}
-                >
-                  {activeStep === stepList.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
     );
   }

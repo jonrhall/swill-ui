@@ -52,6 +52,18 @@ const kettleReducer = (state = initialKettleState, action) => {
       return updateKettleList(action.payload, state);
     case 'KETTLE_UPDATE':
       return updateKettleList(action.kettle, state);
+    case 'UPDATE_KETTLE_TARGET_TEMP':
+      return Object.assign({}, state, {
+        kettles: state.kettles.map((kettle) => {
+          if (action.kettle.id === kettle.id) {
+            return {
+              ...kettle,
+              target_temp: action.kettle.target_temp
+            };
+          }
+          return kettle;
+        })
+      });
     default:
       return state;
   }

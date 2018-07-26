@@ -13,3 +13,10 @@ export function getSteps() {
     payload: sdk.resources.steps.getSteps()
   };
 }
+
+export function updateAllSteps(steps) {
+  return {
+    type: 'UPDATE_ALL_STEPS',
+    payload: steps
+  };
+}
