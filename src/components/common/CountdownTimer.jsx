@@ -16,11 +16,15 @@ class CountdownTimer extends React.Component {
       timer: this.generateCountdown()
     };
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
         timer: this.generateCountdown()
       });
     }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   generateCountdown = () => {

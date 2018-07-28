@@ -5,17 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import GamesIcon from '@material-ui/icons/Games';
 import AssessmentIcon from '@material-ui/icons/AssessmentOutlined';
 import Button from '@material-ui/core/Button';
 
 import ActionToggle from '../common/ActionToggle';
-import CountdownTimer from '../common/CountdownTimer';
 import { getActors } from '../../actions/actors';
 import { getKettles } from '../../actions/kettles';
 import { getSensors } from '../../actions/sensors';
+import KettleCardContent from './KettleCardContent';
 
 class KettleList extends React.Component {
   static styles = theme => ({
@@ -36,44 +33,10 @@ class KettleList extends React.Component {
       fontSize: 36,
       color: theme.palette.text.secondary
     },
-    countdown: {
-      position: 'absolute',
-      top: theme.spacing.unit * 3,
-      left: 'calc(50% - 2.6rem)',
-      color: theme.palette.secondary.main,
-      fontWeight: 'bold',
-      fontSize: '1.6rem',
-      textShadow: '0 0 1px black',
-      fontFamily: 'Share'
-    },
     topLeft: {
       position: 'absolute',
       top: 0,
       left: 0
-    },
-    kettleTitle: {
-      marginTop: theme.spacing.unit * 8,
-      marginBottom: theme.spacing.unit * 2
-    },
-    actualTemp: {
-      fontSize: '3.6rem',
-      fontFamily: 'Share',
-      lineHeight: '2.6rem'
-    },
-    targetTemp: {
-      marginBottom: theme.spacing.unit * 7,
-      display: 'flex',
-      fontSize: '1.6rem',
-      fontFamily: 'Share',
-      justifyContent: 'center',
-      position: 'relative',
-      right: '0.4rem'
-    },
-    targetTempText: {
-      position: 'relative',
-      bottom: '0.4rem',
-      paddingLeft: theme.spacing.unit,
-      fontSize: '2rem'
     }
   })
 
@@ -165,6 +128,8 @@ class KettleList extends React.Component {
     return <React.Fragment>Nil{this.getUnit()}</React.Fragment>;
   }
 
+  getUnit = () => <React.Fragment>&#176;{this.props.tempUnit}</React.Fragment>
+
   getActorState = (actorId) => {
     const actor = this.props.actors.find(a => a.id.toString() === actorId.toString());
 
@@ -211,22 +176,13 @@ class KettleList extends React.Component {
                 text="Heater"
                 alignment="bottomRight"
               />
-              <CardContent>
-                {activeKettle === kettle.id.toString() && activeTimer ?
-                  <CountdownTimer fromDate={activeTimer} className={classes.countdown} /> : null}
-                <Typography className={classes.kettleTitle} color="textSecondary" align="center">
-                  {kettle.name}
-                </Typography>
-                <Typography className={classes.actualTemp} variant="title" gutterBottom align="center">
-                  {this.getKettleTemp(kettle.sensor)}
-                </Typography>
-                <Typography className={classes.targetTemp} color="textSecondary" align="center">
-                  <GamesIcon />
-                  <span className={classes.targetTempText}>
-                    {kettle.target_temp}{this.getUnit()}
-                  </span>
-                </Typography>
-              </CardContent>
+              <KettleCardContent
+                kettle={kettle}
+                activeKettle={activeKettle}
+                activeTimer={activeTimer}
+                sensor={this.props.sensors.find(s => s.id.toString() === kettle.sensor.toString())}
+                tempUnit={this.getUnit()}
+              />
             </Card>
           </Grid>
         ))}
