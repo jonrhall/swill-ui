@@ -54,21 +54,21 @@ class ActionToggle extends React.Component {
       bottomLabel: PropTypes.string
     }).isRequired,
     checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func,
+    onClick: PropTypes.func,
     text: PropTypes.string.isRequired,
     alignment: PropTypes.string
   }
 
   static defaultProps = {
     alignment: 'topRight',
-    onChange: null
+    onClick: null
   }
 
   render() {
     const {
       classes,
       checked,
-      onChange,
+      onClick,
       text,
       alignment
     } = this.props;
@@ -76,13 +76,12 @@ class ActionToggle extends React.Component {
     const alignClass = classes[alignment];
 
     return (
-      <Button className={classNames(classes.button, alignClass)}>
+      <Button className={classNames(classes.button, alignClass)} onClick={onClick}>
         <div className={classes.flex}>
           {alignment === 'bottomRight' || alignment === 'bottomLeft' ?
             <Typography variant="caption" className={classes.topLabel}>{text}</Typography> : null}
           <Switch
             checked={checked}
-            onChange={onChange}
           />
           {alignment === 'topRight' || alignment === 'topLeft' ?
             <Typography variant="caption" className={classes.bottomLabel}>{text}</Typography> : null}

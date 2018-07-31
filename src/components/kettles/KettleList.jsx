@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import AssessmentIcon from '@material-ui/icons/AssessmentOutlined';
-import Button from '@material-ui/core/Button';
 
-import ActionToggle from '../common/ActionToggle';
 import { getActors } from '../../actions/actors';
 import { getKettles } from '../../actions/kettles';
 import { getSensors } from '../../actions/sensors';
+import KettleCardButtons from './KettleCardButtons';
 import KettleCardContent from './KettleCardContent';
 
 class KettleList extends React.Component {
@@ -21,22 +19,6 @@ class KettleList extends React.Component {
     },
     cardHighlight: {
       background: theme.palette.primary.light
-    },
-    buttonWrapper: {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: theme.spacing.unit * 1.5,
-      paddingBottom: theme.spacing.unit * 1.5,
-      minWidth: 70
-    },
-    chartIcon: {
-      fontSize: 36,
-      color: theme.palette.text.secondary
-    },
-    topLeft: {
-      position: 'absolute',
-      top: 0,
-      left: 0
     }
   })
 
@@ -66,14 +48,8 @@ class KettleList extends React.Component {
     activeKettle: PropTypes.string,
     activeTimer: PropTypes.shape({}),
     classes: PropTypes.shape({
-      card: PropTypes.string,
-      cardHighlight: PropTypes.string,
-      chartIcon: PropTypes.string,
-      countdown: PropTypes.string,
-      kettleTitle: PropTypes.string,
-      actualTemp: PropTypes.string,
-      targetTemp: PropTypes.string,
-      targetTempText: PropTypes.string
+      card: PropTypes.string.isRequired,
+      cardHighlight: PropTypes.string.isRequired
     }).isRequired,
     actors: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
@@ -130,18 +106,9 @@ class KettleList extends React.Component {
 
   getUnit = () => <React.Fragment>&#176;{this.props.tempUnit}</React.Fragment>
 
-  getActorState = (actorId) => {
-    const actor = this.props.actors.find(a => a.id.toString() === actorId.toString());
-
-    if (actor) {
-      return !!actor.state;
-    }
-
-    return false;
-  }
-
   render() {
     const {
+      actors,
       activeKettle,
       activeTimer,
       classes,
@@ -156,25 +123,9 @@ class KettleList extends React.Component {
               activeKettle === kettle.id.toString() ? classes.cardHighlight : null
             )}
             >
-              <div className={classes.topLeft}>
-                <Button className={classes.buttonWrapper}>
-                  <AssessmentIcon className={classes.chartIcon} />
-                </Button>
-              </div>
-              <ActionToggle
-                checked={kettle.state}
-                text="Auto"
-                alignment="topRight"
-              />
-              <ActionToggle
-                checked={this.getActorState(kettle.agitator)}
-                text="Agitator"
-                alignment="bottomLeft"
-              />
-              <ActionToggle
-                checked={this.getActorState(kettle.heater)}
-                text="Heater"
-                alignment="bottomRight"
+              <KettleCardButtons
+                actors={actors}
+                kettle={kettle}
               />
               <KettleCardContent
                 kettle={kettle}

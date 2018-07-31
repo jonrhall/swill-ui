@@ -37,18 +37,6 @@ class StepList extends React.Component {
   })
 
   static styles = theme => ({
-    button: {
-      marginRight: theme.spacing.unit
-    },
-    instructions: {
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit
-    },
-    next: {
-      marginLeft: theme.spacing.unit * 2,
-      marginRight: theme.spacing.unit * 2,
-      color: theme.palette.grey[400]
-    },
     secondary: {
       color: `${theme.palette.secondary.main} !important`
     },
@@ -60,7 +48,6 @@ class StepList extends React.Component {
 
   static propTypes = {
     classes: PropTypes.shape({
-      next: PropTypes.string,
       secondary: PropTypes.string,
       stepper: PropTypes.string
     }).isRequired,
@@ -77,10 +64,6 @@ class StepList extends React.Component {
     getSteps: PropTypes.func.isRequired,
     tempUnit: PropTypes.node.isRequired
   }
-
-  state = {
-    activeStep: 0
-  };
 
   componentWillMount() {
     if (this.props.stepList.length < 1) {
@@ -108,19 +91,6 @@ class StepList extends React.Component {
     });
 
     return timer;
-  }
-
-  handleNext = () => {
-    const { activeStep } = this.state;
-    this.setState({
-      activeStep: activeStep + 1
-    });
-  }
-
-  handleReset = () => {
-    this.setState({
-      activeStep: 0
-    });
   }
 
   render() {
