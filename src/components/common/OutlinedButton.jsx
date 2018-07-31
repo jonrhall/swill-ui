@@ -17,6 +17,12 @@ class OutlinedButton extends React.Component {
     },
     marginLeft: {
       marginLeft: theme.spacing.unit
+    },
+    iconOnly: {
+      padding: 0,
+      minWidth: 44,
+      marginLeft: theme.spacing.unit,
+      marginBottom: theme.spacing.unit
     }
   })
 
@@ -26,24 +32,28 @@ class OutlinedButton extends React.Component {
       greyButton: PropTypes.string,
       marginLeft: PropTypes.string
     }).isRequired,
-    text: PropTypes.string.isRequired,
+    text: PropTypes.string,
     onClick: PropTypes.func,
     color: PropTypes.string,
     icon: PropTypes.node,
-    href: PropTypes.string
+    href: PropTypes.string,
+    disabled: PropTypes.bool
   }
 
   static defaultProps = {
+    text: '',
     color: 'default',
     icon: null,
     onClick: null,
-    href: null
+    href: null,
+    disabled: false
   }
 
   render() {
     const {
       classes,
       color,
+      disabled,
       icon,
       onClick,
       text,
@@ -54,12 +64,17 @@ class OutlinedButton extends React.Component {
         variant="outlined"
         color={color}
         size="medium"
-        className={classNames(classes.button, color === 'default' ? classes.greyButton : null)}
+        className={classNames(
+          classes.button,
+          color === 'default' ? classes.greyButton : null,
+          icon && !text ? classes.iconOnly : null
+        )}
         onClick={onClick}
         href={href}
+        disabled={disabled}
       >
         {icon}
-        <span className={classes.marginLeft}>{text}</span>
+        {text ? <span className={classes.marginLeft}>{text}</span> : null}
       </Button>
     );
   }

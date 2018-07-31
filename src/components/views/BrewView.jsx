@@ -11,12 +11,17 @@ class HomeView extends React.Component {
   static styles = theme => ({
     margin: {
       margin: theme.spacing.unit * 2
+    },
+    rightSide: {
+      position: 'relative',
+      bottom: theme.spacing.unit * 2
     }
   })
 
   static propTypes = {
     classes: PropTypes.shape({
-      margin: PropTypes.string
+      margin: PropTypes.string,
+      rightSide: PropTypes.string
     }).isRequired
   }
 
@@ -28,7 +33,7 @@ class HomeView extends React.Component {
           <Grid item xs={9}>
             <KettleList />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} className={this.props.classes.rightSide}>
             <StepList />
           </Grid>
         </Grid>

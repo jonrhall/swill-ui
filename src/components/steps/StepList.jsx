@@ -5,10 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
 import Typography from '@material-ui/core/Typography';
 
 import { getSteps } from '../../actions/steps';
+import ActiveStepContent from './ActiveStepContent';
+import StepListButtons from './StepListButtons';
 
 class StepList extends React.Component {
   static stepTypes = {
@@ -123,7 +124,11 @@ class StepList extends React.Component {
   }
 
   render() {
-    const { classes, stepList, tempUnit } = this.props;
+    const {
+      classes,
+      stepList,
+      tempUnit
+    } = this.props;
     const currentStep = stepList.find(step => step.state === 'A');
     const timer = this.parseTimer();
     let activeStep = 99;
@@ -133,7 +138,8 @@ class StepList extends React.Component {
     }
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
+        <StepListButtons />
         <Stepper
           activeStep={activeStep}
           className={classes.stepper}
@@ -146,21 +152,22 @@ class StepList extends React.Component {
                   active: classes.secondary
                 }
               },
-              optional: <Typography variant="caption">{StepList.translateStepType(step.type)}</Typography>
+              optional: (
+                <React.Fragment>
+                  <Typography variant="caption">{StepList.translateStepType(step.type)}</Typography>
+                  <Typography variant="caption">Set Temp: {this.getStepTemp(step)}{tempUnit}</Typography>
+                </React.Fragment>
+              )
             };
             return (
               <Step key={step.name} completed={step.state === 'D'} active={step.state === 'A'}>
                 <StepLabel {...labelProps}>{step.name}</StepLabel>
-                <StepContent>
-                  <Typography variant="caption">Start: {new Date(1000 * step.start).toLocaleTimeString()}</Typography>
-                  {timer ? <Typography variant="caption">Approx. End: {timer.toLocaleTimeString()}</Typography> : null}
-                  <Typography variant="caption">Set Temp: {this.getStepTemp(step)}{tempUnit}</Typography>
-                </StepContent>
+                <ActiveStepContent step={step} timer={timer} />
               </Step>
             );
           })}
         </Stepper>
-      </div>
+      </React.Fragment>
     );
   }
 }

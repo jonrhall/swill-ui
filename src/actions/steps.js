@@ -20,3 +20,31 @@ export function updateAllSteps(steps) {
     payload: steps
   };
 }
+
+export function nextStep() {
+  return {
+    type: 'NEXT_STEP',
+    payload: sdk.resources.steps.nextStep()
+  };
+}
+
+export function restartStep() {
+  return {
+    type: 'RESTART_STEP',
+    payload: sdk.resources.steps.resetStep()
+  };
+}
+
+export function startSteps() {
+  return {
+    type: 'START_STEPS',
+    payload: sdk.resources.steps.startSteps()
+  };
+}
+
+export function resetSteps() {
+  return {
+    type: 'RESET_STEPS',
+    payload: sdk.resources.steps.resetSteps()
+  };
+}
