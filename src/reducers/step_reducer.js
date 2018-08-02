@@ -2,11 +2,16 @@ const initialStepState = {
   loadingTypes: false,
   stepTypes: [],
   loadingList: false,
-  steps: []
+  steps: [],
+  editing: false
 };
 
 const stepReducer = (state = initialStepState, action) => {
   switch (action.type) {
+    case 'EDIT_STEPS':
+      return Object.assign({}, state, {
+        editing: action.editMode
+      });
     case 'GET_STEP_TYPES_PENDING':
       return Object.assign({}, state, {
         loadingTypes: true

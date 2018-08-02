@@ -36,6 +36,10 @@ class LogSection extends React.Component {
       return 'Application log';
     }
 
+    if (name === 'action.log') {
+      return 'Action log';
+    }
+
     return name;
   }
 

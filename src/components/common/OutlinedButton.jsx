@@ -23,10 +23,15 @@ class OutlinedButton extends React.Component {
       minWidth: 44,
       marginLeft: theme.spacing.unit,
       marginBottom: theme.spacing.unit
+    },
+    iconText: {
+      paddingLeft: 8,
+      marginBottom: theme.spacing.unit
     }
   })
 
   static propTypes = {
+    className: PropTypes.string,
     classes: PropTypes.shape({
       button: PropTypes.string,
       greyButton: PropTypes.string,
@@ -41,6 +46,7 @@ class OutlinedButton extends React.Component {
   }
 
   static defaultProps = {
+    className: null,
     text: '',
     color: 'default',
     icon: null,
@@ -51,6 +57,7 @@ class OutlinedButton extends React.Component {
 
   render() {
     const {
+      className,
       classes,
       color,
       disabled,
@@ -67,7 +74,9 @@ class OutlinedButton extends React.Component {
         className={classNames(
           classes.button,
           color === 'default' ? classes.greyButton : null,
-          icon && !text ? classes.iconOnly : null
+          icon && !text ? classes.iconOnly : null,
+          icon && text ? classes.iconText : null,
+          className
         )}
         onClick={onClick}
         href={href}
