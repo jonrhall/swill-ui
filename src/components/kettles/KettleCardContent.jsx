@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import GamesIcon from '@material-ui/icons/Games';
 
 import CountdownTimer from '../common/CountdownTimer';
@@ -26,10 +27,11 @@ class KettleCardContent extends React.Component {
     actualTemp: {
       fontSize: '3.6rem',
       fontFamily: 'Share',
-      lineHeight: '2.6rem'
+      lineHeight: '2.6rem',
+      marginBottom: theme.spacing.unit * 2
     },
     targetTemp: {
-      marginBottom: theme.spacing.unit * 7,
+      marginBottom: theme.spacing.unit * 9,
       display: 'flex',
       fontSize: '1.6rem',
       fontFamily: 'Share',
@@ -37,11 +39,13 @@ class KettleCardContent extends React.Component {
       position: 'relative',
       right: '0.4rem'
     },
+    targetTempButton: {
+      color: theme.palette.text.secondary
+    },
     targetTempText: {
-      position: 'relative',
-      bottom: '0.4rem',
       paddingLeft: theme.spacing.unit,
-      fontSize: '2rem'
+      fontFamily: 'Share',
+      fontSize: '2.2rem'
     }
   })
 
@@ -101,10 +105,12 @@ class KettleCardContent extends React.Component {
           {this.getKettleTemp()}
         </Typography>
         <Typography className={classes.targetTemp} color="textSecondary" align="center">
-          <GamesIcon />
-          <span className={classes.targetTempText}>
-            {kettle.target_temp}{tempUnit}
-          </span>
+          <Button className={classes.targetTempButton}>
+            <GamesIcon />
+            <span className={classes.targetTempText}>
+              {kettle.target_temp}{tempUnit}
+            </span>
+          </Button>
         </Typography>
       </CardContent>
     );
